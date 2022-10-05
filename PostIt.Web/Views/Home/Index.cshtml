@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<Post>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -12,6 +14,24 @@
         <p>
             <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
         </p>
+        
+        <div>
+            <textarea cols="10" rows="5"></textarea>
+            
+            <button type="submit">Send post</button>
+        </div>
+        
+        <div class="main-posts">
+            @foreach (var post in Model)
+            {
+                <h4>@post.Title</h4>
+
+                <p>@post.Description</p>
+                <a>@post.TimeAdded</a>
+                <hr/>
+            }
+        </div>
+        
     </div>
 }
 else

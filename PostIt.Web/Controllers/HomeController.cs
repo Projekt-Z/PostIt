@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Models;
@@ -16,7 +17,19 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("~/Views/Home/Index.cshtml");
+        var posts = new List<Post>();
+
+        for (var i = 0; i < 10; i++)
+        {
+            posts.Add(new Post
+            {
+                Title = $"test title {i}",
+                Description = $"test desc {i}",
+                TimeAdded = DateTime.Now.ToString(CultureInfo.InvariantCulture)
+            });   
+        }
+
+        return View("~/Views/Home/Index.cshtml", posts);
     }
 
     [AllowAnonymous]

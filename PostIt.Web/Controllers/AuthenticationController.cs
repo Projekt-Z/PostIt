@@ -39,6 +39,6 @@ public class AuthenticationController : Controller
     public async Task<IActionResult> GoogleLogout()
     {
         await HttpContext.SignOutAsync();
-        return RedirectToAction("Privacy", "Home");
+        return RedirectToAction("Index", "Home");
     }
 }
