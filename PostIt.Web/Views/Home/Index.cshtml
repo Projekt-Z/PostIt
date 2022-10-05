@@ -2,7 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (Context.User.Identity.IsAuthenticated)
+{
+    // TODO: This where all the posts will be displayed if user IsAuthenticated 
+    
+    <div class="text-center">
+        <h1 class="display-4">Welcome @Context.User.Identity.Name !</h1>
+        
+        <p>
+            <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
+        </p>
+    </div>
+}
+else
+{
+    <p class="text-center">Please
+    
+        <a asp-controller="Authentication" asp-action="GoogleLogin">Log In</a>
+        
+        in order to use this App
+    </p>
+}
+

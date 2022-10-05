@@ -1,7 +1,30 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+#region Google oAuth2
+
+builder.Services.AddAuthentication(o =>
+    {
+    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+    .AddCookie(o =>
+    {
+        o.LoginPath = "/oauth/google-login";
+    })
+    .AddGoogle(o =>
+    {
+        o.ClientId = builder.Configuration.GetSection("GoogleCredentials").GetSection("ClientId").Value;
+        o.ClientSecret = builder.Configuration.GetSection("GoogleCredentials").GetSection("ClientSecret").Value;
+        o.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+    });
+
+#endregion
 
 var app = builder.Build();
 
@@ -18,6 +41,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
