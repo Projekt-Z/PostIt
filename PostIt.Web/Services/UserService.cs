@@ -20,7 +20,7 @@ public class UserService : IUserService
 
         if (find) return false;
         
-        var user = new User
+        var user = new Models.User
         {
             Id = Guid.NewGuid(),
             Username = request.Username,
@@ -42,6 +42,13 @@ public class UserService : IUserService
     public User Get(Guid id)
     {
         var user = _context.Users.FirstOrDefault(u => u.Id == id);
+        return user ?? new User();
+    }
+
+    public User GetByUsername(string username)
+    {
+        var user = _context.Users.FirstOrDefault(x => x.Username == username);
+
         return user ?? new User();
     }
 

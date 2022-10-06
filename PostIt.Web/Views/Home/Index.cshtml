@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Post>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Post>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,28 +7,25 @@
 
 @if (Context.User.Identity.IsAuthenticated)
 {
-    // TODO: This where all the posts will be displayed if user IsAuthenticated 
-    
     <div class="text-center">
         <h1 class="display-4">Welcome @Context.User.Identity.Name !</h1>
         
         <p>
             <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
+            <a asp-action="Post" asp-controller="Home">Write a Post!</a>
         </p>
-        
-        <div>
-            <input type="text" placeholder="Write a post!"/> <br/>
-            
-            <button type="submit">Send post</button>
-        </div>
         
         <div class="main-posts">
             @foreach (var post in Model)
             {
-                <h4>@post.Title</h4>
+                <a>@post.Id</a><h4>@post.Title</h4>
 
                 <p>@post.Description</p>
-                <a>@post.TimeAdded</a>
+                <a>@post.TimeAdded | @post.Author.Username</a>
+                  @if (post.Author.Username == Context.User.Identity.Name)
+                  {
+                      <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                  }
                 <hr/>
             }
         </div>

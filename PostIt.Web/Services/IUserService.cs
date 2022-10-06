@@ -7,6 +7,7 @@ public interface IUserService
 {
     bool Add(UserCreationRequest user);
     User Get(Guid id);
+    User GetByUsername(string username);
     List<User> GetAll();
     bool Remove(Guid id);
     bool Update(User user);

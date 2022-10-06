@@ -1,0 +1,31 @@
+@model PostIt.Web.Dtos.Post.CreatePost
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Write a post</title>
+</head>
+<body>
+<div>
+    <form asp-action="Post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Content" Title="text-danger"></span>
+            <label asp-for="Content" class="control-label"></label>
+            <input asp-for="Content" class="form-control" />
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Post" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+</body>
+</html>
