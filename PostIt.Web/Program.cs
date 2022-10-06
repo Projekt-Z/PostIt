@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Services;
+using PostIt.Web.Services.DefaultAuthentication;
 using PostIt.Web.Services.Posts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IDefaultAuthenticationService, DefaultAuthenticationService>();
 
 #region Google oAuth2
 

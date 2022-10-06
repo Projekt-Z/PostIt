@@ -1,7 +1,9 @@
 using System.Globalization;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.Authentication;
+using PostIt.Web.Enums;
 using PostIt.Web.Models;
+using PostIt.Web.Services.DefaultAuthentication;
 
 namespace PostIt.Web.Services;
 
@@ -14,25 +16,28 @@ public class UserService : IUserService
         _context = context;
     }
     
-    public bool Add(UserCreationRequest request)
+    public bool Add(UserCreationRequest request, EAuthType authType)
     {
         var find = _context.Users.Any(x => x.Username == request.Username);
 
         if (find) return false;
         
-        var user = new Models.User
+        var user = new User
         {
             Id = Guid.NewGuid(),
             Username = request.Username,
             Name = request.Name,
             Surname = request.Surname,
-            PhoneNumber = request.PhoneNumber,
+            PhoneNumber = request.PhoneNumber ?? string.Empty,
             Email = request.Email,
             CreatedOn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
             Posts = new List<Post>(),
-            PasswordHash = string.Empty,
+            PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
         };
+        
+        if(authType == EAuthType.Default)
+            user.ProvideSaltAndHash();
         
         _context.Users.Add(user);
         _context.SaveChanges();

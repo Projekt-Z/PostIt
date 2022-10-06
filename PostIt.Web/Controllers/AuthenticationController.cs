@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Authentication;
+using PostIt.Web.Enums;
 using PostIt.Web.Services;
 
 namespace PostIt.Web.Controllers;
@@ -52,7 +53,7 @@ public class AuthenticationController : Controller
             Email = clamType[4],
             PhoneNumber = string.Empty,
             Password = string.Empty
-        });
+        }, EAuthType.Google);
         
         return RedirectToAction("Index", "Home");
         // return Json(claims);
