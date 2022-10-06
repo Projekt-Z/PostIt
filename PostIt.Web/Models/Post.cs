@@ -9,4 +9,6 @@ public class Post
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
     public string TimeAdded { get; set; } = default!;
+
+    public User Author { get; set; } = default!;
 }

@@ -3,12 +3,21 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PostIt.Web.Dtos.Authentication;
+using PostIt.Web.Services;
 
 namespace PostIt.Web.Controllers;
 
 [AllowAnonymous, Route("oauth")]
 public class AuthenticationController : Controller
 {
+    private readonly IUserService _userService;
+
+    public AuthenticationController(IUserService userService)
+    {
+        _userService = userService;
+    }
+    
     [Route("google-login")]
     public IActionResult GoogleLogin()
     {
@@ -32,8 +41,21 @@ public class AuthenticationController : Controller
             claim.Type,
             claim.Value
         });
+        
+        var clamType = HttpContext.User.Claims.Select(userClaim => userClaim.Value).ToList();
 
-        return Json(claims);
+        _userService.Add(new UserCreationRequest
+        {
+            Username = clamType[1],
+            Name = clamType[2],
+            Surname = clamType[3],
+            Email = clamType[4],
+            PhoneNumber = string.Empty,
+            Password = string.Empty
+        });
+        
+        return RedirectToAction("Index", "Home");
+        // return Json(claims);
     }
 
     public async Task<IActionResult> GoogleLogout()

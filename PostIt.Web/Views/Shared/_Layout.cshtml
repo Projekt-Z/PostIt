@@ -25,7 +25,18 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="AccountActions" asp-action="Index">Account</a>
+                    </li>
                 </ul>
+                
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <a asp-area="" asp-controller="AccountActions" asp-action="Index">
+                        <img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="30" height="30"> 
+                    </a>   
+                }
+
             </div>
         </div>
     </nav>

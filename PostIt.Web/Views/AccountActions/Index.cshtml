@@ -1,0 +1,29 @@
+@using Newtonsoft.Json
+
+    ViewBag.Title = "Account Settings";
+    Layout = "_Layout";
+}
+
+@inject IConfiguration _configuration
+
+<h2>
+    @{
+        var googleApiKey = _configuration
+            .GetSection("GoogleCredentials")
+            .GetSection("ApiKey").Value;
+
+        var nameIdentifier = Context.User.Claims.First(x => x.Issuer == "Google");
+
+        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo?access_token={nameIdentifier.Value}";
+
+        Console.WriteLine(jsonUrl);
+        using (var httpClient = new HttpClient())
+        {
+            var s = await httpClient.GetStringAsync(jsonUrl);
+            dynamic deserializeObject = JsonConvert.DeserializeObject(s);
+            var thumbnailUrl = (string)deserializeObject.image.url;
+            var thumbnail = await httpClient.GetByteArrayAsync(thumbnailUrl);
+        }
+    }
+    
+</h2>

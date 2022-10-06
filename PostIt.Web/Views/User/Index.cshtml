@@ -1,0 +1,15 @@
+@model List<User>
+
+@{
+    ViewBag.Title = "Sign In";
+    Layout = "_Layout";
+}
+
+<table>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Id</td> <td>@user.Name</td> <td>@user.Surname</td> <td>@user.Email</td> <td>@user.CreatedOn</td> <td>@user.Username</td>
+        </tr>
+    }
+</table>
