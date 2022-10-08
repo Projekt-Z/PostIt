@@ -15,7 +15,8 @@ public class ApplicationContext : DbContext
     {
         modelBuilder.Entity<User>(eb =>
         {
-            eb.HasMany<Post>().WithOne(x => x.Author);
+            eb.HasMany(x => x.Posts).WithOne(x => x.Author);
+            eb.HasMany(x => x.LikedPosts).WithMany(x => x.Likes);
         });
     }
 

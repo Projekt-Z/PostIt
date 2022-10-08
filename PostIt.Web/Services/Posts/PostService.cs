@@ -15,7 +15,9 @@ public class PostService : IPostService
     
     public List<Post> GetAll()
     {
-        return _context.Posts.Include(x => x.Author)
+        return _context.Posts
+            .Include(x => x.Author)
+            .Include(x => x.Likes)
             .OrderByDescending(x => x.TimeAdded).ToList();
     }
 
@@ -27,6 +29,10 @@ public class PostService : IPostService
     public void Add(Post post)
     {
         _context.Posts.Add(post);
+        post.Author.Posts.Add(post);
+
+        post.Likes = new List<User>();
+        
         _context.SaveChanges();
     }
 
@@ -39,5 +45,27 @@ public class PostService : IPostService
         _context.Posts.Remove(post);
         _context.SaveChanges();
         return true;
+    }
+
+    public void Like(int postId, Guid userId)
+    {
+        var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
+        var user = _context.Users.Include(x => x.LikedPosts).First(x => x.Id == userId);
+        
+        user.LikedPosts.Add(post);
+        post.Likes.Add(user);
+
+        _context.SaveChanges();
+    }
+
+    public void Unlike(int postId, Guid userId)
+    {
+        var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
+        var user = _context.Users.Include(x => x.LikedPosts).First(x => x.Id == userId);
+        
+        user.LikedPosts.Remove(post);
+        post.Likes.Remove(user);
+
+        _context.SaveChanges();
     }
 }

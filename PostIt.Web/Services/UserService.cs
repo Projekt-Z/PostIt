@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.Authentication;
 using PostIt.Web.Enums;
@@ -35,6 +36,8 @@ public class UserService : IUserService
             PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
         };
+
+        user.LikedPosts ??= new List<Post>();
         
         if(authType == EAuthType.Default)
             user.ProvideSaltAndHash();
@@ -52,7 +55,10 @@ public class UserService : IUserService
 
     public User GetByUsername(string username)
     {
-        var user = _context.Users.FirstOrDefault(x => x.Username == username);
+        var user = _context.Users
+            .Include(x => x.Posts)
+            .Include(x => x.LikedPosts)
+            .FirstOrDefault(x => x.Username == username);
 
         return user ?? new User();
     }

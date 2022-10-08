@@ -1,29 +1,26 @@
-@using Newtonsoft.Json
+@model User
 
+@{    
     ViewBag.Title = "Account Settings";
     Layout = "_Layout";
 }
 
-@inject IConfiguration _configuration
-
-<h2>
-    @{
-        var googleApiKey = _configuration
-            .GetSection("GoogleCredentials")
-            .GetSection("ApiKey").Value;
-
-        var nameIdentifier = Context.User.Claims.First(x => x.Issuer == "Google");
-
-        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo?access_token={nameIdentifier.Value}";
-
-        Console.WriteLine(jsonUrl);
-        using (var httpClient = new HttpClient())
-        {
-            var s = await httpClient.GetStringAsync(jsonUrl);
-            dynamic deserializeObject = JsonConvert.DeserializeObject(s);
-            var thumbnailUrl = (string)deserializeObject.image.url;
-            var thumbnail = await httpClient.GetByteArrayAsync(thumbnailUrl);
-        }
-    }
+<div>
+    <b> <p>Username</p> </b>
+    <a>@Model.Username</a>
     
-</h2>
+    <hr/>
+    
+    <b> <p>Phone</p> </b>
+    <a>@Model.PhoneNumber</a>
+    
+    <hr/>
+
+    <b> <p>Email</p> </b>
+    <a>@Model.Email</a>
+    
+    <hr/>
+    
+    <b> <p>Account creation</p> </b>
+    <a>@Model.CreatedOn</a>
+</div>

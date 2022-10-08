@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PostIt.Web.Services;
 
 namespace PostIt.Web.Controllers;
 
@@ -7,8 +8,15 @@ namespace PostIt.Web.Controllers;
 [Authorize]
 public class AccountActionsController : Controller
 {
+    private readonly IUserService _userService;
+    public AccountActionsController(IUserService userService)
+    {
+        _userService = userService;
+    }
+    
     public IActionResult Index()
     {
-        return View();
+        var username = HttpContext.User.Identity.Name;
+        return View(_userService.GetByUsername(username));
     }
 }

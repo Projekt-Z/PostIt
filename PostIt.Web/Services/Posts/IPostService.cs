@@ -8,4 +8,6 @@ public interface IPostService
     Post Get(int id);
     void Add(Post post);
     bool Delete(int id);
+    void Like(int postId, Guid userId);
+    void Unlike(int postId, Guid userId);
 }

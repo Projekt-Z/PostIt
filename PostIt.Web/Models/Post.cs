@@ -11,4 +11,5 @@ public class Post
     public string TimeAdded { get; set; } = default!;
 
     public User Author { get; set; } = default!;
+    public List<User> Likes { get; set; } = default!;
 }

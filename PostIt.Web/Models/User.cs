@@ -24,4 +24,5 @@ public class User
     public string CreatedOn { get; set; } = default!;
 
     public List<Post> Posts { get; set; } = default!;
+    public List<Post> LikedPosts { get; set; } = default!;
 }

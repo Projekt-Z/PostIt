@@ -45,14 +45,9 @@ namespace PostIt.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -104,19 +99,45 @@ namespace PostIt.Web.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PostUser", b =>
+                {
+                    b.Property<int>("LikedPostsId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("LikesId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LikedPostsId", "LikesId");
+
+                    b.HasIndex("LikesId");
+
+                    b.ToTable("PostUser");
+                });
+
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
                 {
                     b.HasOne("PostIt.Web.Models.User", "Author")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostIt.Web.Models.User", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("PostUser", b =>
+                {
+                    b.HasOne("PostIt.Web.Models.Post", null)
+                        .WithMany()
+                        .HasForeignKey("LikedPostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PostIt.Web.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("LikesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.User", b =>
