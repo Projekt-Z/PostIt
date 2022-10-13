@@ -14,8 +14,16 @@ public class ProfileController : Controller
         _userService = userService;
     }
 
-    public IActionResult Index([FromQuery] string username)
+    [Route("[controller]/{username}")]
+    public IActionResult Index(string username)
     {
-        return View(_userService.GetByUsername(username));
+        var user = _userService.GetByUsername(username);
+
+        if (user is null)
+        {
+            return NotFound();
+        }
+        
+        return View(user);
     }
 }

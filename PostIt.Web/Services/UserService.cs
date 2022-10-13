@@ -53,14 +53,13 @@ public class UserService : IUserService
         return user ?? new User();
     }
 
-    public User GetByUsername(string username)
+    public User? GetByUsername(string username)
     {
         var user = _context.Users.Include(x => x.Posts)
             .Include(x => x.PostLiked)
             .FirstOrDefault(x => x.Username == username);
-
         
-        return user ?? new User();
+        return user ?? null;
     }
 
     public List<User> GetAll()

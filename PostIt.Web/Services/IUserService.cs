@@ -8,7 +8,7 @@ public interface IUserService
 {
     bool Add(UserCreationRequest user, EAuthType authType, string image);
     User Get(Guid id);
-    User GetByUsername(string username);
+    User? GetByUsername(string username);
     List<User> GetAll();
     bool Remove(Guid id);
     bool Update(User user);
