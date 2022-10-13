@@ -1,5 +1,4 @@
-@using Newtonsoft.Json
-
+@{
     ViewBag.Title = "Account Settings";
     Layout = "_Layout";
 }
@@ -14,15 +13,17 @@
 
         var nameIdentifier = Context.User.Claims.First(x => x.Issuer == "Google");
 
-        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo?access_token={nameIdentifier.Value}";
+        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo";
 
         Console.WriteLine(jsonUrl);
         using (var httpClient = new HttpClient())
         {
-            var s = await httpClient.GetStringAsync(jsonUrl);
-            dynamic deserializeObject = JsonConvert.DeserializeObject(s);
-            var thumbnailUrl = (string)deserializeObject.image.url;
-            var thumbnail = await httpClient.GetByteArrayAsync(thumbnailUrl);
+            using var request = new HttpRequestMessage(HttpMethod.Get, jsonUrl);
+            request.Headers.Add("Authorization", $"Bearer {nameIdentifier.Value}");
+            var response = await httpClient.SendAsync(request);
+
+            var json = response.Content.ReadAsStringAsync();
+            Console.WriteLine(json.Result);
         }
     }
     

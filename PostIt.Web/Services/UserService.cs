@@ -31,6 +31,7 @@ public class UserService : IUserService
             PhoneNumber = request.PhoneNumber ?? string.Empty,
             Email = request.Email,
             CreatedOn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+            Roles = ERoleType.User,
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
