@@ -1,3 +1,4 @@
+using System.Collections;
 using PostIt.Web.Models;
 
 namespace PostIt.Web.Services.Posts;
@@ -12,4 +13,8 @@ public interface IPostService
     bool Delete(int id);
     void Like(int postId, Guid userId);
     void Unlike(int postId, Guid userId);
+    void Follow(Guid followerId, Guid userId);
+    void Unfollow(Guid followerId, Guid userId);
+    List<User> GetFollowers(string username);
+    List<User> GetFollowing(string username);
 }

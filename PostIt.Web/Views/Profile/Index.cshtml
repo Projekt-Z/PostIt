@@ -1,6 +1,8 @@
 ﻿@using PostIt.Web.Services.Posts
+@using PostIt.Web.Services
 @model User
 @inject IPostService _postService
+@inject IUserService _userService
 
 @{
     ViewBag.Title = $"- {Model.Username}";
@@ -13,6 +15,19 @@
 <a>&#64;@Model.Username</a>
 <br/>
 <p>Jonied @Model.CreatedOn</p>
+
+@{
+    var user = _userService.GetByUsername(User.Identity.Name);
+}
+
+@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)) && user!.Following.Contains(new Following { UserId = Model.Id}))
+{
+    <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
+}
+else
+{
+    <a>Following</a>
+}
 
 <div class="">
     <p>Posts : @Model.Posts.Count</p>
@@ -40,6 +55,18 @@
         <p>@post.Description</p>
         <hr/>
     }
+</div>
+
+<div class="">
+    <p>Followers : @Model.Followers.Count</p>
+    <hr/>
+
+</div>
+
+<div class="">
+    <p>Following : @Model.Following.Count</p>
+    <hr/>
+
 </div>
 
 <div>

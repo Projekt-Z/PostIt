@@ -100,4 +100,50 @@ public class PostService : IPostService
 
         _context.SaveChanges();
     }
+
+    public void Follow(Guid followerId, Guid userId)
+    {
+        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
+        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
+        
+        user.Following.Add(new Following
+        {
+            UserId = followerId
+        });
+        
+        follower.Followers.Add(new Followers
+        {
+            UserId = userId
+        });
+        
+        _context.SaveChanges();
+    }
+    
+    public void Unfollow(Guid followerId, Guid userId)
+    {
+        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
+        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
+        
+        user.Following.Remove(new Following
+        {
+            UserId = followerId
+        });
+        
+        follower.Followers.Remove(new Followers
+        {
+            UserId = userId
+        });
+        
+        _context.SaveChanges();
+    }
+
+    public List<User> GetFollowers(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<User> GetFollowing(string username)
+    {
+        throw new NotImplementedException();
+    }
 }

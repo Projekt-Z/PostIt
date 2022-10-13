@@ -28,4 +28,6 @@ public class User
 
     public List<Post> Posts { get; set; } = default!;
     public List<Post> PostLiked { get; set; } = default!;
+    public List<Followers> Followers { get; set; } = new();
+    public List<Following> Following { get; set; } = new();
 }

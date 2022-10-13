@@ -57,6 +57,8 @@ public class UserService : IUserService
     {
         var user = _context.Users.Include(x => x.Posts)
             .Include(x => x.PostLiked)
+            .Include(x => x.Followers)
+            .Include(x => x.Following)
             .FirstOrDefault(x => x.Username == username);
         
         return user ?? null;
