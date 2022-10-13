@@ -1,0 +1,47 @@
+﻿@using PostIt.Web.Services.Posts
+@model User
+@inject IPostService _postService
+
+@{
+    ViewBag.Title = $"- {Model.Username}";
+    Layout = "_Layout";
+}
+
+<img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
+
+<b> <p>@Model.Name</p> </b>
+<a>&#64;@Model.Username</a>
+<br/>
+<p>Jonied @Model.CreatedOn</p>
+
+<div class="">
+    <p>Posts : @Model.Posts.Count</p>
+    <hr/>
+    @foreach (var post in _postService.GetAllYours(Model.Username))
+    {
+        <hr/>
+        <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
+        <p>@post.Title</p>
+        <p>@post.Description</p>
+        <hr/>
+    }
+</div>
+
+<hr class="text-black"/>
+
+<div class="">
+    <p>Liked Posts : @Model.PostLiked.Count</p>
+    <hr/>
+    @foreach (var post in _postService.GetAllLiked(Model.Username))
+    {
+        <hr/>
+        <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
+        <p>@post.Title</p>
+        <p>@post.Description</p>
+        <hr/>
+    }
+</div>
+
+<div>
+    <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
+</div>

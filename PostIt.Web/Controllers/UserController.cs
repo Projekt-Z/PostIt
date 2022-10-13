@@ -45,7 +45,7 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var success = _userService.Add(creationRequest, EAuthType.Default);
+            var success = _userService.Add(creationRequest, EAuthType.Default, string.Empty);
             if (!success)
             {
                 return RedirectToAction(nameof(Create));

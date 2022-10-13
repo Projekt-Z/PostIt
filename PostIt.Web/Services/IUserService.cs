@@ -6,7 +6,7 @@ namespace PostIt.Web.Services;
 
 public interface IUserService
 {
-    bool Add(UserCreationRequest user, EAuthType authType);
+    bool Add(UserCreationRequest user, EAuthType authType, string image);
     User Get(Guid id);
     User GetByUsername(string username);
     List<User> GetAll();

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - PostIt.Web</title>
+    <title>@ViewData["Title"] - PostIt</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/PostIt.Web.styles.css" asp-append-version="true"/>
@@ -12,7 +12,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PostIt.Web</a>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PostIt</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,8 +32,8 @@
                 
                 @if (Context.User.Identity.IsAuthenticated)
                 {
-                    <a asp-area="" asp-controller="AccountActions" asp-action="Index">
-                        <img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="30" height="30"> 
+                    <a asp-controller="Profile" asp-action="Index" asp-route-username="@User.Identity.Name">
+                        <img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="30" height="30" class="rounded-circle"> 
                     </a>   
                 }
 

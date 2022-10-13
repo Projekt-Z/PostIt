@@ -15,18 +15,49 @@ public class PostService : IPostService
     
     public List<Post> GetAll()
     {
-        return _context.Posts.Include(x => x.Author)
+        return _context.Posts
+            .Include(x => x.Author)
+            .Include(x => x.Likes)
             .OrderByDescending(x => x.TimeAdded).ToList();
+    }
+
+    public List<Post> GetAllYours(string username)
+    {
+        return _context.Users.Include(x => x.Posts).First(x => x.Username == username).Posts;
+    }
+
+    public List<Post> GetAllLiked(string username)
+    {
+        var user = _context.Users.Include(x => x.PostLiked).First(x => x.Username == username);
+        
+        foreach (var post in user.PostLiked)
+        {
+            post.Author = FindAuthorByPostId(post.Id);
+        }
+        
+        return user.PostLiked;
+    }
+
+    private User FindAuthorByPostId(int id)
+    {
+        var user = _context.Posts.Include(x => x.Author).First(x => x.Id == id).Author;
+        return user;
     }
 
     public Post Get(int id)
     {
-        return _context.Posts.First(x => x.Id == id);
+        return _context.Posts
+            .Include(x => x.Author)
+            .First(x => x.Id == id);
     }
 
     public void Add(Post post)
     {
         _context.Posts.Add(post);
+        post.Author.Posts.Add(post);
+
+        post.Likes = new List<User>();
+        
         _context.SaveChanges();
     }
 
@@ -39,5 +70,34 @@ public class PostService : IPostService
         _context.Posts.Remove(post);
         _context.SaveChanges();
         return true;
+    }
+
+    public void Like(int postId, Guid userId)
+    {
+        var post = _context.Posts
+            .Include(x => x.Author)
+            .Include(x => x.Likes)
+            .First(x => x.Id == postId);
+        
+        var user = _context.Users
+            .Include(x => x.Posts)
+            .Include(x => x.PostLiked)
+            .First(x => x.Id == userId);
+        
+        user.PostLiked.Add(post);
+        post.Likes.Add(user);
+
+        _context.SaveChanges();
+    }
+
+    public void Unlike(int postId, Guid userId)
+    {
+        var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
+        var user = _context.Users.Include(x => x.PostLiked).First(x => x.Id == userId);
+        
+        user.PostLiked.Remove(post);
+        post.Likes.Remove(user);
+
+        _context.SaveChanges();
     }
 }

@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.Authentication;
 using PostIt.Web.Enums;
@@ -16,7 +17,7 @@ public class UserService : IUserService
         _context = context;
     }
     
-    public bool Add(UserCreationRequest request, EAuthType authType)
+    public bool Add(UserCreationRequest request, EAuthType authType, string image)
     {
         var find = _context.Users.Any(x => x.Username == request.Username);
 
@@ -31,6 +32,7 @@ public class UserService : IUserService
             PhoneNumber = request.PhoneNumber ?? string.Empty,
             Email = request.Email,
             CreatedOn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+            ImageUrl = image,
             Roles = ERoleType.User,
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
@@ -53,8 +55,11 @@ public class UserService : IUserService
 
     public User GetByUsername(string username)
     {
-        var user = _context.Users.FirstOrDefault(x => x.Username == username);
+        var user = _context.Users.Include(x => x.Posts)
+            .Include(x => x.PostLiked)
+            .FirstOrDefault(x => x.Username == username);
 
+        
         return user ?? new User();
     }
 

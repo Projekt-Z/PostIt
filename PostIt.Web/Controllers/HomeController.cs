@@ -75,6 +75,22 @@ public class HomeController : Controller
         _postService.Delete(id);
         return RedirectToAction(nameof(Index));
     }
+
+    [Authorize]
+    public IActionResult Like([FromRoute] int id)
+    {
+        var user = _userService.GetByUsername(User.Identity!.Name!);
+        _postService.Like(id, user.Id);
+        return RedirectToAction("Index");
+    }
+    
+    [Authorize]
+    public IActionResult Unlike([FromRoute] int id)
+    {
+        var user = _userService.GetByUsername(User.Identity!.Name!);
+        _postService.Unlike(id, user.Id);
+        return RedirectToAction("Index");
+    }
     
     [AllowAnonymous]
     public IActionResult Privacy()

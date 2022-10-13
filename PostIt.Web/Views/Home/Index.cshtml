@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PostIt.Web.Services
 @model IEnumerable<Post>
+
+@inject IUserService _userService
 
 @{
     ViewData["Title"] = "Home Page";
@@ -11,21 +14,32 @@
         <h1 class="display-4">Welcome @Context.User.Identity.Name !</h1>
         
         <p>
-            <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
             <a asp-action="Post" asp-controller="Home">Write a Post!</a>
         </p>
         
         <div class="main-posts">
             @foreach (var post in Model)
             {
-                <a>@post.Id</a><h4>@post.Title</h4>
+                <h4>@post.Title</h4>
 
                 <p>@post.Description</p>
                 <a>@post.TimeAdded | @post.Author.Username</a>
-                  @if (post.Author.Username == Context.User.Identity.Name)
-                  {
-                      <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
-                  }
+                @if (post.Author.Username == Context.User.Identity.Name)
+                {
+                    <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                }
+                var user = _userService.GetByUsername(User.Identity.Name);
+                @if (!post.Likes.Contains(user))
+                {
+                    <a asp-action="Like" asp-route-id="@post.Id">Like</a>
+                }
+                else if (post.Likes.Contains(user))
+                {
+                    <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
+                }
+                
+                <p> <a>&#10084; @post.Likes.Count</a> </p>
+                
                 <hr/>
             }
         </div>
@@ -43,4 +57,3 @@ else
         in order to use this App
     </p>
 }
-
