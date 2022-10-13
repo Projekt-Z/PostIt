@@ -1,11 +1,13 @@
+@using PostIt.Web.Services.Posts
 @model User
+@inject IPostService _postService
 
 @{
     ViewBag.Title = $"- {Model.Username}";
     Layout = "_Layout";
 }
 
-<img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="60" height="60"> 
+<img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
 
 <b> <p>@Model.Name</p> </b>
 <a>&#64;@Model.Username</a>
@@ -15,7 +17,7 @@
 <div class="">
     <p>Posts : @Model.Posts.Count</p>
     <hr/>
-    @foreach (var post in Model.Posts)
+    @foreach (var post in _postService.GetAllLiked(Model.Username))
     {
         <hr/>
         <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>

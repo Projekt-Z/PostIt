@@ -21,9 +21,21 @@ public class PostService : IPostService
             .OrderByDescending(x => x.TimeAdded).ToList();
     }
 
+    public List<Post> GetAllLiked(string username)
+    {
+        var user = _context.Users.First(x => x.Username == username);
+        var p = _context.Posts.Include(x => x.Author)
+            .Include(x => x.Likes).Where(x => x.Author.Id == user.Id)
+            .OrderByDescending(x => x.TimeAdded).ToList();
+
+        return p;
+    }
+
     public Post Get(int id)
     {
-        return _context.Posts.First(x => x.Id == id);
+        return _context.Posts
+            .Include(x => x.Author)
+            .First(x => x.Id == id);
     }
 
     public void Add(Post post)
@@ -49,8 +61,15 @@ public class PostService : IPostService
 
     public void Like(int postId, Guid userId)
     {
-        var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
-        var user = _context.Users.Include(x => x.LikedPosts).First(x => x.Id == userId);
+        var post = _context.Posts
+            .Include(x => x.Author)
+            .Include(x => x.Likes)
+            .First(x => x.Id == postId);
+        
+        var user = _context.Users
+            .Include(x => x.Posts)
+            .Include(x => x.LikedPosts)
+            .First(x => x.Id == userId);
         
         user.LikedPosts.Add(post);
         post.Likes.Add(user);

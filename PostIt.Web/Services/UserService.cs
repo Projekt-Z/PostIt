@@ -17,8 +17,13 @@ public class UserService : IUserService
         _context = context;
     }
     
-    public bool Add(UserCreationRequest request, EAuthType authType)
+    public bool Add(UserCreationRequest request, EAuthType authType, string image)
     {
+        var u = _context.Users.First(x => x.Username == request.Username);
+
+        u.ImageUrl = image;
+        _context.SaveChanges();
+        
         var find = _context.Users.Any(x => x.Username == request.Username);
 
         if (find) return false;
@@ -34,7 +39,8 @@ public class UserService : IUserService
             CreatedOn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
-            Salt = string.Empty
+            Salt = string.Empty,
+            ImageUrl = image
         };
 
         user.LikedPosts ??= new List<Post>();
