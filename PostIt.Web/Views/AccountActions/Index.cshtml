@@ -1,26 +1,30 @@
-@model User
-
-@{    
+@{
     ViewBag.Title = "Account Settings";
     Layout = "_Layout";
 }
 
-<div>
-    <b> <p>Username</p> </b>
-    <a>@Model.Username</a>
-    
-    <hr/>
-    
-    <b> <p>Phone</p> </b>
-    <a>@Model.PhoneNumber</a>
-    
-    <hr/>
+@inject IConfiguration _configuration
 
-    <b> <p>Email</p> </b>
-    <a>@Model.Email</a>
+<h2>
+    @{
+        var googleApiKey = _configuration
+            .GetSection("GoogleCredentials")
+            .GetSection("ApiKey").Value;
+
+        var nameIdentifier = Context.User.Claims.First(x => x.Issuer == "Google");
+
+        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo";
+
+        Console.WriteLine(jsonUrl);
+        using (var httpClient = new HttpClient())
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, jsonUrl);
+            request.Headers.Add("Authorization", $"Bearer {nameIdentifier.Value}");
+            var response = await httpClient.SendAsync(request);
+
+            var json = response.Content.ReadAsStringAsync();
+            Console.WriteLine(json.Result);
+        }
+    }
     
-    <hr/>
-    
-    <b> <p>Account creation</p> </b>
-    <a>@Model.CreatedOn</a>
-</div>
+</h2>

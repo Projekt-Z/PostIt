@@ -104,4 +104,12 @@ public class HomeController : Controller
     {
         return View("~/Views/Shared/Error.cshtml",new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
+
+    [Authorize]
+    public IActionResult Follow([FromRoute] Guid id)
+    {
+        var user = _userService.GetByUsername(User.Identity!.Name!);
+        _postService.Follow(id, user.Id);
+        return RedirectToAction("Index");
+    }
 }

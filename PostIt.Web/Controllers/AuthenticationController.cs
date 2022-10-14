@@ -52,8 +52,8 @@ public class AuthenticationController : Controller
             Surname = clamType[3],
             Email = clamType[4],
             PhoneNumber = string.Empty,
-            Password = string.Empty
-        }, EAuthType.Google);
+            Password = string.Empty,
+        }, EAuthType.Google, User.Claims.Last(x => x.Issuer == "Google").Value);
         
         return RedirectToAction("Index", "Home");
         // return Json(claims);

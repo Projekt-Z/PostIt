@@ -1,21 +1,38 @@
+﻿@using PostIt.Web.Services.Posts
+@using PostIt.Web.Services
 @model User
+@inject IPostService _postService
+@inject IUserService _userService
 
 @{
     ViewBag.Title = $"- {Model.Username}";
     Layout = "_Layout";
 }
 
-<img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="60" height="60"> 
+<img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
 
 <b> <p>@Model.Name</p> </b>
 <a>&#64;@Model.Username</a>
 <br/>
 <p>Jonied @Model.CreatedOn</p>
 
+@{
+    var user = _userService.GetByUsername(User.Identity.Name);
+}
+
+@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)) && user!.Following.Contains(new Following { UserId = Model.Id}))
+{
+    <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
+}
+else
+{
+    <a>Following</a>
+}
+
 <div class="">
     <p>Posts : @Model.Posts.Count</p>
     <hr/>
-    @foreach (var post in Model.Posts)
+    @foreach (var post in _postService.GetAllYours(Model.Username))
     {
         <hr/>
         <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
@@ -28,9 +45,9 @@
 <hr class="text-black"/>
 
 <div class="">
-    <p>Liked Posts : @Model.LikedPosts.Count</p>
+    <p>Liked Posts : @Model.PostLiked.Count</p>
     <hr/>
-    @foreach (var post in Model.LikedPosts)
+    @foreach (var post in _postService.GetAllLiked(Model.Username))
     {
         <hr/>
         <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
@@ -38,6 +55,18 @@
         <p>@post.Description</p>
         <hr/>
     }
+</div>
+
+<div class="">
+    <p>Followers : @Model.Followers.Count</p>
+    <hr/>
+
+</div>
+
+<div class="">
+    <p>Following : @Model.Following.Count</p>
+    <hr/>
+
 </div>
 
 <div>

@@ -32,7 +32,7 @@
                 
                 @if (Context.User.Identity.IsAuthenticated)
                 {
-                    <a asp-area="" asp-controller="Profile" asp-action="Index">
+                    <a asp-controller="Profile" asp-action="Index" asp-route-username="@User.Identity.Name">
                         <img src="@Context.User.Claims.Last(x => x.Issuer == "Google").Value;" alt="Profile Picture" width="30" height="30" class="rounded-circle"> 
                     </a>   
                 }

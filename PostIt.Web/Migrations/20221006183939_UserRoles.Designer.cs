@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PostIt.Web.Data;
@@ -11,9 +12,10 @@ using PostIt.Web.Data;
 namespace PostIt.Web.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221006183939_UserRoles")]
+    partial class UserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,42 +23,6 @@ namespace PostIt.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("PostIt.Web.Models.Followers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Followers");
-                });
-
-            modelBuilder.Entity("PostIt.Web.Models.Following", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Following");
-                });
 
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
                 {
@@ -81,9 +47,14 @@ namespace PostIt.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
@@ -100,9 +71,6 @@ namespace PostIt.Web.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -141,71 +109,23 @@ namespace PostIt.Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PostUser", b =>
-                {
-                    b.Property<Guid>("LikesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("PostLikedId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("LikesId", "PostLikedId");
-
-                    b.HasIndex("PostLikedId");
-
-                    b.ToTable("PostUser");
-                });
-
-            modelBuilder.Entity("PostIt.Web.Models.Followers", b =>
-                {
-                    b.HasOne("PostIt.Web.Models.User", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PostIt.Web.Models.Following", b =>
-                {
-                    b.HasOne("PostIt.Web.Models.User", null)
-                        .WithMany("Following")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
                 {
                     b.HasOne("PostIt.Web.Models.User", "Author")
-                        .WithMany("Posts")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("PostUser", b =>
-                {
                     b.HasOne("PostIt.Web.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("LikesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Posts")
+                        .HasForeignKey("UserId");
 
-                    b.HasOne("PostIt.Web.Models.Post", null)
-                        .WithMany()
-                        .HasForeignKey("PostLikedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.User", b =>
                 {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Following");
-
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

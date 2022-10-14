@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Authentication;
 using PostIt.Web.Enums;
-using PostIt.Web.Models;
 using PostIt.Web.Services;
 using PostIt.Web.Services.DefaultAuthentication;
 
@@ -19,8 +19,16 @@ public class UserController : Controller
         _authService = authService;
     }
     
+    [Authorize]
     public IActionResult Index()
     {
+        var user = _userService.GetByUsername(HttpContext.User.Identity!.Name!);
+
+        if (user.Roles != ERoleType.Admin)
+        {
+            return BadRequest();
+        }
+        
         return View(_userService.GetAll());
     }
 
@@ -37,9 +45,7 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            Console.WriteLine(ModelState.IsValid);
-            
-            var success = _userService.Add(creationRequest, EAuthType.Default);
+            var success = _userService.Add(creationRequest, EAuthType.Default, string.Empty);
             if (!success)
             {
                 return RedirectToAction(nameof(Create));

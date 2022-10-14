@@ -21,9 +21,34 @@ public class PostService : IPostService
             .OrderByDescending(x => x.TimeAdded).ToList();
     }
 
+    public List<Post> GetAllYours(string username)
+    {
+        return _context.Users.Include(x => x.Posts).First(x => x.Username == username).Posts;
+    }
+
+    public List<Post> GetAllLiked(string username)
+    {
+        var user = _context.Users.Include(x => x.PostLiked).First(x => x.Username == username);
+        
+        foreach (var post in user.PostLiked)
+        {
+            post.Author = FindAuthorByPostId(post.Id);
+        }
+        
+        return user.PostLiked;
+    }
+
+    private User FindAuthorByPostId(int id)
+    {
+        var user = _context.Posts.Include(x => x.Author).First(x => x.Id == id).Author;
+        return user;
+    }
+
     public Post Get(int id)
     {
-        return _context.Posts.First(x => x.Id == id);
+        return _context.Posts
+            .Include(x => x.Author)
+            .First(x => x.Id == id);
     }
 
     public void Add(Post post)
@@ -49,10 +74,17 @@ public class PostService : IPostService
 
     public void Like(int postId, Guid userId)
     {
-        var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
-        var user = _context.Users.Include(x => x.LikedPosts).First(x => x.Id == userId);
+        var post = _context.Posts
+            .Include(x => x.Author)
+            .Include(x => x.Likes)
+            .First(x => x.Id == postId);
         
-        user.LikedPosts.Add(post);
+        var user = _context.Users
+            .Include(x => x.Posts)
+            .Include(x => x.PostLiked)
+            .First(x => x.Id == userId);
+        
+        user.PostLiked.Add(post);
         post.Likes.Add(user);
 
         _context.SaveChanges();
@@ -61,11 +93,57 @@ public class PostService : IPostService
     public void Unlike(int postId, Guid userId)
     {
         var post = _context.Posts.Include(x => x.Likes).First(x => x.Id == postId);
-        var user = _context.Users.Include(x => x.LikedPosts).First(x => x.Id == userId);
+        var user = _context.Users.Include(x => x.PostLiked).First(x => x.Id == userId);
         
-        user.LikedPosts.Remove(post);
+        user.PostLiked.Remove(post);
         post.Likes.Remove(user);
 
         _context.SaveChanges();
+    }
+
+    public void Follow(Guid followerId, Guid userId)
+    {
+        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
+        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
+        
+        user.Following.Add(new Following
+        {
+            UserId = followerId
+        });
+        
+        follower.Followers.Add(new Followers
+        {
+            UserId = userId
+        });
+        
+        _context.SaveChanges();
+    }
+    
+    public void Unfollow(Guid followerId, Guid userId)
+    {
+        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
+        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
+        
+        user.Following.Remove(new Following
+        {
+            UserId = followerId
+        });
+        
+        follower.Followers.Remove(new Followers
+        {
+            UserId = userId
+        });
+        
+        _context.SaveChanges();
+    }
+
+    public List<User> GetFollowers(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<User> GetFollowing(string username)
+    {
+        throw new NotImplementedException();
     }
 }

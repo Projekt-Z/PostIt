@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using PostIt.Web.Enums;
 
 namespace PostIt.Web.Models;
 
@@ -22,7 +23,11 @@ public class User
     public string PhoneNumber { get; set; } = default!;
 
     public string CreatedOn { get; set; } = default!;
+    public string? ImageUrl { get; set; }
+    public ERoleType Roles { get; set; }
 
     public List<Post> Posts { get; set; } = default!;
-    public List<Post> LikedPosts { get; set; } = default!;
+    public List<Post> PostLiked { get; set; } = default!;
+    public List<Followers> Followers { get; set; } = new();
+    public List<Following> Following { get; set; } = new();
 }
