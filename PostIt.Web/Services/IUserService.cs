@@ -12,4 +12,6 @@ public interface IUserService
     List<User> GetAll();
     bool Remove(Guid id);
     bool Update(User user);
+    IEnumerable<User> GetMostFollowedDesc();
+    List<User> GetMostFollowedDesc(int first);
 }

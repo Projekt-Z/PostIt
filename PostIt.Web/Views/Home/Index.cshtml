@@ -11,6 +11,29 @@
 @if (Context.User.Identity.IsAuthenticated)
 {
     var user = _userService.GetByUsername(User.Identity.Name);
+    
+    <div id="who_to_follow" class="w-25 h-auto">
+        <h5>Who to follow?</h5>
+        @foreach (var user1 in _userService.GetMostFollowedDesc(5))
+        {
+            <div>
+                <h6>
+                    <img alt="profile" src="@user1.ImageUrl" width="20" height="20" class="rounded-circle"/>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@user1.Username">@user1.Username</a>
+                </h6>
+
+                <a>Followers: @user1.Followers.Count</a>
+                
+                @if (!user!.Following.Contains(new Following { UserId = user1.Id}))
+                {
+                    <a asp-action="Follow" asp-route-id="@user1.Id">Follow</a>
+                }
+                  
+                <hr />
+            </div>
+        }
+    </div>
+    
     <div class="text-center">
         <h1 class="display-4">Welcome @Context.User.Identity.Name !</h1>
         
@@ -32,7 +55,7 @@
                     <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
                 }
 
-                if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && user!.Following.Contains(new Following { UserId = post.Author.Id}))
+                if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { UserId = post.Author.Id}))
                 {
                     <a asp-action="Follow" asp-route-id="@post.Author.Id">Follow</a>
                 }

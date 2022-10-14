@@ -20,11 +20,11 @@
     var user = _userService.GetByUsername(User.Identity.Name);
 }
 
-@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)) && user!.Following.Contains(new Following { UserId = Model.Id}))
+@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { UserId = Model.Id}))
 {
     <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
 }
-else
+else if(!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
 {
     <a>Following</a>
 }

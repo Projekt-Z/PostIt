@@ -90,4 +90,21 @@ public class UserService : IUserService
         _context.SaveChanges();
         return true;
     }
+
+    public IEnumerable<User> GetMostFollowedDesc()
+    {
+        var users = _context.Users
+            .Include(x => x.Followers)
+            .Include(x => x.Following)
+            .Include(x => x.Posts)
+            .Include(x => x.PostLiked).ToList()
+            .OrderByDescending(x => x.Followers.Count);
+
+        return users;
+    }
+
+    public List<User> GetMostFollowedDesc(int first)
+    {
+        return GetMostFollowedDesc().Take(first).ToList();
+    }
 }
