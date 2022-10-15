@@ -64,6 +64,17 @@ public class UserService : IUserService
         return user ?? null;
     }
 
+    public User? GetByEmail(string email)
+    {
+        var user = _context.Users.Include(x => x.Posts)
+            .Include(x => x.PostLiked)
+            .Include(x => x.Followers)
+            .Include(x => x.Following)
+            .FirstOrDefault(x => x.Email == email);
+        
+        return user ?? null;
+    }
+
     public List<User> GetAll()
     {
         return _context.Users.ToList();

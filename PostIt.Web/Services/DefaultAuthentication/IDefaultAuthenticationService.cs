@@ -2,5 +2,5 @@
 
 public interface IDefaultAuthenticationService
 {
-    void Login();
+    bool Login(string email, string password);
 }
