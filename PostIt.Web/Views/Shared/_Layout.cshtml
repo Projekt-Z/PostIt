@@ -1,7 +1,6 @@
 ﻿@using PostIt.Web.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IUserService _userService
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +32,14 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="AccountActions" asp-action="Index">Account</a>
                     </li>
                 </ul>
+                
+                <a>
+                    @using (Html.BeginForm("Search", "Search", FormMethod.Get))
+                    {
+                        <input type="text" id="search_text" name="q" placeholder="Search..."/>
+                        <input type="submit" value="🔎"/> 
+                    }
+                </a> &nbsp;
                 
                 @if (Context.User.Identity.IsAuthenticated)
                 {
