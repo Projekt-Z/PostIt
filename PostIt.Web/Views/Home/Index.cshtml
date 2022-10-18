@@ -14,7 +14,7 @@
     
     <div id="who_to_follow" class="w-25 h-auto">
         <h5>Who to follow?</h5>
-        @foreach (var user1 in _userService.GetMostFollowedDesc(5))
+        @foreach (var user1 in _userService.GetMostFollowedDesc(5, user.Username))
         {
             <div>
                 <h6>
@@ -44,9 +44,9 @@
         <div class="main-posts">
             @foreach (var post in Model)
             {
-                <h4>@post.Title</h4>
+                <h4> <a asp-action="Index" asp-controller="Post" asp-route-id="@post.Id"> @post.Title </a> </h4>
 
-                <p>@post.Description</p>
+                <p> <a asp-action="Index" asp-controller="Post" asp-route-id="@post.Id">@post.Description</a> </p>
                 <a>@post.TimeAdded |</a> 
                 <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
                 
@@ -68,8 +68,8 @@
                 {
                     <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
                 }
-                
-                <p> <a>&#10084; @post.Likes.Count</a> </p>
+
+                <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
                 
                 <hr/>
             }

@@ -9,25 +9,45 @@
     Layout = "_Layout";
 }
 
-<img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
-
-<b> <p>@Model.Name</p> </b>
-<a>&#64;@Model.Username</a>
-<br/>
-<p>Jonied @Model.CreatedOn</p>
-
 @{
     var user = _userService.GetByUsername(User.Identity.Name);
 }
+<div id="bg" style="background-image: url(@Model.BackgroundUrl);" >
+    <div style="width: 60px; height: 60px; background-color: gray;" class="rounded-circle">
+        <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
+    </div>
+</div>
 
-@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { UserId = Model.Id}))
+
+<b> <p>@Model.Name</p> </b>
+<a>&#64;@Model.Username</a>
+
+<br/>
+<p>Jonied @Model.CreatedOn</p>
+
+
+@if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
 {
-    <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
+    @if (user.Following.Any(x => x.UserId != Model.Id) || user.Following.Count == 0)
+    {
+        <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
+    }
+    else
+    {
+        <a>Following</a>
+        <a asp-action="Unfollow" asp-controller="Home" asp-route-id="@Model.Id">Unfollow</a>
+    }
+
+    @if (user.BlockedUsers.Any(x => x.BlockedUserId != Model.Id) || user.BlockedUsers.Count == 0)
+    {
+        <a asp-action="Block" asp-controller="Profile" asp-route-username="@Model.Username"> Block </a>
+    }
+    else 
+    {
+        <a asp-action="Unblock" asp-controller="Profile" asp-route-username="@Model.Username"> Unblock </a>
+    }
 }
-else if(!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
-{
-    <a>Following</a>
-}
+
 
 <div class="">
     <p>Posts : @Model.Posts.Count</p>

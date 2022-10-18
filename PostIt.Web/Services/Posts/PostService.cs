@@ -15,9 +15,10 @@ public class PostService : IPostService
     
     public List<Post> GetAll()
     {
-        return _context.Posts
+            return _context.Posts
             .Include(x => x.Author)
             .Include(x => x.Likes)
+            .Include(x => x.Comments)
             .OrderByDescending(x => x.TimeAdded).ToList();
     }
 
@@ -44,11 +45,13 @@ public class PostService : IPostService
         return user;
     }
 
-    public Post Get(int id)
+    public Post? Get(int id)
     {
         return _context.Posts
             .Include(x => x.Author)
-            .First(x => x.Id == id);
+            .Include(x => x.Likes)
+            .Include(x => x.Comments)
+            .FirstOrDefault(x => x.Id == id);
     }
 
     public void Add(Post post)
@@ -101,14 +104,14 @@ public class PostService : IPostService
         _context.SaveChanges();
     }
 
-    public void Follow(Guid followerId, Guid userId)
+    public void Follow(Guid userId, Guid followedBy)
     {
-        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
-        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
+        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == followedBy);
+        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
         
         user.Following.Add(new Following
         {
-            UserId = followerId
+            UserId = followedBy
         });
         
         follower.Followers.Add(new Followers

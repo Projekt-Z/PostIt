@@ -6,7 +6,7 @@ namespace PostIt.Web.Services;
 
 public interface IUserService
 {
-    bool Add(UserCreationRequest user, EAuthType authType, string image);
+    bool Add(UserCreationRequest user, EAuthType authType, string image, string background);
     User Get(Guid id);
     User? GetByUsername(string username);
     User? GetByEmail(string email);
@@ -15,4 +15,7 @@ public interface IUserService
     bool Update(User user);
     IEnumerable<User> GetMostFollowedDesc();
     List<User> GetMostFollowedDesc(int first);
+    List<User> GetMostFollowedDesc(int first, string username);
+    void BlockUser(string usernameToBlock, string username);
+    void UnblockUser(string usernameToBlock, string username);
 }

@@ -1,5 +1,6 @@
-﻿@using PostIt.Web.Services
-@model IEnumerable<Post>
+﻿@using PostIt.Web.Dtos.Search
+@using PostIt.Web.Services
+@model Search
 @inject IUserService _userService
 
 @{
@@ -8,7 +9,7 @@
 }
 
 @{
-    if (Model is null)
+    if (Model.Posts is null && Model.Users is null)
     {
         <h2>Couldn't find anything</h2>
     }
@@ -18,8 +19,19 @@
         <h2>Results: </h2>
         
         var user = _userService.GetByUsername(User.Identity.Name);
+        var search = ViewContext.RouteData.Values["q"];
 
-        foreach (var post in Model)
+        foreach(var u in Model.Users) 
+        {
+            <a asp-controller="Profile" asp-action="Index" asp-route-username="@u.Username">
+                <img src="@u.ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle">
+                <a asp-action="Index" asp-controller="Profile" asp-route-username="@u.Username">@u.Username</a>
+            </a>
+        }
+
+        <hr />
+
+        foreach (var post in Model.Posts)
         {
         <h4>@post.Title</h4>
 

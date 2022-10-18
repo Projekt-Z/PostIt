@@ -53,7 +53,7 @@ public class AuthenticationController : Controller
             Email = clamType[4],
             PhoneNumber = string.Empty,
             Password = string.Empty,
-        }, EAuthType.Google, User.Claims.Last(x => x.Issuer == "Google").Value);
+        }, EAuthType.Google, User.Claims.Last(x => x.Issuer == "Google").Value, string.Empty);
         
         return RedirectToAction("Index", "Home");
         // return Json(claims);

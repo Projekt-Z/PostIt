@@ -1,0 +1,17 @@
+﻿@using PostIt.Web.Services.Posts
+@using PostIt.Web.Services
+@model User
+
+@inject IUserService _userService
+
+@{
+    ViewBag.Title = $" - {Model.Username}";
+    Layout = "_Layout";
+}
+
+<img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
+
+<a>&#64;@Model.Username</a>
+
+<p><strong>Account is not aviable right now</strong></p>
+<a asp-action="Index" asp-controller="Home">Go back to Home Page</a>

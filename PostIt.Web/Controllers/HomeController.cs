@@ -108,8 +108,16 @@ public class HomeController : Controller
     [Authorize]
     public IActionResult Follow([FromRoute] Guid id)
     {
-        var user = _userService.GetByUsername(User.Identity!.Name!);
-        _postService.Follow(id, user.Id);
+        var followedBy = _userService.GetByUsername(User.Identity!.Name!);
+        _postService.Follow(id, followedBy.Id);
+        return RedirectToAction("Index");
+    }
+    
+    [Authorize]
+    public IActionResult Unfollow([FromRoute] Guid id)
+    {
+        var followedBy = _userService.GetByUsername(User.Identity!.Name!);
+        _postService.Unfollow(id, followedBy.Id);
         return RedirectToAction("Index");
     }
 }

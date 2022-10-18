@@ -38,30 +38,42 @@ public class UserController : Controller
     [Route("Create")]
     public IActionResult Create()
     {
-        return View();
+        if (!User.Identity.IsAuthenticated)
+        {
+            return View();
+        }
+
+        return RedirectToAction("Index", "Home");
     }
     
     [HttpPost, ActionName("Create")]
     [Route("Create")]
     [ValidateAntiForgeryToken]
-    public IActionResult CreateConfirmed(UserCreationRequest creationRequest)
+    public Task<IActionResult> CreateConfirmed(UserCreationRequest creationRequest)
     {
+        const string profilePicture = @"https://imgs.search.brave.com/9PlMRoqgvAVJEtTTeC_HWqdfdlK2GjafmbtzJID3TT8/rs:fit:600:600:1/g:ce/aHR0cDovL3d3dy5l/dXJvZ2Vvc3VydmV5/cy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTQvMDIvZGVm/YXVsdF9wcm9maWxl/X3BpYy5qcGc";
+        
         if (ModelState.IsValid)
         {
-            var success = _userService.Add(creationRequest, EAuthType.Default, string.Empty);
+            var success = _userService.Add(creationRequest, EAuthType.Default, profilePicture, string.Empty);
             if (!success)
             {
-                return RedirectToAction(nameof(Create));
+                return Task.FromResult<IActionResult>(RedirectToAction("Index","User"));
             }
         }
 
-        return RedirectToAction(nameof(Index));
+        return Task.FromResult<IActionResult>(RedirectToAction("Index", "User"));
     }
     
     [Route("Login")]
     public IActionResult Login()
     {
-        return View();
+        if (!User.Identity.IsAuthenticated)
+        {
+            return View();
+        }
+
+        return RedirectToAction("Index", "Home");
     }
     
     [HttpPost, ActionName("Login")]
@@ -75,7 +87,7 @@ public class UserController : Controller
             
             var login = _authService.Login(loginRequest.Email, loginRequest.Password);
 
-            if (!login) return Task.FromResult<IActionResult>(BadRequest());
+            if (!login) return Task.FromResult<IActionResult>(RedirectToAction(nameof(Login)));
 
             var claims = new List<Claim>
             {

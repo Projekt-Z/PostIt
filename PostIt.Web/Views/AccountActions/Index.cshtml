@@ -2,29 +2,3 @@
     ViewBag.Title = "Account Settings";
     Layout = "_Layout";
 }
-
-@inject IConfiguration _configuration
-
-<h2>
-    @{
-        var googleApiKey = _configuration
-            .GetSection("GoogleCredentials")
-            .GetSection("ApiKey").Value;
-
-        var nameIdentifier = Context.User.Claims.First(x => x.Issuer == "Google");
-
-        var jsonUrl = $"https://www.googleapis.com/oauth2/v2/userinfo";
-
-        Console.WriteLine(jsonUrl);
-        using (var httpClient = new HttpClient())
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Get, jsonUrl);
-            request.Headers.Add("Authorization", $"Bearer {nameIdentifier.Value}");
-            var response = await httpClient.SendAsync(request);
-
-            var json = response.Content.ReadAsStringAsync();
-            Console.WriteLine(json.Result);
-        }
-    }
-    
-</h2>

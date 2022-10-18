@@ -12,4 +12,5 @@ public class Post
 
     public User Author { get; set; } = default!;
     public List<User> Likes { get; set; } = default!;
+    public List<Comment>? Comments { get; set; } = default!;
 }

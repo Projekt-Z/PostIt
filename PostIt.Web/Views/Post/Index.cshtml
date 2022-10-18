@@ -1,0 +1,52 @@
+﻿@using PostIt.Web.Services
+@model Post
+
+@inject IUserService userService
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+@{
+    var user = userService.GetByUsername(User.Identity.Name);
+}
+
+<div class="text-center">
+    <a> <img src="@Model.Author.ImageUrl" alt="profile picture" width="60" height="60" /> @Model.Author.Username</a>
+    <h1>@Model.Title</h1>
+    <h4>@Model.Description</h4>
+    
+    <p> <a>&#10084; @Model.Likes.Count</a> </p>
+    <p> <a>&#128488; @Model.Comments.Count</a> </p>
+
+    @if(Context.User.Identity.IsAuthenticated) 
+    {
+        if (!@Model.Likes.Contains(user))
+        {
+            <a asp-action="Like" asp-controller="Home" asp-route-id="@Model.Id">Like</a>
+        }
+        else if (@Model.Likes.Contains(user))
+        {
+            <a asp-action="Unlike" asp-controller="Home" asp-route-id="@Model.Id">Unlike</a>
+        }
+    }
+
+    Comments:
+    @foreach (var comment in Model.Comments)
+    {
+        <a> <img src="@comment.Author.ImageUrl" alt="profile picture" width="30" height="30"/> @comment.Author.Username</a>
+        <h5>@comment.Content</h5>
+    }
+
+    @using (Html.BeginForm("Comment", "Post", FormMethod.Post))
+    {
+        <input type="text" name="content" placeholder="Comment..." />
+
+        <input type="number" name="id" value="@Model.Id" hidden/>
+        <input type="text" name="username" value="@User.Identity.Name" hidden/>
+
+        <input type="submit" value="&#128488;" />
+    }
+
+</div>

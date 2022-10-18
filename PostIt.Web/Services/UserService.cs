@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.Authentication;
 using PostIt.Web.Enums;
+using PostIt.Web.Helpers;
 using PostIt.Web.Models;
 using PostIt.Web.Services.DefaultAuthentication;
 
@@ -17,12 +18,14 @@ public class UserService : IUserService
         _context = context;
     }
     
-    public bool Add(UserCreationRequest request, EAuthType authType, string image)
+    public bool Add(UserCreationRequest request, EAuthType authType, string image, string background)
     {
         var find = _context.Users.Any(x => x.Username == request.Username);
 
         if (find) return false;
-        
+
+        if (!request.Email.IsValidEmail()) return false;
+
         var user = new User
         {
             Id = Guid.NewGuid(),
@@ -33,6 +36,7 @@ public class UserService : IUserService
             Email = request.Email,
             CreatedOn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
             ImageUrl = image,
+            BackgroundUrl = background,
             Roles = ERoleType.User,
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
@@ -59,6 +63,7 @@ public class UserService : IUserService
             .Include(x => x.PostLiked)
             .Include(x => x.Followers)
             .Include(x => x.Following)
+            .Include(x => x.BlockedUsers)
             .FirstOrDefault(x => x.Username == username);
         
         return user ?? null;
@@ -117,5 +122,41 @@ public class UserService : IUserService
     public List<User> GetMostFollowedDesc(int first)
     {
         return GetMostFollowedDesc().Take(first).ToList();
+    }
+    
+    public List<User> GetMostFollowedDesc(int first, string username)
+    {
+        var you = GetByUsername(username);
+        var most = GetMostFollowedDesc().ToList();
+        most.Remove(you);
+        return most.Take(first).ToList();
+    }
+
+    public void BlockUser(string usernameToBlock, string usernam)
+    {
+        var userToBlock = GetByUsername(usernameToBlock);
+
+        var user = GetByUsername(usernam);
+
+        if (user.BlockedUsers is null) user.BlockedUsers = new List<BlockedUser>();
+
+        user.BlockedUsers.Add(new BlockedUser { BlockedUserId = userToBlock.Id });
+
+        _context.SaveChanges();
+    }
+
+    public void UnblockUser(string usernameToBlock, string usernam)
+    {
+        var blockedUser = GetByUsername(usernameToBlock);
+
+        var user = GetByUsername(usernam);
+
+        if (user.BlockedUsers is null) user.BlockedUsers = new List<BlockedUser>();
+
+        var blockedUser2 = user.BlockedUsers.First(x => x.BlockedUserId == blockedUser.Id);
+
+        user.BlockedUsers.Remove(blockedUser2);
+
+        _context.SaveChanges();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PostIt.Web.Data;
+using PostIt.Web.Helpers;
 
 namespace PostIt.Web.Services.DefaultAuthentication;
 
@@ -17,6 +18,8 @@ public class DefaultAuthenticationService : IDefaultAuthenticationService
 
         if (user == null) return false;
 
+        if (!user.Email.IsValidEmail()) return false;
+        
         if (user.PasswordHash != AuthenticationHelper.GenerateHash(password, user.Salt))
             return false;
 
