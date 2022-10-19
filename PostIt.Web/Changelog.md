@@ -10,4 +10,6 @@
 + Changed input type = password to all inputs requiring password.
 + FIXED following users and unfollowing
 
++ FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'
+
 </pre>

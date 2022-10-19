@@ -5,50 +5,32 @@
     <projectFile profileName="PostIt.Web">PostIt.Web/PostIt.Web.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountActionsController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
+    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Changelog.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Dtos/Authentication/UserLoginRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Dtos/Authentication/UserLoginRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Dtos/Post/CreatePost.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Dtos/Post/CreatePost.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221006092544_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221006092544_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221006183939_UserRoles.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221006183939_UserRoles.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013164222_LikesRelation.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013164222_LikesRelation.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013170511_ImageUrl.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013170511_ImageUrl.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013190658_FollowersFollowing.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221013190658_FollowersFollowing.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221018175000_CommentsBlocking.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221018175000_CommentsBlocking.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Post.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Post.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/DefaultAuthentication/DefaultAuthenticationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/DefaultAuthentication/DefaultAuthenticationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/IUserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/AccountActions/Index.cshtml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/User/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/User/Create.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/User/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/User/Login.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d76d1de163a012d58994899c89ffd7dae80790/LoggerMessage.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -109,8 +91,16 @@
       <option name="presentableId" value="Default" />
       <updated>1666196913228</updated>
       <workItem from="1666196930998" duration="327000" />
-      <workItem from="1666197312211" duration="1078000" />
+      <workItem from="1666197312211" duration="11561000" />
     </task>
+    <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
+      <created>1666198764320</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666198764320</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,5 +121,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

@@ -50,7 +50,7 @@ public class PostService : IPostService
         return _context.Posts
             .Include(x => x.Author)
             .Include(x => x.Likes)
-            .Include(x => x.Comments)
+            .Include(x => x.Comments)!.ThenInclude(x => x.Author)
             .FirstOrDefault(x => x.Id == id);
     }
 
