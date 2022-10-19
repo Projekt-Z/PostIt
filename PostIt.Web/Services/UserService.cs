@@ -38,6 +38,7 @@ public class UserService : IUserService
             ImageUrl = image,
             BackgroundUrl = background,
             Roles = ERoleType.User,
+            AccountType = authType,
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
@@ -158,5 +159,24 @@ public class UserService : IUserService
         user.BlockedUsers.Remove(blockedUser2);
 
         _context.SaveChanges();
+    }
+
+    public bool ChangePassword(Guid id, string current, string newPassword)
+    {
+        var user = _context.Users.Find(id);
+
+        if (user is null) return false;
+
+        if (user.PasswordHash != AuthenticationHelper.GenerateHash(current, user.Salt))
+            return false;
+
+
+        user.PasswordHash = newPassword;
+        user.Salt = string.Empty;
+
+        user.ProvideSaltAndHash();
+
+        _context.SaveChanges();
+        return true;
     }
 }

@@ -24,17 +24,46 @@
         <span asp-validation-for="Surname" class="text-danger"></span>
         
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" type="password"/>
+        <input asp-for="Password" id="password" class="form-control" type="password"/>
         <span asp-validation-for="Password" class="text-danger"></span>
+
+        <label class="control-label">Confirm Password</label>
+        <input class="form-control" id="passwordConfirmation" type="password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
+        <p id="validation-password" style="color: red;"></p>
 
         <label asp-for="Email" class="control-label"></label>
         <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
         
         <label class="control-label">Phone Number</label>
-        <input asp-for="PhoneNumber" class="form-control" />
+        <input asp-for="PhoneNumber" class="form-control" type="tel" />
     </div>
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" id="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
+
+<script>
+
+    function checkPassword() {   
+        let passwordInput = document.getElementById('password').value;
+        let passwordConfirmationInput = document.getElementById('passwordConfirmation').value;
+        let valid = document.getElementById("validation-password");
+        let submit = document.getElementById("submit");
+
+        if (passwordInput != passwordConfirmationInput) {
+            valid.innerText = "Passwords are not the same!"
+            submit.disabled = true;
+        }
+        else {
+            valid.innerText = ""
+            submit.disabled = false;
+        }
+
+    }
+
+    setInterval(checkPassword, 1);
+
+</script>

@@ -62,7 +62,11 @@ public class UserController : Controller
             }
         }
 
-        return Task.FromResult<IActionResult>(RedirectToAction("Index", "User"));
+        return LoginConfirmed(new UserLoginRequest
+        {
+            EmailOrRUsername = creationRequest.Email,
+            Password = creationRequest.Password!
+        });
     }
     
     [Route("Login")]
@@ -83,11 +87,19 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = _userService.GetByEmail(loginRequest.Email);
+            var user = _userService.GetByEmail(loginRequest.EmailOrRUsername);
             
-            var login = _authService.Login(loginRequest.Email, loginRequest.Password);
+            if (user is null)
+            {
+                user = _userService.GetByUsername(loginRequest.EmailOrRUsername);
+            }
 
-            if (!login) return Task.FromResult<IActionResult>(RedirectToAction(nameof(Login)));
+            var login = _authService.Login(loginRequest.EmailOrRUsername, loginRequest.Password);
+
+            if (!login)
+            {
+                return Task.FromResult<IActionResult>(RedirectToAction(nameof(Login)));
+            }
 
             var claims = new List<Claim>
             {

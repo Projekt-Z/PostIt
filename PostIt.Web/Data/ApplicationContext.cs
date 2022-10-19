@@ -15,14 +15,21 @@ public class ApplicationContext : DbContext
     {
         modelBuilder.Entity<User>(eb =>
         {
-            eb.HasMany(x => x.Posts).WithOne(x => x.Author);
+            eb.HasMany(x => x.Posts).WithOne(x => x.Author).OnDelete(DeleteBehavior.ClientCascade);
             eb.HasMany(x => x.PostLiked).WithMany(x => x.Likes);
+            eb.HasMany(x => x.Replies).WithOne(X => X.Author).OnDelete(DeleteBehavior.ClientCascade);
         });
 
         modelBuilder.Entity<Post>(eb =>
         {
-            eb.HasOne(x => x.Author).WithMany(x => x.Posts);
+            eb.HasOne(x => x.Author).WithMany(x => x.Posts).OnDelete(DeleteBehavior.ClientCascade);
             eb.HasMany(x => x.Likes).WithMany(x => x.PostLiked);
+        });
+
+        modelBuilder.Entity<Comment>(eb =>
+        {
+            eb.HasOne(x => x.Author).WithMany(x => x.Replies).OnDelete(DeleteBehavior.ClientCascade);
+            eb.HasOne(x => x.Post).WithMany(x => x.Comments).OnDelete(DeleteBehavior.ClientCascade);
         });
     }
 

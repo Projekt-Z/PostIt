@@ -8,6 +8,7 @@ public class Post
     public int Id { get; set; }
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
+    public string? MediaLink { get; set; }
     public string TimeAdded { get; set; } = default!;
 
     public User Author { get; set; } = default!;

@@ -26,6 +26,7 @@ public class User
     public string? ImageUrl { get; set; }
     public string? BackgroundUrl { get; set; }
     public ERoleType Roles { get; set; }
+    public EAuthType AccountType { get; set; }
 
     public List<Post> Posts { get; set; } = default!;
     public List<Post> PostLiked { get; set; } = default!;

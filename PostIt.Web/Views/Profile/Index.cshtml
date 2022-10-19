@@ -28,11 +28,11 @@
 
 @if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
 {
-    @if (user.Following.Any(x => x.UserId != Model.Id) || user.Following.Count == 0)
+    @if (user!.Following.Any(x => x.UserId == Model.Id) || user.Following.Count == 0)
     {
         <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
     }
-    else
+    else 
     {
         <a>Following</a>
         <a asp-action="Unfollow" asp-controller="Home" asp-route-id="@Model.Id">Unfollow</a>

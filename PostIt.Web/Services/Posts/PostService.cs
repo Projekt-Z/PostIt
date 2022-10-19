@@ -106,17 +106,19 @@ public class PostService : IPostService
 
     public void Follow(Guid userId, Guid followedBy)
     {
-        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == followedBy);
-        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
+        if (userId == followedBy) return;
+
+        var user = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == followedBy);
+        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == userId);
         
         user.Following.Add(new Following
         {
-            UserId = followedBy
+            UserId = userToFollow.Id
         });
         
-        follower.Followers.Add(new Followers
+        userToFollow.Followers.Add(new Followers
         {
-            UserId = userId
+            UserId = user.Id
         });
         
         _context.SaveChanges();
@@ -124,19 +126,18 @@ public class PostService : IPostService
     
     public void Unfollow(Guid followerId, Guid userId)
     {
-        var user = _context.Users.Include(x => x.Followers).First(x => x.Id == userId);
-        var follower = _context.Users.Include(x => x.Followers).First(x => x.Id == followerId);
-        
-        user.Following.Remove(new Following
-        {
-            UserId = followerId
-        });
-        
-        follower.Followers.Remove(new Followers
-        {
-            UserId = userId
-        });
-        
+        if (userId == followerId) return;
+
+        var user = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == userId);
+        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == followerId);
+
+        var following = user.Following.FirstOrDefault(x => x.UserId == user.Id);
+        var follower = userToFollow.Followers.FirstOrDefault(x => x.UserId == userToFollow.Id);
+
+        user.Following.Remove(following);
+
+        userToFollow.Followers.Remove(follower);
+
         _context.SaveChanges();
     }
 

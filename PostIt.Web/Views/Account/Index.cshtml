@@ -1,0 +1,32 @@
+@using PostIt.Web.Enums
+@model User
+
+@{
+    ViewBag.Title = "Account Settings";
+    Layout = "_Layout";
+}
+
+<h3 class="text-center">@Model.Username</h3>
+<p>What you want to do?</p>
+
+<ul>
+    @if(Model.AccountType != EAuthType.Google) {
+    <li>
+        <div>
+            <a asp-controller="Account" asp-action="UpdatePassword">Change password</a>
+        </div>
+    </li>
+    }
+
+    <li>
+        <div>
+            <a asp-controller="Account" asp-action="UpdateUsername">Change Username</a>
+        </div>
+    </li>
+
+    <li>
+        <div>
+            <a asp-controller="Account" asp-action="UpdatePhoneNumber">Change/Add PhoneNumber</a>
+        </div>
+    </li>
+</ul>

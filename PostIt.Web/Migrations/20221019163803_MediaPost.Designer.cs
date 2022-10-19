@@ -12,8 +12,8 @@ using PostIt.Web.Data;
 namespace PostIt.Web.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221018175000_CommentsBlocking")]
-    partial class CommentsBlocking
+    [Migration("20221019163803_MediaPost")]
+    partial class MediaPost
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,9 +56,6 @@ namespace PostIt.Web.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("CommentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
@@ -69,8 +66,6 @@ namespace PostIt.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("CommentId");
 
                     b.HasIndex("PostId");
 
@@ -128,6 +123,9 @@ namespace PostIt.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MediaLink")
+                        .HasColumnType("text");
+
                     b.Property<string>("TimeAdded")
                         .IsRequired()
                         .HasColumnType("text");
@@ -148,6 +146,9 @@ namespace PostIt.Web.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<int>("AccountType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("BackgroundUrl")
                         .HasColumnType("text");
@@ -226,17 +227,13 @@ namespace PostIt.Web.Migrations
                     b.HasOne("PostIt.Web.Models.User", "Author")
                         .WithMany("Replies")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.HasOne("PostIt.Web.Models.Comment", null)
-                        .WithMany("Replies")
-                        .HasForeignKey("CommentId");
 
                     b.HasOne("PostIt.Web.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -267,7 +264,7 @@ namespace PostIt.Web.Migrations
                     b.HasOne("PostIt.Web.Models.User", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -286,11 +283,6 @@ namespace PostIt.Web.Migrations
                         .HasForeignKey("PostLikedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PostIt.Web.Models.Comment", b =>
-                {
-                    b.Navigation("Replies");
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
