@@ -111,6 +111,7 @@ public class UserService : IUserService
     public IEnumerable<User> GetMostFollowedDesc()
     {
         var users = _context.Users
+            .Include(x => x.BlockedUsers)
             .Include(x => x.Followers)
             .Include(x => x.Following)
             .Include(x => x.Posts)
@@ -132,7 +133,7 @@ public class UserService : IUserService
 
         most.Remove(you);
 
-        foreach (var m in most.ToList())
+        /*foreach (var m in most.ToList())
         {
             if (you.BlockedUsers.Count < 1) break;
 
@@ -141,7 +142,7 @@ public class UserService : IUserService
 
             if (u is not null)
                     most.Remove(usr);
-        }
+        }*/
             
         foreach(var f in you.Following)
         {
@@ -153,11 +154,11 @@ public class UserService : IUserService
         return most.Take(first).ToList();
     }
 
-    public void BlockUser(string usernameToBlock, string usernam)
+    public void BlockUser(string usernameToBlock, string username) // TODO: BUG FIX
     {
         var userToBlock = GetByUsername(usernameToBlock);
 
-        var user = GetByUsername(usernam);
+        var user = GetByUsername(username);
 
         user.BlockedUsers ??= new List<BlockedUser>();
 

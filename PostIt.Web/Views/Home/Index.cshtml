@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PostIt.Web.Enums
 @using PostIt.Web.Services
 @model IEnumerable<Post>
 
@@ -59,7 +60,7 @@
             {
                 
                 <div class="post">
-                    <a asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
+                    <a class="action" asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
                         <h4> @post.Title </h4>
 
                         <p> @post.Description </p>
@@ -72,21 +73,29 @@
                             <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
                         }
 
-                        @if (post.Author.Username == Context.User.Identity.Name)
+                        @if (post.Author.Username == Context.User.Identity.Name || user.Roles == ERoleType.Admin)
                         {
-                            <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                            <a asp-action="Delete" class="action" asp-route-id="@post.Id">Delete</a>
                         }
                 
-                        @if (!post.Likes.Contains(user))
-                        {
-                            <a asp-action="Like" asp-route-id="@post.Id">Like</a>
-                        }
-                        else if (post.Likes.Contains(user))
-                        {
-                            <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
-                        }
+                        <p>
 
-                        <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
+                            @if(Context.User.Identity.IsAuthenticated) 
+                            {
+                                if (!post.Likes.Contains(user))
+                                {
+                                    <a asp-action="Like" class="action" asp-controller="Home" asp-route-id="@post.Id">🤍 @post.Likes.Count</a>
+                                }
+                                else if (post.Likes.Contains(user))
+                                {
+                                    <a asp-action="Unlike" class="action" asp-controller="Home" asp-route-id="@post.Id">&#10084; @post.Likes.Count</a>
+                                }
+                            }
+                            
+                            <a>&#128488; @post.Comments.Count</a> 
+                        
+                        </p>
+                        
                     </a>
                 </div>
               
@@ -110,11 +119,11 @@ else
 <style>
 
 .post {
-    background-color: #cdc5bf;
+    background-color: rgb(237, 235, 235);
     width: 80%;
     height: 200px;
     border: 1px solid black;
-    margin: 0 auto;
+    margin: 10px auto 0;
 }
 
 a#a {
@@ -122,4 +131,10 @@ a#a {
     width: 100%;
     text-decoration: none;
 }
+
+.action {
+    text-decoration: none;
+    color: black;
+}
+
 </style>

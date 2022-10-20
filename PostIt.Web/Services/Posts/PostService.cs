@@ -28,6 +28,8 @@ public class PostService : IPostService
             .Include(x => x.Posts)
             .ThenInclude(x => x.Likes)
             .Include(x => x.Posts)
+            .ThenInclude(x => x.Comments)
+            .Include(x => x.Posts)
             .Include(x=>x.PostLiked)
             .First(x => x.Username == username).Posts;
     }

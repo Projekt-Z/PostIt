@@ -7,33 +7,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/DesignTimeBuild/.dtbcache.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/FileContentIndex/4b663cf7-5490-46dd-984b-7f251ee82fa6.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/FileContentIndex/a452db17-fde8-4cc0-a4b9-cfc3fd3fbe87.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/FileContentIndex/ae7760be-1e00-4e2b-830a-803d3c4c65ac.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/FileContentIndex/faf90832-cf94-4e88-9189-9e168f56261f.vsidx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/FileContentIndex/read.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/config/applicationhost.config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/v17/.futdcache.v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/PostIt/v17/.suo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/postit.metadata.v5.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/ProjectEvaluation/postit.projects.v5.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/ChangeLog.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Changelog.md" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Changelog.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221019163803_MediaPost.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221019163803_MediaPost.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221019190950_CommentTimeAdded.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221019190950_CommentTimeAdded.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221020094400_Initial.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/20221020094400_Initial.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj.user" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/User/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/User/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +90,7 @@
       <workItem from="1666196930998" duration="327000" />
       <workItem from="1666197312211" duration="11602000" />
       <workItem from="1666285640656" duration="600000" />
-      <workItem from="1666286599959" duration="713000" />
+      <workItem from="1666286599959" duration="5059000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -151,5 +130,38 @@
     <MESSAGE value="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing" />
     <MESSAGE value="FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'" />
     <option name="LAST_COMMIT_MESSAGE" value="FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml</url>
+          <line>19</line>
+          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Views\Home\Index.cshtml" initialLine="18" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
+            <startOffsets>
+              <option value="-1" />
+            </startOffsets>
+            <endOffsets>
+              <option value="-1" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/PostIt.Web/Services/UserService.cs</url>
+          <line>133</line>
+          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Services\UserService.cs" initialLine="133" containingFunctionPresentation="method 'GetMostFollowedDesc'">
+            <startOffsets>
+              <option value="3655" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3672" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
