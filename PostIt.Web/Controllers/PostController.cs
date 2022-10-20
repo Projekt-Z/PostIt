@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Data;
 using PostIt.Web.Models;
@@ -38,7 +39,8 @@ public class PostController : Controller
         {
             Content = content,
             Author = _userService.GetByUsername(username),
-            Post = post
+            Post = post,
+            TimeAdded = DateTime.Now.ToString()
         };
 
         if (post.Comments is null)

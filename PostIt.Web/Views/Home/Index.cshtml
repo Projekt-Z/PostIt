@@ -36,6 +36,10 @@
                 {
                     <a asp-action="Follow" asp-route-id="@users[i].Id">Follow</a>
                 }
+                else 
+                {
+                    <a>Following</a>
+                }
                   
                 <hr />
             </div>
@@ -60,6 +64,7 @@
 
                         <p> @post.Description </p>
                         <a>@post.TimeAdded |</a> 
+
                         <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
                 
                         @if(!string.IsNullOrEmpty(post.MediaLink))
@@ -117,5 +122,4 @@ a#a {
     width: 100%;
     text-decoration: none;
 }
-
 </style>

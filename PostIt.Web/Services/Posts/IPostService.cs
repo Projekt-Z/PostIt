@@ -1,4 +1,3 @@
-using System.Collections;
 using PostIt.Web.Models;
 
 namespace PostIt.Web.Services.Posts;

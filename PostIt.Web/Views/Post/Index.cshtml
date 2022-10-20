@@ -1,4 +1,6 @@
 ﻿@using PostIt.Web.Services
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Post
 
 @inject IUserService userService
@@ -13,30 +15,46 @@
 }
 
 <div class="text-center">
-    <a> <img src="@Model.Author.ImageUrl" alt="profile picture" width="60" height="60" /> @Model.Author.Username</a>
-    <h1>@Model.Title</h1>
-    <h4>@Model.Description</h4>
+    <div class="post">
+        <a style="maring-top: 10px;"> <img src="@Model.Author.ImageUrl" alt="profile picture" width="50" height="50" class="rounded-circle"/> @Model.Author.Username</a>
+        <h1>@Model.Title</h1>
+        <h4>@Model.Description</h4>
+        <a>@Model.TimeAdded</a>
+        
+        <p>
+
+            @if(Context.User.Identity.IsAuthenticated) 
+            {
+                if (!Model.Likes.Contains(user))
+                {
+                    <a asp-action="Like" asp-controller="Home" asp-route-id="@Model.Id">🤍 @Model.Likes.Count</a>
+                }
+                else if (Model.Likes.Contains(user))
+                {
+                    <a asp-action="Unlike" asp-controller="Home" asp-route-id="@Model.Id">&#10084; @Model.Likes.Count</a>
+                }
+            }
+            
+            <a>&#128488; @Model.Comments.Count</a> 
+        
+        </p>
+    </div>
     
-    <p> <a>&#10084; @Model.Likes.Count</a> </p>
-    <p> <a>&#128488; @Model.Comments.Count</a> </p>
-
-    @if(Context.User.Identity.IsAuthenticated) 
-    {
-        if (!@Model.Likes.Contains(user))
-        {
-            <a asp-action="Like" asp-controller="Home" asp-route-id="@Model.Id">Like</a>
-        }
-        else if (@Model.Likes.Contains(user))
-        {
-            <a asp-action="Unlike" asp-controller="Home" asp-route-id="@Model.Id">Unlike</a>
-        }
-    }
-
-    Comments:
+    <p> Comments: </p>
     @foreach (var comment in Model.Comments)
     {
-        <a> <img src="@comment.Author.ImageUrl" alt="profile picture" width="30" height="30"/> @comment.Author.Username</a>
-        <h5>@comment.Content</h5>
+        <div class="comments_section">
+            <a> <img src="@comment.Author.ImageUrl" alt="profile picture" width="30" height="30" class="rounded-circle"/> @comment.Author.Username</a>
+            <h5>@comment.Content</h5>
+            
+            @{
+                var ago = DateTime.Now.Subtract(DateTime.Parse(comment.TimeAdded));
+
+                var formattedTimeSpan = string.Format("{0:D2} hrs, {1:D2} mins, {2:D2} secs", ago.Hours, ago.Minutes, ago.Seconds);
+            }
+            
+            <a>@formattedTimeSpan ago</a>
+        </div>
     }
 
     @using (Html.BeginForm("Comment", "Post", FormMethod.Post))
@@ -50,3 +68,31 @@
     }
 
 </div>
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .post {
+        background-color: rgb(237, 235, 235);
+        width: 80%;
+        height: 200px;
+        border: 1px solid black;
+        margin: 10px auto 0;
+        padding-top: 5px;
+    }
+    
+    .comments_section {
+        background-color: rgb(237, 235, 235);
+        width: 40%;
+        height: 100%;
+        border: 1px solid black;
+        margin: 10px auto 0;
+        padding: 5px;
+    }
+    form {
+        margin-top: 10px;
+    }
+</style>
