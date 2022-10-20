@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.AccountActions;
 using PostIt.Web.Models;
 using PostIt.Web.Services;
-using PostIt.Web.Services.DefaultAuthentication;
 
 namespace PostIt.Web.Controllers;
 
@@ -49,7 +47,7 @@ public class AccountController : Controller
 
         if(!success)
         {
-            return RedirectToAction("ChangePassword");
+            return RedirectToAction("UpdatePassword");
         }
 
         return RedirectToAction("Index");
@@ -67,5 +65,17 @@ public class AccountController : Controller
         }
 
         return View(users);
+    }
+
+    [Route("UpdateUsername")]
+    public IActionResult UpdateUsername()
+    {
+        throw new NotImplementedException();
+    }
+
+    [Route("UpdatePhoneNumber")]
+    public IActionResult UpdatePhoneNumber()
+    {
+        throw new NotImplementedException();
     }
 }

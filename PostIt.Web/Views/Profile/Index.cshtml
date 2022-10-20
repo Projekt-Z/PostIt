@@ -25,7 +25,7 @@
 <br/>
 <p>Jonied @Model.CreatedOn</p>
 
-@if (!User.Identity.IsAuthenticated) return;
+@if (!User.Identity.IsAuthenticated) {return;}
 
 @if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
 {
@@ -70,7 +70,7 @@
 
                 @if (post.Author.Username == Context.User.Identity.Name)
                 {
-                    <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                    <a asp-action="Delete" asp-controller="Home" asp-route-id="@post.Id">Delete</a>
                 }
 
                 <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
@@ -106,11 +106,11 @@
                 
                 @if (!post.Likes.Contains(user))
                 {
-                    <a asp-action="Like" asp-route-id="@post.Id">Like</a>
+                    <a asp-action="Like" asp-controller="Home" asp-route-id="@post.Id">Like</a>
                 }
                 else if (post.Likes.Contains(user))
                 {
-                    <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
+                    <a asp-action="Unlike" asp-controller="Home" asp-route-id="@post.Id">Unlike</a>
                 }
 
                 <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>

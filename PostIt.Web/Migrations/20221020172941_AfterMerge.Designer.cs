@@ -12,8 +12,8 @@ using PostIt.Web.Data;
 namespace PostIt.Web.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20221019190950_CommentTimeAdded")]
-    partial class CommentTimeAdded
+    [Migration("20221020172941_AfterMerge")]
+    partial class AfterMerge
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,9 @@ namespace PostIt.Web.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
@@ -71,6 +74,8 @@ namespace PostIt.Web.Migrations
 
                     b.HasIndex("AuthorId");
 
+                    b.HasIndex("CommentId");
+
                     b.HasIndex("PostId");
 
                     b.ToTable("Comment");
@@ -84,7 +89,10 @@ namespace PostIt.Web.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -102,7 +110,10 @@ namespace PostIt.Web.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("FollowingId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -234,6 +245,10 @@ namespace PostIt.Web.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
+                    b.HasOne("PostIt.Web.Models.Comment", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("CommentId");
+
                     b.HasOne("PostIt.Web.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
@@ -249,18 +264,14 @@ namespace PostIt.Web.Migrations
                 {
                     b.HasOne("PostIt.Web.Models.User", null)
                         .WithMany("Followers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.Following", b =>
                 {
                     b.HasOne("PostIt.Web.Models.User", null)
                         .WithMany("Following")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
@@ -287,6 +298,11 @@ namespace PostIt.Web.Migrations
                         .HasForeignKey("PostLikedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PostIt.Web.Models.Comment", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
