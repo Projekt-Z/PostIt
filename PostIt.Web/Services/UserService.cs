@@ -38,6 +38,7 @@ public class UserService : IUserService
             ImageUrl = image,
             BackgroundUrl = background,
             Roles = ERoleType.User,
+            AccountType = authType,
             Posts = new List<Post>(),
             PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
@@ -128,7 +129,27 @@ public class UserService : IUserService
     {
         var you = GetByUsername(username);
         var most = GetMostFollowedDesc().ToList();
+
         most.Remove(you);
+
+        foreach (var m in most.ToList())
+        {
+            if (you.BlockedUsers.Count < 1) break;
+
+            var u = you.BlockedUsers.FirstOrDefault(x => x.BlockedUserId == m.Id);
+            var usr = _context.Users.FirstOrDefault(x => x.Id == u.BlockedUserId);
+
+            if (u is not null)
+                    most.Remove(usr);
+        }
+            
+        foreach(var f in you.Following)
+        {
+            var u = _context.Users.FirstOrDefault(x => x.Id == f.FollowingId);
+
+            most.Remove(u);
+        }
+      
         return most.Take(first).ToList();
     }
 
@@ -138,7 +159,7 @@ public class UserService : IUserService
 
         var user = GetByUsername(usernam);
 
-        if (user.BlockedUsers is null) user.BlockedUsers = new List<BlockedUser>();
+        user.BlockedUsers ??= new List<BlockedUser>();
 
         user.BlockedUsers.Add(new BlockedUser { BlockedUserId = userToBlock.Id });
 
@@ -158,5 +179,24 @@ public class UserService : IUserService
         user.BlockedUsers.Remove(blockedUser2);
 
         _context.SaveChanges();
+    }
+
+    public bool ChangePassword(Guid id, string current, string newPassword)
+    {
+        var user = _context.Users.Find(id);
+
+        if (user is null) return false;
+
+        if (user.PasswordHash != AuthenticationHelper.GenerateHash(current, user.Salt))
+            return false;
+
+
+        user.PasswordHash = newPassword;
+        user.Salt = string.Empty;
+
+        user.ProvideSaltAndHash();
+
+        _context.SaveChanges();
+        return true;
     }
 }

@@ -51,7 +51,7 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public Task<IActionResult> CreateConfirmed(UserCreationRequest creationRequest)
     {
-        const string profilePicture = @"https://imgs.search.brave.com/9PlMRoqgvAVJEtTTeC_HWqdfdlK2GjafmbtzJID3TT8/rs:fit:600:600:1/g:ce/aHR0cDovL3d3dy5l/dXJvZ2Vvc3VydmV5/cy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTQvMDIvZGVm/YXVsdF9wcm9maWxl/X3BpYy5qcGc";
+        const string profilePicture = @"https://www.pngkey.com/png/detail/115-1150152_default-profile-picture-avatar-png-green.png";
         
         if (ModelState.IsValid)
         {
@@ -62,7 +62,11 @@ public class UserController : Controller
             }
         }
 
-        return Task.FromResult<IActionResult>(RedirectToAction("Index", "User"));
+        return LoginConfirmed(new UserLoginRequest
+        {
+            EmailOrRUsername = creationRequest.Email,
+            Password = creationRequest.Password!
+        });
     }
     
     [Route("Login")]
@@ -83,11 +87,19 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = _userService.GetByEmail(loginRequest.Email);
+            var user = _userService.GetByEmail(loginRequest.EmailOrRUsername);
             
-            var login = _authService.Login(loginRequest.Email, loginRequest.Password);
+            if (user is null)
+            {
+                user = _userService.GetByUsername(loginRequest.EmailOrRUsername);
+            }
 
-            if (!login) return Task.FromResult<IActionResult>(RedirectToAction(nameof(Login)));
+            var login = _authService.Login(loginRequest.EmailOrRUsername, loginRequest.Password);
+
+            if (!login)
+            {
+                return Task.FromResult<IActionResult>(RedirectToAction(nameof(Login)));
+            }
 
             var claims = new List<Claim>
             {

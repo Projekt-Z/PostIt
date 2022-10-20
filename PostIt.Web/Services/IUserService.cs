@@ -18,4 +18,5 @@ public interface IUserService
     List<User> GetMostFollowedDesc(int first, string username);
     void BlockUser(string usernameToBlock, string username);
     void UnblockUser(string usernameToBlock, string username);
+    bool ChangePassword(Guid id, string current, string newPassword);
 }

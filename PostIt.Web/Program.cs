@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Postgres
 builder.Services.AddDbContext<ApplicationContext>(o 
-    => o.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb")));
+    => o.UseSqlServer(@"Server=X220\ITM;Database=PostIt;Trusted_Connection=True;"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

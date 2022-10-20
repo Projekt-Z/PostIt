@@ -14,7 +14,7 @@ public class DefaultAuthenticationService : IDefaultAuthenticationService
     
     public bool Login(string email, string password)
     {
-        var user = _context.Users.SingleOrDefault(x => x.Email == email);
+        var user = _context.Users.SingleOrDefault(x => x.Email == email || x.Username == email);
 
         if (user == null) return false;
 

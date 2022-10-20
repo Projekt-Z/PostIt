@@ -13,7 +13,7 @@ public interface IPostService
     bool Delete(int id);
     void Like(int postId, Guid userId);
     void Unlike(int postId, Guid userId);
-    void Follow(Guid userId, Guid folowedBy);
+    void Follow(Guid toFollow, Guid followedBy);
     void Unfollow(Guid followerId, Guid userId);
     List<User> GetFollowers(string username);
     List<User> GetFollowing(string username);

@@ -14,24 +14,33 @@
     
     <div id="who_to_follow" class="w-25 h-auto">
         <h5>Who to follow?</h5>
-        @foreach (var user1 in _userService.GetMostFollowedDesc(5, user.Username))
+        @{
+            var users = _userService.GetMostFollowedDesc(5, user.Username);
+        }
+
+        @for (var i = 0; i < users.Count; i++)
         {
             <div>
                 <h6>
-                    <img alt="profile" src="@user1.ImageUrl" width="20" height="20" class="rounded-circle"/>
-                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@user1.Username">@user1.Username</a>
+                    <img alt="profile" src="@users[i].ImageUrl" width="20" height="20" class="rounded-circle"/>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@users[i].Username">@users[i].Username</a>
                 </h6>
 
-                <a>Followers: @user1.Followers.Count</a>
+                <a>Followers: @users[i].Followers.Count</a>
                 
-                @if (!user!.Following.Contains(new Following { UserId = user1.Id}))
+                @{
+                    var a = user!.Following.Contains(new Following { FollowingId = users[i].Id });
+                }
+
+                @if (a == false || user.Following.Count == 0)
                 {
-                    <a asp-action="Follow" asp-route-id="@user1.Id">Follow</a>
+                    <a asp-action="Follow" asp-route-id="@users[i].Id">Follow</a>
                 }
                   
                 <hr />
             </div>
         }
+
     </div>
     
     <div class="text-center">
@@ -44,34 +53,38 @@
         <div class="main-posts">
             @foreach (var post in Model)
             {
-                <h4> <a asp-action="Index" asp-controller="Post" asp-route-id="@post.Id"> @post.Title </a> </h4>
-
-                <p> <a asp-action="Index" asp-controller="Post" asp-route-id="@post.Id">@post.Description</a> </p>
-                <a>@post.TimeAdded |</a> 
-                <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
                 
-                @if (post.Author.Username == Context.User.Identity.Name)
-                {
-                    <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
-                }
+                <div class="post">
+                    <a asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
+                        <h4> @post.Title </h4>
 
-                if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { UserId = post.Author.Id}))
-                {
-                    <a asp-action="Follow" asp-route-id="@post.Author.Id">Follow</a>
-                }
+                        <p> @post.Description </p>
+                        <a>@post.TimeAdded |</a> 
+                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
                 
-                if (!post.Likes.Contains(user))
-                {
-                    <a asp-action="Like" asp-route-id="@post.Id">Like</a>
-                }
-                else if (post.Likes.Contains(user))
-                {
-                    <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
-                }
+                        @if(!string.IsNullOrEmpty(post.MediaLink))
+                        {
+                            <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+                        }
 
-                <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
+                        @if (post.Author.Username == Context.User.Identity.Name)
+                        {
+                            <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                        }
                 
-                <hr/>
+                        @if (!post.Likes.Contains(user))
+                        {
+                            <a asp-action="Like" asp-route-id="@post.Id">Like</a>
+                        }
+                        else if (post.Likes.Contains(user))
+                        {
+                            <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
+                        }
+
+                        <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
+                    </a>
+                </div>
+              
             }
         </div>
         
@@ -88,3 +101,21 @@ else
         in order to use this App
     </p>
 }
+
+<style>
+
+.post {
+    background-color: #cdc5bf;
+    width: 80%;
+    height: 200px;
+    border: 1px solid black;
+    margin: 0 auto;
+}
+
+a#a {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+</style>

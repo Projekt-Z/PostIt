@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="Views\AccountActions\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Delete.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Home\Post.cshtml" />
@@ -33,6 +33,10 @@
       <_ContentIncludedByDefault Remove="Views\User\Create.cshtml" />
       <_ContentIncludedByDefault Remove="Views\User\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Views\User\Login.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
 </Project>

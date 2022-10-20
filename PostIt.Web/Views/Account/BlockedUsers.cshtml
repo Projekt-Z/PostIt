@@ -1,0 +1,20 @@
+﻿@model List<User>
+
+@{
+    ViewData["Title"] = "Blocked Users";
+}
+
+<h1>Blocked Users</h1>
+
+@foreach (var user in Model)
+{
+    <div class="user">
+        <a asp-action="Index" asp-controller="Profile" asp-route-username="@user.Username">
+            <img src="@user.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle">
+
+            &#64;@user.Username
+        </a>
+
+        <a asp-action="Unblock" asp-controller="Profile" asp-route-username="@user.Username"> Unblock </a>
+    </div>
+}

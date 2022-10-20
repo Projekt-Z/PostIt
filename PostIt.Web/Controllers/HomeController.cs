@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Post;
@@ -45,6 +46,7 @@ public class HomeController : Controller
                 Title = postRequest.Title,
                 Description = postRequest.Content,
                 TimeAdded = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                MediaLink = postRequest.MediaUrl ??= string.Empty,
                 Author = _userService.GetByUsername(HttpContext.User.Identity.Name)
             };
 

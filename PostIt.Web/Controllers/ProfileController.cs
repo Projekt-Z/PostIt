@@ -17,6 +17,7 @@ public class ProfileController : Controller
     }
 
     [Route("{username}")]
+    [AllowAnonymous]
     public IActionResult Index(string username)
     {
         var user = _userService.GetByUsername(username);
@@ -49,5 +50,21 @@ public class ProfileController : Controller
         _userService.UnblockUser(username, User.Identity.Name);
 
         return RedirectToAction("Index", "Profile", new { username = username });
+    }
+
+    [Route("{username}/Followers")]
+    public IActionResult Followers(string username)
+    {
+        var you = _userService.GetByUsername(username);
+
+        return View(you.Followers);
+    }
+
+    [Route("{username}/Following")]
+    public IActionResult Following(string username)
+    {
+        var you = _userService.GetByUsername(username);
+
+        return View(you.Following);
     }
 }

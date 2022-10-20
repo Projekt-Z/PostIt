@@ -1,0 +1,41 @@
+﻿@using PostIt.Web.Data
+@using PostIt.Web.Services
+@model List<Following>
+
+@inject IUserService userService
+@inject ApplicationContext context
+
+@{
+    ViewData["Title"] = "Followers";
+}
+
+<h1>Following</h1>
+
+@foreach (var following in Model)
+{
+    var f = context.Users.FirstOrDefault(x => x.Id == following.FollowingId);
+
+    <div class="user">
+        <a asp-action="Index" asp-route-username="@f.Username">
+            <img src="@f.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle">
+
+            &#64;@f.Username
+        </a>
+    </div>
+}
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .user {
+        width: 20%;
+        height: auto;
+        padding: 10px;
+        background-color: #cdc5bf;
+        border: 1px solid black;
+        margin: 10px 0 auto;
+    }
+</style>
