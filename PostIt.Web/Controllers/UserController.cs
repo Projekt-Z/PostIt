@@ -51,7 +51,7 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public Task<IActionResult> CreateConfirmed(UserCreationRequest creationRequest)
     {
-        const string profilePicture = @"https://imgs.search.brave.com/9PlMRoqgvAVJEtTTeC_HWqdfdlK2GjafmbtzJID3TT8/rs:fit:600:600:1/g:ce/aHR0cDovL3d3dy5l/dXJvZ2Vvc3VydmV5/cy5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMTQvMDIvZGVm/YXVsdF9wcm9maWxl/X3BpYy5qcGc";
+        const string profilePicture = @"https://www.pngkey.com/png/detail/115-1150152_default-profile-picture-avatar-png-green.png";
         
         if (ModelState.IsValid)
         {

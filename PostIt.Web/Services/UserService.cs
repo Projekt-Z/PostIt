@@ -129,7 +129,27 @@ public class UserService : IUserService
     {
         var you = GetByUsername(username);
         var most = GetMostFollowedDesc().ToList();
+
         most.Remove(you);
+
+        foreach (var m in most.ToList())
+        {
+            if (you.BlockedUsers.Count < 1) break;
+
+            var u = you.BlockedUsers.FirstOrDefault(x => x.BlockedUserId == m.Id);
+            var usr = _context.Users.FirstOrDefault(x => x.Id == u.BlockedUserId);
+
+            if (u is not null)
+                    most.Remove(usr);
+        }
+            
+        foreach(var f in you.Following)
+        {
+            var u = _context.Users.FirstOrDefault(x => x.Id == f.FollowingId);
+
+            most.Remove(u);
+        }
+      
         return most.Take(first).ToList();
     }
 
@@ -139,7 +159,7 @@ public class UserService : IUserService
 
         var user = GetByUsername(usernam);
 
-        if (user.BlockedUsers is null) user.BlockedUsers = new List<BlockedUser>();
+        user.BlockedUsers ??= new List<BlockedUser>();
 
         user.BlockedUsers.Add(new BlockedUser { BlockedUserId = userToBlock.Id });
 

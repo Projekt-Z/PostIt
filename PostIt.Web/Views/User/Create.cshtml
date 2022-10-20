@@ -30,9 +30,7 @@
         <label class="control-label">Confirm Password</label>
         <input class="form-control" id="passwordConfirmation" type="password" />
         <span asp-validation-for="Password" class="text-danger"></span>
-    
-        <p id="caps" style="color: red;"></p>
-        
+
         <p id="validation-password" style="color: red;"></p>
 
         <label asp-for="Email" class="control-label"></label>
@@ -55,7 +53,7 @@
         let valid = document.getElementById("validation-password");
         let submit = document.getElementById("submit");
 
-        if (passwordInput !== passwordConfirmationInput) {
+        if (passwordInput != passwordConfirmationInput) {
             valid.innerText = "Passwords are not the same!"
             submit.disabled = true;
         }
@@ -68,5 +66,7 @@
 
     setInterval(checkPassword, 1);
 
+</script>
+=======
 </script>
 <script src="js/is_capslock.js"></script>

@@ -14,19 +14,27 @@
     
     <div id="who_to_follow" class="w-25 h-auto">
         <h5>Who to follow?</h5>
-        @foreach (var user1 in _userService.GetMostFollowedDesc(5, user.Username))
+        @{
+            var users = _userService.GetMostFollowedDesc(5, user.Username);
+        }
+
+        @for (var i = 0; i < users.Count; i++)
         {
             <div>
                 <h6>
-                    <img alt="profile" src="@user1.ImageUrl" width="20" height="20" class="rounded-circle"/>
-                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@user1.Username">&#64;@user1.Username</a>
+                    <img alt="profile" src="@users[i].ImageUrl" width="20" height="20" class="rounded-circle"/>
+                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@users[i].Username">@users[i].Username</a>
                 </h6>
 
-                <a>Followers: @user1.Followers.Count</a>
+                <a>Followers: @users[i].Followers.Count</a>
                 
-                @if (user!.Following.Any(x => x.UserId == user1.Id) || user.Following.Count == 0)
+                @{
+                    var a = user!.Following.Contains(new Following { FollowingId = users[i].Id });
+                }
+
+                @if (a == false || user.Following.Count == 0)
                 {
-                    <a asp-action="Follow" asp-route-id="@user1.Id">Follow</a>
+                    <a asp-action="Follow" asp-route-id="@users[i].Id">Follow</a>
                 }
                 else 
                 {
@@ -36,6 +44,7 @@
                 <hr />
             </div>
         }
+
     </div>
     
     <div class="text-center">
@@ -55,7 +64,8 @@
 
                         <p> @post.Description </p>
                         <a>@post.TimeAdded |</a> 
-                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">&#64;@post.Author.Username</a>
+
+                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
                 
                         @if(!string.IsNullOrEmpty(post.MediaLink))
                         {
@@ -67,23 +77,16 @@
                             <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
                         }
                 
-                        <p>
-                
-                            @if(Context.User.Identity.IsAuthenticated) 
-                            {
-                                if (!post.Likes.Contains(user))
-                                {
-                                    <a asp-action="Like" asp-controller="Home" asp-route-id="@post.Id">🤍 @post.Likes.Count</a>
-                                }
-                                else if (post.Likes.Contains(user))
-                                {
-                                    <a asp-action="Unlike" asp-controller="Home" asp-route-id="@post.Id">&#10084; @post.Likes.Count</a>
-                                }
-                            }
-                            
-                            <a>&#128488; @post.Comments.Count</a> 
-                        
-                        </p>
+                        @if (!post.Likes.Contains(user))
+                        {
+                            <a asp-action="Like" asp-route-id="@post.Id">Like</a>
+                        }
+                        else if (post.Likes.Contains(user))
+                        {
+                            <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
+                        }
+
+                        <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
                     </a>
                 </div>
               
@@ -107,11 +110,11 @@ else
 <style>
 
 .post {
-    background-color: rgb(237, 235, 235);
+    background-color: #cdc5bf;
     width: 80%;
     height: 200px;
     border: 1px solid black;
-    margin: 10px auto 0;
+    margin: 0 auto;
 }
 
 a#a {
@@ -119,10 +122,4 @@ a#a {
     width: 100%;
     text-decoration: none;
 }
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
 </style>

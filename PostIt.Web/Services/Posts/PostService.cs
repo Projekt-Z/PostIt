@@ -24,7 +24,12 @@ public class PostService : IPostService
 
     public List<Post> GetAllYours(string username)
     {
-        return _context.Users.Include(x => x.Posts).First(x => x.Username == username).Posts;
+        return _context.Users
+            .Include(x => x.Posts)
+            .ThenInclude(x => x.Likes)
+            .Include(x => x.Posts)
+            .Include(x=>x.PostLiked)
+            .First(x => x.Username == username).Posts;
     }
 
     public List<Post> GetAllLiked(string username)
@@ -104,35 +109,35 @@ public class PostService : IPostService
         _context.SaveChanges();
     }
 
-    public void Follow(Guid userId, Guid followedBy)
+    public void Follow(Guid toFollow, Guid followedBy)
     {
-        if (userId == followedBy) return;
+        if (toFollow == followedBy) return;
 
         var user = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == followedBy);
-        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == userId);
+        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == toFollow);
         
         user.Following.Add(new Following
         {
-            UserId = userToFollow.Id
+            FollowingId = toFollow
         });
         
         userToFollow.Followers.Add(new Followers
         {
-            UserId = user.Id
+            FollowerId = followedBy
         });
         
         _context.SaveChanges();
     }
     
-    public void Unfollow(Guid followerId, Guid userId)
+    public void Unfollow(Guid toFollow, Guid followedBy)
     {
-        if (userId == followerId) return;
+        if (toFollow == followedBy) return;
 
-        var user = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == userId);
-        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == followerId);
+        var user = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == followedBy);
+        var userToFollow = _context.Users.Include(x => x.Followers).Include(x => x.Following).First(x => x.Id == toFollow);
 
-        var following = user.Following.FirstOrDefault(x => x.UserId == user.Id);
-        var follower = userToFollow.Followers.FirstOrDefault(x => x.UserId == userToFollow.Id);
+        var following = user.Following.FirstOrDefault(x => x.FollowingId == toFollow);
+        var follower = userToFollow.Followers.FirstOrDefault(x => x.FollowerId == followedBy);
 
         user.Following.Remove(following);
 

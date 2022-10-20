@@ -25,10 +25,11 @@
 <br/>
 <p>Jonied @Model.CreatedOn</p>
 
+@if (!User.Identity.IsAuthenticated) return;
 
 @if (!Model.Equals(_userService.GetByUsername(User.Identity.Name)))
 {
-    @if (user!.Following.Any(x => x.UserId == Model.Id) || user.Following.Count == 0)
+    @if (user!.Following.FirstOrDefault(x => x.FollowingId == Model.Id) is null|| user.Following.Count == 0)
     {
         <a asp-action="Follow" asp-controller="Home" asp-route-id="@Model.Id">Follow</a>
     }
@@ -54,11 +55,27 @@
     <hr/>
     @foreach (var post in _postService.GetAllYours(Model.Username))
     {
-        <hr/>
-        <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
-        <p>@post.Title</p>
-        <p>@post.Description</p>
-        <hr/>
+        <div class="post">
+            <a asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
+                <h4> @post.Title </h4>
+
+                <p> @post.Description </p>
+                <a>@post.TimeAdded |</a> 
+                <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+                
+                @if(!string.IsNullOrEmpty(post.MediaLink))
+                {
+                    <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+                }
+
+                @if (post.Author.Username == Context.User.Identity.Name)
+                {
+                    <a asp-action="Delete" asp-route-id="@post.Id">Delete</a>
+                }
+
+                <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
+            </a>
+        </div>
     }
 </div>
 
@@ -69,22 +86,47 @@
     <hr/>
     @foreach (var post in _postService.GetAllLiked(Model.Username))
     {
-        <hr/>
-        <p>@post.Author.Name | &#64;@post.Author.Username | @post.TimeAdded</p>
-        <p>@post.Title</p>
-        <p>@post.Description</p>
-        <hr/>
+        <div class="post">
+            <a asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
+                <h4> @post.Title </h4>
+
+                <p> @post.Description </p>
+                <a>@post.TimeAdded |</a> 
+                <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+                
+                @if(!string.IsNullOrEmpty(post.MediaLink))
+                {
+                    <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+                }
+
+                @if (post.Author.Username == Context.User.Identity.Name)
+                {
+                    <a asp-action="Delete" asp-controller="Home" asp-route-id="@post.Id">Delete</a>
+                }
+                
+                @if (!post.Likes.Contains(user))
+                {
+                    <a asp-action="Like" asp-route-id="@post.Id">Like</a>
+                }
+                else if (post.Likes.Contains(user))
+                {
+                    <a asp-action="Unlike" asp-route-id="@post.Id">Unlike</a>
+                }
+
+                <p> <a>&#10084; @post.Likes.Count</a>  <a>&#128488; @post.Comments?.Count</a> </p>
+            </a>
+        </div>
     }
 </div>
 
 <div class="">
-    <p>Followers : @Model.Followers.Count</p>
+    <a asp-action="Followers" asp-route-username="@Model.Username">Followers : @Model.Followers.Count</a>
     <hr/>
 
 </div>
 
 <div class="">
-    <p>Following : @Model.Following.Count</p>
+    <a asp-action="Following" asp-route-username="@Model.Username">Following : @Model.Following.Count</a>
     <hr/>
 
 </div>
@@ -92,3 +134,21 @@
 <div>
     <a asp-controller="Authentication" asp-action="GoogleLogout">Log out</a>
 </div>
+
+<style>
+
+.post {
+    background-color: #cdc5bf;
+    width: 80%;
+    height: 200px;
+    border: 1px solid black;
+    margin: 0 auto;
+}
+
+a#a {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+
+</style>

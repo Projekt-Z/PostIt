@@ -59,6 +59,12 @@
 </div>
 
 <footer class="border-top footer text-muted">
+    @if(!User.Identity.IsAuthenticated) 
+    {
+        <div id="auth_false" style="background-color: lightblue; width: 100%; height: auto; padding: 10px; text-align: center;">
+            You are not logged in. <a asp-action="Index" asp-controller="Home">Log In or Create new account</a>
+        </div>
+    }
     <div class="container">
         &copy; 2022 - PostIt.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>

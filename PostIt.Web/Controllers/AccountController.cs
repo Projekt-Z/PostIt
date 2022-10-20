@@ -10,6 +10,7 @@ using PostIt.Web.Services.DefaultAuthentication;
 namespace PostIt.Web.Controllers;
 
 [Authorize]
+[Route("[controller]")]
 public class AccountController : Controller
 {
     private readonly IUserService _userService;
@@ -21,6 +22,7 @@ public class AccountController : Controller
         _context = context;
     }
 
+    [AllowAnonymous]
     public IActionResult Index()
     {
         var username = HttpContext.User.Identity.Name;
@@ -47,19 +49,23 @@ public class AccountController : Controller
 
         if(!success)
         {
-            return RedirectToAction("UpdatePassword");
+            return RedirectToAction("ChangePassword");
         }
 
         return RedirectToAction("Index");
     }
 
-    public IActionResult UpdateUsername()
+    [Route("Blocked")]
+    public IActionResult BlockedUsers()
     {
-        throw new NotImplementedException();
-    }
+        var blockedUsers = _userService.GetByUsername(User.Identity.Name).BlockedUsers;
+        var users = new List<User>();
 
-    public IActionResult UpdatePhoneNumber()
-    {
-        throw new NotImplementedException();
+        foreach (var u in blockedUsers)
+        {
+            users.Add(_context.Users.FirstOrDefault(x => x.Id == u.BlockedUserId)!);
+        }
+
+        return View(users);
     }
 }

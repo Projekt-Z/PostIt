@@ -44,7 +44,7 @@
             <a asp-action="Delete" asp-controller="Home" asp-route-id="@post.Id">Delete</a>
             }
 
-            if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { UserId = post.Author.Id}))
+            if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { FollowingId = post.Author.Id}))
             {
             <a asp-action="Follow" asp-controller="Home" asp-route-id="@post.Author.Id">Follow</a>
             }
