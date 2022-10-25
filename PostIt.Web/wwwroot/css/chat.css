@@ -1,0 +1,25 @@
+﻿#chat {
+    display: block;
+    width: 350px;
+    height: 530px;
+    right: -100%;
+    background-color: black;
+    opacity: 0.1;
+    margin: 10px 82%;
+
+}
+#chat > a {
+    color: black;
+}
+
+#user {
+    color: black !important;
+    width: auto;
+    height: 50px;
+}
+
+#messages {
+    color: black !important;
+    width: auto;
+    height: 420px;
+}

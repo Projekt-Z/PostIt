@@ -73,7 +73,7 @@ public class PostService : IPostService
 
     public bool Delete(int id)
     {
-        var post = _context.Posts.FirstOrDefault(x => x.Id == id);
+        var post = _context.Posts.Include(x => x.Comments).FirstOrDefault(x => x.Id == id);
 
         if (post is null) return false;
 
