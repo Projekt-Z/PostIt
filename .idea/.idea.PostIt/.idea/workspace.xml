@@ -5,12 +5,11 @@
     <projectFile profileName="PostIt.Web">PostIt.Web/PostIt.Web.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="docker-compose">
-      <change afterPath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" afterDir="false" />
+    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Real-time chat with SignalR">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/ChatController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/ChatController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" afterDir="false" />
@@ -102,7 +101,7 @@
       <workItem from="1666475370485" duration="3115000" />
       <workItem from="1666716457018" duration="2042000" />
       <workItem from="1666719308118" duration="7565000" />
-      <workItem from="1666801556364" duration="10576000" />
+      <workItem from="1666801556364" duration="12712000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -132,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666805772052</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Real-time chat with SignalR">
+      <created>1666815420290</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1666815420290</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,7 +163,8 @@
     <MESSAGE value="FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'" />
     <MESSAGE value="FIXED Blocking users bug" />
     <MESSAGE value="docker-compose" />
-    <option name="LAST_COMMIT_MESSAGE" value="docker-compose" />
+    <MESSAGE value="Real-time chat with SignalR" />
+    <option name="LAST_COMMIT_MESSAGE" value="Real-time chat with SignalR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

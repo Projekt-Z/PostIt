@@ -1,4 +1,4 @@
-﻿@model string
+﻿@model User
 
 @{
     ViewBag.Title = "Chat";
@@ -6,6 +6,19 @@
 }
 
 <div class="container">
+    
+    <div>
+        <a asp-action="Index">⬅</a>
+    </div>
+    
+    <div class="user">
+        <a asp-action="Chat" asp-route-username="@Model.Username">
+            <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle">
+
+            &#64;@Model.Username
+        </a>
+    </div>
+    
     <div class="row">
         <div class="col-3">Connection Id</div>
         <div class="col-6"><span id="connectionId"></span></div>
@@ -16,18 +29,18 @@
     </div>
     <div class="row">
         <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
+        <div class="col-4"><input type="text" id="messageInput"/></div>
     </div>
     <div class="row">
         <div class="col-2">Receiver Id</div>
-        <div class="col-4"><input type="text" id="receiverId" value="@Model" /></div>
+        <div class="col-4"><input type="text" id="receiverId" value="@Model.ConnectionId"/></div>
     </div>
 
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-6">
-            <input type="button" id="sendToUser" value="Send Message" />&nbsp;&nbsp;
-            <input type="button" id="sendButton" value="Send Message to All" />
+            <input type="button" id="sendToUser" value="Send Message"/>&nbsp;&nbsp;
+            <input type="button" id="sendButton" value="Send Message to All"/>
 
         </div>
     </div>

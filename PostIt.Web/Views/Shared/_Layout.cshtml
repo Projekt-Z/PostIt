@@ -46,6 +46,13 @@
                 </ul>
                 
                 <a>
+                    @using (Html.BeginForm("Index", "Chat", FormMethod.Get))
+                    {
+                        <input type="submit" value="✉"/>
+                    }
+                </a> &nbsp;
+
+                <a>
                     @using (Html.BeginForm("Search", "Search", FormMethod.Get))
                     {
                         <input type="text" id="search_text" name="q" placeholder="Search..."/>

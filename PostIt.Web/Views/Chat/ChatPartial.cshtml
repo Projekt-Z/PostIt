@@ -1,0 +1,35 @@
+﻿@using PostIt.Web.Data
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Following>
+
+@inject ApplicationContext context
+
+@foreach (var following in Model)
+{
+    var f = context.Users.FirstOrDefault(x => x.Id == following.FollowingId);
+
+    <div class="user">
+        <a asp-action="Chat" asp-route-username="@f.Username">
+            <img src="@f.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle">
+
+            &#64;@f.Username
+        </a>
+        <a asp-action="Chat" asp-route-username="@f.Username">Open Chat</a>
+    </div>
+}
+
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .user {
+        width: 20%;
+        height: auto;
+        padding: 10px;
+        background-color: #cdc5bf;
+        border: 1px solid black;
+        margin: 10px 0 auto;
+    }
+</style>

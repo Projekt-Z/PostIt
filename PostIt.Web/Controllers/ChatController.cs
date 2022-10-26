@@ -15,11 +15,17 @@ public class ChatController : Controller
     {
         _userService = userService;
     }
+
+    public IActionResult Index()
+    {
+        var your = _userService.GetByUsername(User.Identity!.Name!);
+        return View("ChatPartial", your!.Following);
+    }
     
     [Route("{username}")]
     public IActionResult Chat([FromRoute] string? username)
     {
-        var receiverConnectionId = _userService.GetByUsername(username!)?.ConnectionId;
-        return View("Chat", receiverConnectionId);
+        var user = _userService.GetByUsername(username!);
+        return View("Chat", user);
     }
 }

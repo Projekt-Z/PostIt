@@ -35,6 +35,15 @@ document.getElementById("sendToUser").addEventListener("click", function (event)
     var user = document.getElementById("userInput").value;
     var receiverConnectionId = document.getElementById("receiverId").value;
     var message = document.getElementById("messageInput").value;
+
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    var encodedMsg = user + ": " + msg;
+    var li = document.createElement("li");
+    var strong = document.createElement("strong").appendChild(li);
+
+    strong.textContent = encodedMsg;
+    document.getElementById("messagesList").appendChild(li);
+    
     connection.invoke("SendToUser", user, receiverConnectionId, message).catch(function (err) {
         return console.error(err.toString());
     });
