@@ -5,10 +5,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["PostIt.Web/PostIt.Web.csproj", "PostIt.Web/"]
-RUN dotnet restore "PostIt.Web/PostIt.Web.csproj"
+COPY ["PostIt.Web.csproj", "./"]
+RUN dotnet restore "PostIt.Web.csproj"
 COPY . .
-WORKDIR "/src/PostIt.Web"
+WORKDIR "/src/"
 RUN dotnet build "PostIt.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
