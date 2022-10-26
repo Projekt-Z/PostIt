@@ -35,4 +35,5 @@ public class User
     public List<Following> Following { get; set; } = new();
     public List<Comment>? Replies { get; set; } = new ();
     public List<BlockedUser> BlockedUsers { get; set; } = default!;
+    public List<Message>? Messages { get; set; }
 }

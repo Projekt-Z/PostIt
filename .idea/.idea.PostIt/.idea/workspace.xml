@@ -5,11 +5,14 @@
     <projectFile profileName="PostIt.Web">PostIt.Web/PostIt.Web.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Real-time chat with SignalR">
+    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Added List of following users by you to Chat Index">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/ChatController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/ChatController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Hubs/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Hubs/ChatHub.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" afterDir="false" />
@@ -101,7 +104,7 @@
       <workItem from="1666475370485" duration="3115000" />
       <workItem from="1666716457018" duration="2042000" />
       <workItem from="1666719308118" duration="7565000" />
-      <workItem from="1666801556364" duration="12712000" />
+      <workItem from="1666801556364" duration="16514000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -138,7 +141,21 @@
       <option name="project" value="LOCAL" />
       <updated>1666815420290</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added List of following users by you to Chat Index">
+      <created>1666817788364</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1666817788364</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added List of following users by you to Chat Index">
+      <created>1666817809962</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1666817809962</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,37 +181,24 @@
     <MESSAGE value="FIXED Blocking users bug" />
     <MESSAGE value="docker-compose" />
     <MESSAGE value="Real-time chat with SignalR" />
-    <option name="LAST_COMMIT_MESSAGE" value="Real-time chat with SignalR" />
+    <MESSAGE value="Added List of following users by you to Chat Index" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added List of following users by you to Chat Index" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml</url>
-          <line>19</line>
-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Views\Home\Index.cshtml" initialLine="18" isMultiMethodBreakpoint="true">
-            <option name="multiMethodBreakpoint" value="true" />
+          <url>file://$PROJECT_DIR$/PostIt.Web/Hubs/ChatHub.cs</url>
+          <line>26</line>
+          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Hubs\ChatHub.cs" initialLine="26" containingFunctionPresentation="method 'SendToUser'">
             <startOffsets>
-              <option value="-1" />
+              <option value="790" />
             </startOffsets>
             <endOffsets>
-              <option value="-1" />
+              <option value="791" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/PostIt.Web/Services/UserService.cs</url>
-          <line>133</line>
-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Services\UserService.cs" initialLine="133" containingFunctionPresentation="method 'GetMostFollowedDesc'">
-            <startOffsets>
-              <option value="3655" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3672" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

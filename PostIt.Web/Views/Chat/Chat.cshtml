@@ -1,4 +1,8 @@
-﻿@model User
+﻿@using PostIt.Web.Services.Chat
+@using PostIt.Web.Services
+@model User
+@inject IChatService chatService
+@inject IUserService userService
 
 @{
     ViewBag.Title = "Chat";
@@ -10,6 +14,8 @@
     <div>
         <a asp-action="Index">⬅</a>
     </div>
+    
+    <a id="receiver">@Model.Username</a>
     
     <div class="user">
         <a asp-action="Chat" asp-route-username="@Model.Username">
@@ -52,7 +58,18 @@
 </div>
 <div class="row">
     <div class="col-6">
-        <ul id="messagesList"></ul>
+        <ul id="messagesList">
+            @{
+                var sender = userService.GetByUsername(User.Identity.Name!);
+            }                
+            
+            @foreach (var message in chatService.GetMessages(sender!.Id, Model.Id))
+            {
+                <li>
+                    @message.User.Name: @message.Text
+                </li>
+            }
+        </ul>
     </div>
 </div>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

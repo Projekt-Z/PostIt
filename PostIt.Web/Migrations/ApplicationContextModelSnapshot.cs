@@ -121,6 +121,35 @@ namespace PostIt.Web.Migrations
                     b.ToTable("Following");
                 });
 
+            modelBuilder.Entity("PostIt.Web.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DateTime")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -275,6 +304,17 @@ namespace PostIt.Web.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("PostIt.Web.Models.Message", b =>
+                {
+                    b.HasOne("PostIt.Web.Models.User", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PostIt.Web.Models.Post", b =>
                 {
                     b.HasOne("PostIt.Web.Models.User", "Author")
@@ -318,6 +358,8 @@ namespace PostIt.Web.Migrations
                     b.Navigation("Followers");
 
                     b.Navigation("Following");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Posts");
 

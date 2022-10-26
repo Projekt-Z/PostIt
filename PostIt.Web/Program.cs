@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Hubs;
 using PostIt.Web.Services;
+using PostIt.Web.Services.Chat;
 using PostIt.Web.Services.DefaultAuthentication;
 using PostIt.Web.Services.Posts;
 
@@ -24,6 +25,7 @@ builder.Services.AddSignalR();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IDefaultAuthenticationService, DefaultAuthenticationService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 #region Google oAuth2
 
