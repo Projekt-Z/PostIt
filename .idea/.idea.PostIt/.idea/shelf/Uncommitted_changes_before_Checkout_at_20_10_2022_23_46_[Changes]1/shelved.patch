@@ -1,0 +1,383 @@
+Index: PostIt.Web/Views/Shared/_Layout.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Shared/_Layout.cshtml b/PostIt.Web/Views/Shared/_Layout.cshtml
+--- a/PostIt.Web/Views/Shared/_Layout.cshtml	
++++ b/PostIt.Web/Views/Shared/_Layout.cshtml	
+@@ -10,6 +10,7 @@
+     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+     <link rel="stylesheet" href="~/PostIt.Web.styles.css" asp-append-version="true"/>
++    <link rel="stylesheet" href="css/chat.css"/>
+ </head>
+ <body>
+ <header>
+@@ -57,6 +58,23 @@
+         @RenderBody()
+     </main>
+ </div>
++
++    <div id="chat" class="fixed-bottom">
++        <a onclick="Close();">Close</a>
++        <div id="user">
++            Lorem Ipsum is simply dum
++        </div>
++        <div id="messages">
++            ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five c
++        </div>
++        <div id="send" class="text-center">
++            @using (Html.BeginForm("", "", FormMethod.Post))
++            {
++                <input type="text" id="search_text" name="content" placeholder="Write a new message!"/>
++                <input type="submit" value="📨"/>
++            }
++        </div>
++    </div>
+ 
+ <footer class="border-top footer text-muted">
+     @if(!User.Identity.IsAuthenticated) 
+@@ -66,12 +84,13 @@
+         </div>
+     }
+     <div class="container">
+-        &copy; 2022 - PostIt.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
++        &copy; 2022 - PostIt - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+     </div>
+ </footer>
+ <script src="~/lib/jquery/dist/jquery.min.js"></script>
+ <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="~/js/site.js" asp-append-version="true"></script>
++<script src="js/chat.js"></script>
+ @await RenderSectionAsync("Scripts", required: false)
+ </body>
+ </html>
+\ No newline at end of file
+Index: PostIt.Web/Services/Posts/PostService.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Services/Posts/PostService.cs b/PostIt.Web/Services/Posts/PostService.cs
+--- a/PostIt.Web/Services/Posts/PostService.cs	
++++ b/PostIt.Web/Services/Posts/PostService.cs	
+@@ -73,10 +73,12 @@
+ 
+     public bool Delete(int id)
+     {
+-        var post = _context.Posts.FirstOrDefault(x => x.Id == id);
++        var post = _context.Posts.Include(x => x.Comments).FirstOrDefault(x => x.Id == id);
+ 
+         if (post is null) return false;
+ 
++        post.Comments = new List<Comment>();
++        
+         _context.Posts.Remove(post);
+         _context.SaveChanges();
+         return true;
+Index: PostIt.Web/Views/Profile/Index.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Profile/Index.cshtml b/PostIt.Web/Views/Profile/Index.cshtml
+--- a/PostIt.Web/Views/Profile/Index.cshtml	
++++ b/PostIt.Web/Views/Profile/Index.cshtml	
+@@ -15,7 +15,7 @@
+ }
+ <div id="bg" style="background-image: url(@Model.BackgroundUrl);" >
+     <div style="width: 60px; height: 60px; background-color: gray;" class="rounded-circle">
+-        <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
++        <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle"> 
+     </div>
+ </div>
+ 
+Index: PostIt.Web/Controllers/AccountController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Controllers/AccountController.cs b/PostIt.Web/Controllers/AccountController.cs
+--- a/PostIt.Web/Controllers/AccountController.cs	
++++ b/PostIt.Web/Controllers/AccountController.cs	
+@@ -78,4 +78,15 @@
+     {
+         throw new NotImplementedException();
+     }
++    
++    [Route("UpdateImage")]
++    public IActionResult UpdateImage(string url)
++    {
++        var user = _userService.GetByUsername(User.Identity.Name);
++
++        user.ImageUrl = url;
++
++        _context.SaveChanges();
++        return RedirectToAction("Index");
++    }
+ }
+\ No newline at end of file
+Index: PostIt.Web/Views/Post/Index.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Post/Index.cshtml b/PostIt.Web/Views/Post/Index.cshtml
+--- a/PostIt.Web/Views/Post/Index.cshtml	
++++ b/PostIt.Web/Views/Post/Index.cshtml	
+@@ -1,5 +1,4 @@
+ @using PostIt.Web.Services
+-@using System.Globalization
+ @using Microsoft.AspNetCore.Mvc.TagHelpers
+ @model Post
+ 
+@@ -59,6 +58,7 @@
+ 
+     @using (Html.BeginForm("Comment", "Post", FormMethod.Post))
+     {
++        <img src="@user.ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle">
+         <input type="text" name="content" placeholder="Comment..." />
+ 
+         <input type="number" name="id" value="@Model.Id" hidden/>
+Index: PostIt.Web/wwwroot/js/chat.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/wwwroot/js/chat.js b/PostIt.Web/wwwroot/js/chat.js
+new file mode 100644
+--- /dev/null	
++++ b/PostIt.Web/wwwroot/js/chat.js	
+@@ -0,0 +1,5 @@
++function Close() {
++    
++    let chat = document.getElementById('chat')
++    chat.style.display = 'none';
++}
+\ No newline at end of file
+Index: PostIt.Web/Controllers/SearchController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Controllers/SearchController.cs b/PostIt.Web/Controllers/SearchController.cs
+--- a/PostIt.Web/Controllers/SearchController.cs	
++++ b/PostIt.Web/Controllers/SearchController.cs	
+@@ -1,6 +1,4 @@
+-using Microsoft.AspNetCore.Authorization;
+ using Microsoft.AspNetCore.Mvc;
+-using PostIt.Web.Data;
+ using PostIt.Web.Dtos.Search;
+ using PostIt.Web.Services;
+ using PostIt.Web.Services.Posts;
+@@ -21,11 +19,6 @@
+ 
+     public IActionResult Search([FromQuery] string q)
+     {
+-        if (!HttpContext.User.Identity.IsAuthenticated)
+-        {
+-            return RedirectToAction("Index", "Home");
+-        }
+-
+         var query = q.ToLower();
+         var posts = _postService.GetAll().Where(x => x.Title.ToLower().Contains(query) || x.Description.ToLower().Contains(query));
+         var users = _userService.GetAll().Where(x => x.Username.ToLower().Contains(query) || x.Name.ToLower().Contains(query));
+Index: PostIt.Web/Views/Account/Index.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Account/Index.cshtml b/PostIt.Web/Views/Account/Index.cshtml
+--- a/PostIt.Web/Views/Account/Index.cshtml	
++++ b/PostIt.Web/Views/Account/Index.cshtml	
+@@ -39,6 +39,15 @@
+     <li>
+         <div>
+             <a asp-controller="Account" asp-action="BlockedUsers">Blocked Users</a>
++        </div>
++    </li>
++    <li>
++        <div>
++            @using (Html.BeginForm("UpdateImage", "Account", FormMethod.Post))
++            {
++                <input type="text" id="search_text" name="url" asp-route-url="" placeholder="Link to picture"/>
++                <input type="submit" value="Change"/>
++            }
+         </div>
+     </li>
+     <li>
+Index: PostIt.Web/appsettings.Development.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/appsettings.Development.json b/PostIt.Web/appsettings.Development.json
+--- a/PostIt.Web/appsettings.Development.json	
++++ b/PostIt.Web/appsettings.Development.json	
+@@ -12,6 +12,6 @@
+   "GoogleCredentials": {
+     "ClientId": "463589959314-0a30iau14tpjcjbpigl6k39sopudephk.apps.googleusercontent.com",
+     "ClientSecret": "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",
+-    "ApiKey": ""
++    "ApiKey": "AIzaSyBZozUac9lI2piHEoB_VRLrKfGq_O052yM"
+   }
+ }
+Index: PostIt.Web/Views/Home/Index.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Home/Index.cshtml b/PostIt.Web/Views/Home/Index.cshtml
+--- a/PostIt.Web/Views/Home/Index.cshtml	
++++ b/PostIt.Web/Views/Home/Index.cshtml	
+@@ -61,13 +61,14 @@
+                 
+                 <div class="post">
+                     <a class="action" asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
++                        
++                        <img src="@post.Author.ImageUrl" width="50" height="50" alt="profile picture" class="rounded-circle"/>
++                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+                         <h4> @post.Title </h4>
+ 
+                         <p> @post.Description </p>
+-                        <a>@post.TimeAdded |</a> 
+-
+-                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+-                
++                        <a>@post.TimeAdded |</a>
++                        
+                         @if(!string.IsNullOrEmpty(post.MediaLink))
+                         {
+                             <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+@@ -124,6 +125,7 @@
+     height: 200px;
+     border: 1px solid black;
+     margin: 10px auto 0;
++    padding: 10px;
+ }
+ 
+ a#a {
+Index: PostIt.Web/Views/Search/Search.cshtml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/PostIt.Web/Views/Search/Search.cshtml b/PostIt.Web/Views/Search/Search.cshtml
+--- a/PostIt.Web/Views/Search/Search.cshtml	
++++ b/PostIt.Web/Views/Search/Search.cshtml	
+@@ -19,48 +19,83 @@
+         <h2>Results: </h2>
+         
+         var user = _userService.GetByUsername(User.Identity.Name);
+-        var search = ViewContext.RouteData.Values["q"];
+ 
+         foreach(var u in Model.Users) 
+         {
+-            <a asp-controller="Profile" asp-action="Index" asp-route-username="@u.Username">
+-                <img src="@u.ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle">
+-                <a asp-action="Index" asp-controller="Profile" asp-route-username="@u.Username">@u.Username</a>
+-            </a>
++            <div class="user">
++                <a asp-controller="Profile" asp-action="Index" asp-route-username="@u.Username">
++                    <img src="@u.ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle">
++                    <a asp-action="Index" asp-controller="Profile" asp-route-username="@u.Username">@u.Username</a>
++                </a>
++            </div>
+         }
+ 
+         <hr />
+ 
+         foreach (var post in Model.Posts)
+         {
+-        <h4>@post.Title</h4>
++            <div class="post">
++                
++                <h4>@post.Title</h4>
+ 
+-        <p>@post.Description</p>
+-        <a>@post.TimeAdded |</a> 
+-        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+-                
+-            if (post.Author.Username == Context.User.Identity.Name)
+-            {
+-            <a asp-action="Delete" asp-controller="Home" asp-route-id="@post.Id">Delete</a>
+-            }
++                <p>@post.Description</p>
++                <a>@post.TimeAdded |</a>
++                <img src="@post.Author.ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle" />
++                <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
++
++                @if (!User.Identity.IsAuthenticated)
++                {
++                    return;
++                }
++
++                @if (post.Author.Username == Context.User.Identity.Name)
++                {
++                    <a asp-action="Delete" asp-controller="Home" asp-route-id="@post.Id">Delete</a>
++                }
+ 
+-            if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { FollowingId = post.Author.Id}))
+-            {
+-            <a asp-action="Follow" asp-controller="Home" asp-route-id="@post.Author.Id">Follow</a>
+-            }
+-                
+-            if (!post.Likes.Contains(user))
+-            {
+-            <a asp-action="Like" asp-controller="Home" asp-route-id="@post.Id">Like</a>
+-            }
+-            else if (post.Likes.Contains(user))
+-            {
+-            <a asp-action="Unlike" asp-controller="Home" asp-route-id="@post.Id">Unlike</a>
+-            }
+-                
+-            <p> <a>&#10084; @post.Likes.Count</a> </p>
++                @if (!post.Author.Equals(_userService.GetByUsername(User.Identity.Name)) && !user!.Following.Contains(new Following { FollowingId = post.Author.Id }))
++                {
++                    <a asp-action="Follow" asp-controller="Home" asp-route-id="@post.Author.Id">Follow</a>
++                }
++
++                <p>
++
++                    @if(Context.User.Identity.IsAuthenticated) 
++                    {
++                        if (!post.Likes.Contains(user))
++                        {
++                            <a asp-action="Like" class="action" asp-controller="Home" asp-route-id="@post.Id">🤍 @post.Likes.Count</a>
++                        }
++                        else if (post.Likes.Contains(user))
++                        {
++                            <a asp-action="Unlike" asp-controller="Home" asp-route-id="@post.Id">&#10084; @post.Likes.Count</a>
++                        }
++                    }
++                    
++                    <a>&#128488; @post.Comments.Count</a> 
+                 
+-            <hr/>
++                </p>
++            </div>                           
+         }
+     }
+ }
++
++<style>
++    .user {
++        padding: 5px;
++    }
++    
++    .post {
++        background-color: rgb(237, 235, 235);
++        width: 80%;
++        height: 200px;
++        border: 1px solid black;
++        margin: 10px auto 0;
++        padding-top: 5px;
++    }
++    
++    .action {
++        text-decoration: none;
++        color: black;
++    }
++</style>
+\ No newline at end of file

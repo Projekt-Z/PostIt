@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
+using PostIt.Web.Hubs;
 using PostIt.Web.Services;
 using PostIt.Web.Services.DefaultAuthentication;
 using PostIt.Web.Services.Posts;
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<ApplicationContext>(o =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
@@ -75,5 +77,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

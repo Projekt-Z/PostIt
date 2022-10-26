@@ -1,0 +1,136 @@
+Index: .idea/.idea.PostIt/.idea/workspace.xml
+===================================================================
+diff --git a/.idea/.idea.PostIt/.idea/workspace.xml b/.idea/.idea.PostIt/.idea/workspace.xml
+--- a/.idea/.idea.PostIt/.idea/workspace.xml	
++++ b/.idea/.idea.PostIt/.idea/workspace.xml	
+@@ -6,12 +6,17 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Search/Search.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Search/Search.cshtml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -22,11 +27,15 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
++        <option value="CSS File" />
+         <option value="JavaScript File" />
+       </list>
+     </option>
+   </component>
+   <component name="HighlightingSettingsPerFile">
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c2a72f7fe70b4723a5d0dda57d0b15831cba88/98/cdbd4593/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
++    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d76d1de163a012d58994899c89ffd7dae80790/LoggerMessage.g.cs" root0="SKIP_HIGHLIGHTING" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+@@ -38,15 +47,16 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "list.type.of.created.stylesheet": "CSS",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
+   }
+-}</component>
++}]]></component>
+   <component name="RunManager" selected=".NET Launch Settings Profile.PostIt.Web">
+     <configuration name="PostIt.Web" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj" />
+@@ -90,7 +100,9 @@
+       <workItem from="1666196930998" duration="327000" />
+       <workItem from="1666197312211" duration="11602000" />
+       <workItem from="1666285640656" duration="600000" />
+-      <workItem from="1666286599959" duration="5059000" />
++      <workItem from="1666286599959" duration="5637000" />
++      <workItem from="1666293191650" duration="5754000" />
++      <workItem from="1666299980568" duration="2157000" />
+     </task>
+     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
+       <created>1666198764320</created>
+@@ -106,7 +118,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1666209621269</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="quick fixes">
++      <created>1666292021232</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1666292021232</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -129,39 +148,7 @@
+     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+     <MESSAGE value="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing" />
+     <MESSAGE value="FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'" />
+-    <option name="LAST_COMMIT_MESSAGE" value="FIXED Null error on Post.Comments.Author by Adding '.ThenInclude()'" />
+-  </component>
+-  <component name="XDebuggerManager">
+-    <breakpoint-manager>
+-      <breakpoints>
+-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+-          <url>file://$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml</url>
+-          <line>19</line>
+-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Views\Home\Index.cshtml" initialLine="18" isMultiMethodBreakpoint="true">
+-            <option name="multiMethodBreakpoint" value="true" />
+-            <startOffsets>
+-              <option value="-1" />
+-            </startOffsets>
+-            <endOffsets>
+-              <option value="-1" />
+-            </endOffsets>
+-          </properties>
+-          <option name="timeStamp" value="3" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+-          <url>file://$PROJECT_DIR$/PostIt.Web/Services/UserService.cs</url>
+-          <line>133</line>
+-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Services\UserService.cs" initialLine="133" containingFunctionPresentation="method 'GetMostFollowedDesc'">
+-            <startOffsets>
+-              <option value="3655" />
+-            </startOffsets>
+-            <endOffsets>
+-              <option value="3672" />
+-            </endOffsets>
+-          </properties>
+-          <option name="timeStamp" value="4" />
+-        </line-breakpoint>
+-      </breakpoints>
+-    </breakpoint-manager>
++    <MESSAGE value="quick fixes" />
++    <option name="LAST_COMMIT_MESSAGE" value="quick fixes" />
+   </component>
+ </project>
+\ No newline at end of file
