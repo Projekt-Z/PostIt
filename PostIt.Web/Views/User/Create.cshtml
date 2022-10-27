@@ -38,7 +38,10 @@
         <span asp-validation-for="Email" class="text-danger"></span>
         
         <label class="control-label">Phone Number</label>
-        <input asp-for="PhoneNumber" class="form-control" type="tel" />
+        <input asp-for="PhoneNumber" id="phone-number" class="form-control" type="tel" />
+        
+        <p id="validation-number" style="color: red;"></p>
+        
     </div>
     <div class="form-group">
         <input type="submit" id="submit" value="Create" class="btn btn-primary" />
@@ -47,13 +50,14 @@
 
 <script>
 
+    let submit = document.getElementById("submit");
+
     function checkPassword() {   
         let passwordInput = document.getElementById('password').value;
         let passwordConfirmationInput = document.getElementById('passwordConfirmation').value;
         let valid = document.getElementById("validation-password");
-        let submit = document.getElementById("submit");
 
-        if (passwordInput != passwordConfirmationInput) {
+        if (passwordInput !== passwordConfirmationInput) {
             valid.innerText = "Passwords are not the same!"
             submit.disabled = true;
         }
@@ -63,7 +67,29 @@
         }
 
     }
+    
+    function checkPhoneNumber() {
+        let phoneInput = document.getElementById('phone-number').value;
+        let valid = document.getElementById("validation-number");
+
+        
+        if (!phoneNumberRegex(phoneInput) && phoneInput !== "") {
+            valid.innerText = "Phone number is not valid";
+            submit.disabled = true; 
+        }
+        else {
+            valid.innerText = "";
+            submit.disabled = false;
+        }
+    }
+
+    function phoneNumberRegex(number)  {
+        let re = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{3})$/
+        
+        return re.test(number)
+    }
 
     setInterval(checkPassword, 1);
+    setInterval(checkPhoneNumber, 1);
 
 </script>

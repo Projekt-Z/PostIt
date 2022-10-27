@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Authentication;
 using PostIt.Web.Enums;
+using PostIt.Web.Helpers;
 using PostIt.Web.Services;
 using PostIt.Web.Services.DefaultAuthentication;
 
@@ -56,6 +57,12 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             var success = _userService.Add(creationRequest, EAuthType.Default, profilePicture, string.Empty);
+
+            if (creationRequest.PhoneNumber != null && !creationRequest.PhoneNumber.IsValidPhoneNumber())
+            {
+                return Task.FromResult<IActionResult>(RedirectToAction("Index","User"));
+            }
+            
             if (!success)
             {
                 return Task.FromResult<IActionResult>(RedirectToAction("Index","User"));

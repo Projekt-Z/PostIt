@@ -61,11 +61,15 @@
         <ul id="messagesList">
             @{
                 var sender = userService.GetByUsername(User.Identity.Name!);
-            }                
+                sender!.Messages ??= new();
+            }
             
             @foreach (var message in chatService.GetMessages(sender!.Id, Model.Id))
             {
                 <li>
+                    <a asp-action="Index" asp-controller="Profile">
+                        <img src="@sender.ImageUrl" alt="profile picture" width="15" height="15"/>
+                    </a>
                     @message.User.Name: @message.Text
                 </li>
             }

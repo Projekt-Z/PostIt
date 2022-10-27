@@ -65,6 +65,7 @@ public class UserService : IUserService
             .Include(x => x.Followers)
             .Include(x => x.Following)
             .Include(x => x.BlockedUsers)
+            .Include(x => x.Messages)
             .FirstOrDefault(x => x.Username == username);
         
         return user ?? null;
