@@ -4,7 +4,8 @@ namespace PostIt.Web.Services.Posts;
 
 public interface IPostService
 {
-    List<Post> GetAll();
+    IEnumerable<Post> GetAll();
+    List<Post> GetAll(string username);
     List<Post> GetAllYours(string username);
     List<Post> GetAllLiked(string username);
     Post? Get(int id);

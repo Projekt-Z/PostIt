@@ -7,21 +7,55 @@ namespace PostIt.Web.Services.Posts;
 public class PostService : IPostService
 {
     private readonly ApplicationContext _context;
+    private readonly IUserService _userService;
 
-    public PostService(ApplicationContext context)
+    public PostService(ApplicationContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
     
-    public List<Post> GetAll()
+    /// <summary>
+    /// Pseudo algorithm for searching all your posts, all posts users you follow, and following liked posts. 
+    /// </summary>
+    /// <param name="username">Authenticated user username</param>
+    /// <returns></returns>
+    public List<Post> GetAll(string username)
     {
-            return _context.Posts
+        var user = _context.Users.Include(x => x.Following).FirstOrDefault(x => x.Username == username);
+
+        if (user is null) return null!;
+        
+        foreach (var following in user.Following)
+        {
+            var posts = _context.Posts
+                .Include(x => x.Author)
+                .Include(x => x.Likes)
+                .Include(x => x.Comments)
+                .Where(x => x.Author.Id == following.FollowingId).ToList();
+
+            var likedPosts = _context.Users
+                .Include(x => x.PostLiked)
+                .ThenInclude(x => x.Likes)
+                .Include(x => x.PostLiked)
+                .ThenInclude(x => x.Comments)
+                .FirstOrDefault(x => x.Id == following.FollowingId)?.PostLiked;
+
+            return posts.Concat(likedPosts ?? new ()).Concat(GetAllYours(username)).OrderByDescending(x => x.TimeAdded).ToList();
+        }
+        
+        return new List<Post>();
+    }
+
+    public IEnumerable<Post> GetAll()
+    {
+        return _context.Posts
             .Include(x => x.Author)
             .Include(x => x.Likes)
             .Include(x => x.Comments)
-            .OrderByDescending(x => x.TimeAdded).ToList();
+            .OrderByDescending(x => x.TimeAdded);
     }
-
+    
     public List<Post> GetAllYours(string username)
     {
         return _context.Users

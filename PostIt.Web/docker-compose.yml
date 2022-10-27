@@ -10,9 +10,19 @@ services:
     ports:
       - "5432:5432"
   
+  cache:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'  
+    environment:
+      REDIS_HOST: localhost
+      REDIS_PORT: 6379
+      
   postitweb:
     build: .
     ports:
       - "8080:80"
     depends_on: 
       - postgres
+      - cache

@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PostIt.Web.Enums
 @using PostIt.Web.Services
-@model IEnumerable<Post>
+@model IEnumerable<Post>?
 
 @inject IUserService _userService
 
@@ -9,8 +9,59 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (Context.User.Identity.IsAuthenticated)
+@if (!Context.User.Identity.IsAuthenticated)
 {
+    <p class="text-center">Please
+    
+        <a asp-controller="Authentication" asp-action="GoogleLogin">Log In with google</a> <br/>
+        <a asp-controller="User" asp-action="Create">Create new account</a> <br/>
+        <a asp-controller="User" asp-action="Login">Log In</a> <br/>
+        
+        in order to use this App
+    </p>
+    
+    return;
+}
+
+@if (Model is null || !Model.Any())
+{
+    <h3 class="text-primary">Seems like you are not following anyone? Here is a list of users to follow:</h3>
+    <em>pssst.. you need to start somewhere</em>
+    
+    var usr = _userService.GetByUsername(User.Identity.Name);
+    
+    var usrs = _userService.GetMostFollowedDesc(15, usr.Username);
+
+    foreach (var u in usrs)
+    {
+        <div>
+            <h6>
+                <img alt="profile" src="@u.ImageUrl" width="20" height="20" class="rounded-circle"/>
+                <a asp-action="Index" asp-controller="Profile" asp-route-username="@u.Username">@u.Username</a>
+            </h6>
+
+            <a>Followers: @u.Followers.Count</a>
+                
+            @{
+                var a = usr!.Following.Contains(new Following { FollowingId = u.Id });
+
+
+                if (a == false || usr.Following.Count == 0)
+                {
+                    <a asp-action="Follow" asp-route-id="@u.Id">Follow</a>
+                }
+                else 
+                {
+                    <a>Following</a>
+                }
+            }
+            <hr />
+        </div>
+    }
+    return;
+}
+
+@{
     var user = _userService.GetByUsername(User.Identity.Name);
     
     <div id="who_to_follow" class="w-25 h-auto">
@@ -49,8 +100,6 @@
     </div>
     
     <div class="text-center">
-        <h1 class="display-4">Welcome @Context.User.Identity.Name !</h1>
-        
         <p>
             <a asp-action="Post" asp-controller="Home">Write a Post!</a>
         </p>
@@ -60,13 +109,26 @@
             {
                 
                 <div class="post">
+                    @if (post.Likes.Count > 0)
+                    {
+                        var userWhoLiked = post.Likes[0];
+                                        
+                        <a asp-action="Index" class="action" asp-controller="Profile" asp-route-username="@userWhoLiked.Username" class="text-primary">
+                            <img src="@userWhoLiked.ImageUrl" width="15" height="15" alt="profile picture" class="rounded-circle"/>
+                            Liked by @userWhoLiked.Username
+                        </a>
+                    }
+                
                     <a class="action" asp-action="Index" id="a" asp-controller="Post" asp-route-id="@post.Id">
                         <h4> @post.Title </h4>
 
                         <p> @post.Description </p>
                         <a>@post.TimeAdded |</a> 
 
-                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">@post.Author.Username</a>
+                        <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">
+                            <img src="@post.Author.ImageUrl" width="30" height="30" alt="profile picture" class="rounded-circle"/>
+                            @post.Author.Username
+                        </a>
                 
                         @if(!string.IsNullOrEmpty(post.MediaLink))
                         {
@@ -103,17 +165,6 @@
         </div>
         
     </div>
-}
-else
-{
-    <p class="text-center">Please
-    
-        <a asp-controller="Authentication" asp-action="GoogleLogin">Log In with google</a> <br/>
-        <a asp-controller="User" asp-action="Create">Create new account</a> <br/>
-        <a asp-controller="User" asp-action="Login">Log In</a> <br/>
-        
-        in order to use this App
-    </p>
 }
 
 <style>

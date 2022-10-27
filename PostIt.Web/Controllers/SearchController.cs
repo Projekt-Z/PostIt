@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PostIt.Web.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Search;
 using PostIt.Web.Services;
 using PostIt.Web.Services.Posts;

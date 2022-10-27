@@ -7,15 +7,16 @@
   <component name="ChangeListManager">
     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Added List of following users by you to Chat Index">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Data/ApplicationContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Hubs/ChatHub.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Hubs/ChatHub.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/IPostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/IPostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Chat/Chat.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/wwwroot/js/chat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,10 +32,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c2a72f7fe70b4723a5d0dda57d0b15831cba88/98/cdbd4593/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ef6e9cab77d34786ac7dd38cf78b37393ac90/75/3031e5b7/RazorPage`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/575c31ecc35a636b6f962cb71d53992552941a18982aae1c8e6c16305cc3761b/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af5e8f58e0cd43a56f652468b1080bbdbf4276e50cddad25571e6f22556715/EntityFrameworkQueryableExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d76d1de163a012d58994899c89ffd7dae80790/LoggerMessage.g.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -105,6 +109,7 @@
       <workItem from="1666716457018" duration="2042000" />
       <workItem from="1666719308118" duration="7565000" />
       <workItem from="1666801556364" duration="16514000" />
+      <workItem from="1666886516872" duration="5512000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>

@@ -25,7 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View("~/Views/Home/Index.cshtml", _postService.GetAll());
+        return View("~/Views/Home/Index.cshtml", _postService.GetAll(HttpContext.User.Identity?.Name ?? string.Empty));
     }
 
     [Authorize]

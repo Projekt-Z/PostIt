@@ -63,7 +63,8 @@
                 @if (Context.User.Identity.IsAuthenticated)
                 {
                     <a asp-controller="Profile" asp-action="Index" asp-route-username="@User.Identity.Name">
-                        <img src="@_userService.GetByUsername(User.Identity.Name).ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle"> 
+                        &#64;@User.Identity.Name
+                        <img src="@_userService.GetByUsername(User.Identity.Name).ImageUrl" alt="Profile Picture" width="30" height="30" class="rounded-circle">
                     </a>   
                 }
 
