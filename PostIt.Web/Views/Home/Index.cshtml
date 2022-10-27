@@ -38,6 +38,7 @@
             <h6>
                 <img alt="profile" src="@u.ImageUrl" width="20" height="20" class="rounded-circle"/>
                 <a asp-action="Index" asp-controller="Profile" asp-route-username="@u.Username">@u.Username</a>
+                <em>@u.Description</em>
             </h6>
 
             <a>Followers: @u.Followers.Count</a>

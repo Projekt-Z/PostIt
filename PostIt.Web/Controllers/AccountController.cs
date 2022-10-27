@@ -67,6 +67,19 @@ public class AccountController : Controller
         return View(users);
     }
 
+    [Route("Description")]
+    [HttpPost]
+    public IActionResult UpdateDescription(User user)
+    {
+        var u = _userService.Get(user.Id);
+
+        u.Description = user.Description;
+
+        _context.SaveChanges();
+
+        return RedirectToAction("Index", "Profile", new {username = u.Username});
+    }
+    
     [Route("UpdateUsername")]
     public IActionResult UpdateUsername()
     {

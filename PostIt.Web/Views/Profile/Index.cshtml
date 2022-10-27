@@ -19,9 +19,20 @@
     </div>
 </div>
 
+@if (Model.Username == User.Identity.Name && User.Identity.IsAuthenticated)
+{
+    <a>Account desciption</a>
+    <form asp-action="UpdateDescription" asp-controller="Account">
+        <input asp-for="Description" type="text" value="@Model.Description" placeholder="Say something about you!"/>
+        <input asp-for="Id" hidden value="@Model.Id"/>
+
+        <input type="submit" value="Change"/>
+    </form>
+}
 
 <b> <p>@Model.Name</p> </b>
 <a>&#64;@Model.Username</a>
+<em>@Model.Description</em>
 
 <br/>
 <p>Jonied @Model.CreatedOn</p>

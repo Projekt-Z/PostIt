@@ -23,6 +23,7 @@ public class User
     public string PhoneNumber { get; set; } = default!;
 
     public string CreatedOn { get; set; } = default!;
+    public string? Description { get; set; }
     public string? ImageUrl { get; set; }
     public string? BackgroundUrl { get; set; }
     public string? ConnectionId { get; set; }
