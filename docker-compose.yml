@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  postitdb:
+    image: ${DOCKER_REGISTRY-}postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1337
+      - POSTGRES_DB=PostItDb
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+  
+  postit:
+    image: ${DOCKER_REGISTRY-}postit
+    build:
+      context: PostIt.Web
+      dockerfile: Dockerfile
+    depends_on:
+      - postitdb
+
+volumes:
+  database-data:
+    

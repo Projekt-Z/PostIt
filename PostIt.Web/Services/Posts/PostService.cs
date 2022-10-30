@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using PostIt.Web.Data;
+using PostIt.Web.Helpers;
 using PostIt.Web.Models;
 
 namespace PostIt.Web.Services.Posts;
@@ -8,11 +11,13 @@ public class PostService : IPostService
 {
     private readonly ApplicationContext _context;
     private readonly IUserService _userService;
+    private readonly IDistributedCache _cache;
 
-    public PostService(ApplicationContext context, IUserService userService)
+    public PostService(ApplicationContext context, IUserService userService, IDistributedCache cache)
     {
         _context = context;
         _userService = userService;
+        _cache = cache;
     }
     
     /// <summary>
@@ -24,6 +29,8 @@ public class PostService : IPostService
     {
         var user = _context.Users.Include(x => x.Following).FirstOrDefault(x => x.Username == username);
 
+        var joinedPosts = new List<Post>();
+        
         if (user is null) return null!;
         
         foreach (var following in user.Following)
@@ -41,7 +48,7 @@ public class PostService : IPostService
                 .ThenInclude(x => x.Comments)
                 .FirstOrDefault(x => x.Id == following.FollowingId)?.PostLiked;
 
-            return posts.Concat(likedPosts ?? new ()).Concat(GetAllYours(username)).OrderByDescending(x => x.TimeAdded).ToList();
+            return joinedPosts.Concat(posts).Concat(likedPosts ?? new ()).Concat(GetAllYours(username)).OrderByDescending(x => x.TimeAdded).ToList();
         }
         
         return new List<Post>();
@@ -99,6 +106,16 @@ public class PostService : IPostService
     {
         _context.Posts.Add(post);
         post.Author.Posts.Add(post);
+
+        var postJson = JsonConvert.SerializeObject(post, new JsonSerializerSettings 
+        { 
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
+
+        foreach (var follower in post.Author.Followers)
+        {
+            _cache.SetStringAsync(CacheKeyGenerator.Generate(follower.FollowerId.ToString(), post.Author.Id), postJson);
+        }
 
         post.Likes = new List<User>();
         

@@ -17,11 +17,11 @@ public class SearchController : Controller
         _userService = userService;
     }
 
-    public IActionResult Search([FromQuery] string q)
+    public IActionResult Search([FromQuery] string? q)
     {
-        if (!HttpContext.User.Identity.IsAuthenticated)
+        if (q is null)
         {
-            return RedirectToAction("Index", "Home");
+            return View(null);
         }
 
         var query = q.ToLower();

@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  postit:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5088
+    ports:
+      - "5088:5088"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    
+  postitdb:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1337
+      - POSTGRES_DB=PostItDb
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - database-data:/var/lib/postgresql/data/

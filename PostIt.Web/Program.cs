@@ -17,6 +17,16 @@ builder.Services.AddDbContext<ApplicationContext>(o =>
     o.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb"));
 });
 
+#region redis
+
+builder.Services.AddDistributedRedisCache(o =>
+{
+    o.Configuration = builder.Configuration.GetConnectionString("RedisCache");
+    o.InstanceName = "redisOne";
+});
+
+#endregion
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
