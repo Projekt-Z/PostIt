@@ -8,6 +8,7 @@ using PostIt.Web.Services;
 using PostIt.Web.Services.Chat;
 using PostIt.Web.Services.DefaultAuthentication;
 using PostIt.Web.Services.Posts;
+using PostIt.Web.Services.Smtp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IDefaultAuthenticationService, DefaultAuthenticationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<ISmtpService, SmtpService>();
 
 #region Google oAuth2
 

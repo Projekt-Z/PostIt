@@ -1,0 +1,14 @@
+﻿@model PostIt.Web.Dtos.Authentication.CreateConfirm
+
+@{
+    ViewBag.Title = "Account creation confirmation";
+    Layout = "_Layout";
+}
+
+<form asp-action="CreateConfirm">
+    <label class="control-label">Your code from @Model.Email</label>
+    <input asp-for="Code" type="number" placeholder="Code..."/> <br/>
+    <input asp-for="Email" value="@Model.Email" hidden/>
+    
+    <input type="submit" value="Confirm email"/>
+</form>

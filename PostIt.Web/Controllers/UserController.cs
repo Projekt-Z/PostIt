@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using PostIt.Web.Data;
 using PostIt.Web.Dtos.Authentication;
+using PostIt.Web.Dtos.Smtp;
 using PostIt.Web.Enums;
 using PostIt.Web.Helpers;
 using PostIt.Web.Services;
 using PostIt.Web.Services.DefaultAuthentication;
+using PostIt.Web.Services.Smtp;
 
 namespace PostIt.Web.Controllers;
 
@@ -16,11 +20,21 @@ public class UserController : Controller
 {
     private readonly IUserService _userService;
     private readonly IDefaultAuthenticationService _authService;
+    private readonly IDistributedCache _cache;
+    private readonly ISmtpService _smtpService;
+    private readonly ApplicationContext _context;
 
-    public UserController(IUserService userService, IDefaultAuthenticationService authService)
+    public UserController(
+        IUserService userService, 
+        IDefaultAuthenticationService authService, 
+        IDistributedCache cache, ISmtpService smtpService, 
+        ApplicationContext context)
     {
         _userService = userService;
         _authService = authService;
+        _cache = cache;
+        _smtpService = smtpService;
+        _context = context;
     }
     
     [Authorize]
@@ -47,6 +61,48 @@ public class UserController : Controller
         return RedirectToAction("Index", "Home");
     }
     
+    [Route("Create/Confirm")]
+    public IActionResult CreateConfirm(CreateConfirm confirm)
+    {
+        return View("CreateConfirm", confirm);
+    }
+    
+    [HttpPost, ActionName("Create/Confirm")]
+    [Route("Create/Confirm")]
+    [ValidateAntiForgeryToken]
+    public IActionResult CreateConfirmConfirmed(CreateConfirm confirm)
+    {
+        if (ModelState.IsValid)
+        {
+            var code = _cache.GetString(confirm.Email);
+
+            if (confirm.Code != int.Parse(code))
+            {
+                return RedirectToAction("CreateConfirm", confirm);
+            }
+
+            var user = _userService.GetByEmail(confirm.Email!);
+
+            user.VerifiedEmail = true;
+            _context.SaveChanges();
+            
+            var claims = new List<Claim>
+            {
+                new (ClaimTypes.Name, user.Username)
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            var props = new AuthenticationProperties();
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, props).Wait();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        return RedirectToAction("CreateConfirm", confirm);
+    }
+    
     [HttpPost, ActionName("Create")]
     [Route("Create")]
     [ValidateAntiForgeryToken]
@@ -57,6 +113,19 @@ public class UserController : Controller
         if (ModelState.IsValid)
         {
             var success = _userService.Add(creationRequest, EAuthType.Default, profilePicture, string.Empty);
+
+            var code = Random.Shared.Next();
+            
+            // Setting the code into redis cluster
+            _cache.SetString(creationRequest.Email, code.ToString());
+            
+            // Send Mail with code
+            _smtpService.Send(new MailRequestDto
+            {
+                ToAddress = creationRequest.Email,
+                Subject = "Confirm your Account - PostIt",
+                Body = @$"<p style=""text-align: center;""> Your code is: {code} </p>"
+            });
 
             if (creationRequest.PhoneNumber != null && !creationRequest.PhoneNumber.IsValidPhoneNumber())
             {
@@ -69,11 +138,10 @@ public class UserController : Controller
             }
         }
 
-        return LoginConfirmed(new UserLoginRequest
+        return Task.FromResult<IActionResult>(RedirectToAction("CreateConfirm", new CreateConfirm
         {
-            EmailOrRUsername = creationRequest.Email,
-            Password = creationRequest.Password!
-        });
+            Email = creationRequest.Email
+        }));
     }
     
     [Route("Login")]
@@ -94,13 +162,13 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = _userService.GetByEmail(loginRequest.EmailOrRUsername);
-            
-            if (user is null)
-            {
-                user = _userService.GetByUsername(loginRequest.EmailOrRUsername);
-            }
+            var user = _userService.GetByEmail(loginRequest.EmailOrRUsername) ?? _userService.GetByUsername(loginRequest.EmailOrRUsername);
 
+            if (!user!.VerifiedEmail)
+            {
+                return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
+            }
+            
             var login = _authService.Login(loginRequest.EmailOrRUsername, loginRequest.Password);
 
             if (!login)

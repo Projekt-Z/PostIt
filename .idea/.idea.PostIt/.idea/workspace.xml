@@ -7,15 +7,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/SearchController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/PostIt.Web.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Search/Search.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Search/Search.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/UserService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,14 +29,17 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c2a72f7fe70b4723a5d0dda57d0b15831cba88/98/cdbd4593/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ef6e9cab77d34786ac7dd38cf78b37393ac90/75/3031e5b7/RazorPage`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/575c31ecc35a636b6f962cb71d53992552941a18982aae1c8e6c16305cc3761b/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/91c68e7dbd3550854d7e2c9a886f4aa32eeb553742cef4cbbad0f26217b1cb/DistributedCacheExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af5e8f58e0cd43a56f652468b1080bbdbf4276e50cddad25571e6f22556715/EntityFrameworkQueryableExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d1f68ef86315497c7b39ddb155d5cf3ace964abca69857f9943cd58479799/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d76d1de163a012d58994899c89ffd7dae80790/LoggerMessage.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dcf63bd710ab768fc442a7a2112df62d37348b5e52c73843c9633a4b57245c0/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f4d9a133305e4a386417768eca2b59e29cbf89ff5e3143243f5f711a4744e18/RedisCache.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -113,7 +113,7 @@
       <workItem from="1666886516872" duration="11516000" />
       <workItem from="1666992789721" duration="1665000" />
       <workItem from="1667058256559" duration="3858000" />
-      <workItem from="1667156665486" duration="1057000" />
+      <workItem from="1667156665486" duration="7350000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -185,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1666993810491</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="docker-compose and Search Service bug fixed">
+      <created>1667157782871</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1667157782871</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +222,8 @@
     <MESSAGE value="‼UPDATED‼ Post Service - Getting Posts from your following and their liked posts" />
     <MESSAGE value="➕ Account Description" />
     <MESSAGE value="Fixed chat bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed chat bugs" />
+    <MESSAGE value="docker-compose and Search Service bug fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="docker-compose and Search Service bug fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

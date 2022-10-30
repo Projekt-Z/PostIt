@@ -40,6 +40,7 @@ public class UserService : IUserService
             Roles = ERoleType.User,
             AccountType = authType,
             Posts = new List<Post>(),
+            VerifiedEmail = false,
             PasswordHash = request.Password ?? string.Empty,
             Salt = string.Empty
         };
