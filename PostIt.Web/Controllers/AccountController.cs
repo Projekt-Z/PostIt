@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Data;
 using PostIt.Web.Dtos.AccountActions;
+using PostIt.Web.Dtos.Smtp;
 using PostIt.Web.Models;
 using PostIt.Web.Services;
+using PostIt.Web.Services.Smtp;
 
 namespace PostIt.Web.Controllers;
 
@@ -13,11 +15,13 @@ public class AccountController : Controller
 {
     private readonly IUserService _userService;
     private readonly ApplicationContext _context;
+    private readonly ISmtpService _smtpService;
 
-    public AccountController(IUserService userService, ApplicationContext context)
+    public AccountController(IUserService userService, ApplicationContext context, ISmtpService smtpService)
     {
         _userService = userService;
         _context = context;
+        _smtpService = smtpService;
     }
 
     [AllowAnonymous]
@@ -78,6 +82,28 @@ public class AccountController : Controller
         _context.SaveChanges();
 
         return RedirectToAction("Index", "Profile", new {username = u.Username});
+    }
+
+    [Route("Issues")]
+    public IActionResult Issues()
+    {
+        return View();
+    }
+
+    [HttpPost("Issues")]
+    [ActionName("Issues")]
+    [ValidateAntiForgeryToken]
+    public IActionResult IssuesSend(BugRequest request)
+    {
+        var success = _smtpService.BugRequest(request);
+
+        if (!success)
+        {
+            return RedirectToAction(nameof(Issues), request);
+        }
+
+        ViewData["Message"] = "Email was sent";
+        return RedirectToAction(nameof(Issues));
     }
     
     [Route("UpdateUsername")]

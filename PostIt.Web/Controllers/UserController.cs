@@ -166,7 +166,23 @@ public class UserController : Controller
 
             if (!user!.VerifiedEmail)
             {
-                return Task.FromResult<IActionResult>(RedirectToAction(nameof(Index)));
+                var code = Random.Shared.Next();
+            
+                // Setting the code into redis cluster
+                _cache.SetString(user.Email, code.ToString());
+            
+                // Send Mail with code
+                _smtpService.Send(new MailRequestDto
+                {
+                    ToAddress = user.Email,
+                    Subject = "Confirm your Account - PostIt",
+                    Body = @$"<p style=""text-align: center;""> Your code is: {code} </p>"
+                });
+
+                return Task.FromResult<IActionResult>(RedirectToAction(nameof(CreateConfirm), new CreateConfirm
+                {
+                    Email = user.Email
+                }));
             }
             
             var login = _authService.Login(loginRequest.EmailOrRUsername, loginRequest.Password);
