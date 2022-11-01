@@ -1,3 +1,4 @@
+using System.Net;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -184,6 +185,15 @@ public class UserController : Controller
                     Email = user.Email
                 }));
             }
+
+            var ip = new WebClient().DownloadString("https://ipv4.icanhazip.com/").TrimEnd();
+            
+            _smtpService.Send(new MailRequestDto
+            {
+                ToAddress = user.Email,
+                Subject = "New login detected - PostIt",
+                Body = @$"<p>Someone with IP: {ip} at {DateTime.UtcNow} UTC has logged in to tour account. If that was you, You can ignore this message.</p>"
+            });
             
             var login = _authService.Login(loginRequest.EmailOrRUsername, loginRequest.Password);
 

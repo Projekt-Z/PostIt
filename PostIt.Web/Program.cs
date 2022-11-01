@@ -7,6 +7,7 @@ using PostIt.Web.Hubs;
 using PostIt.Web.Services;
 using PostIt.Web.Services.Chat;
 using PostIt.Web.Services.DefaultAuthentication;
+using PostIt.Web.Services.Notification;
 using PostIt.Web.Services.Posts;
 using PostIt.Web.Services.Smtp;
 
@@ -38,6 +39,7 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IDefaultAuthenticationService, DefaultAuthenticationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<ISmtpService, SmtpService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 #region Google oAuth2
 

@@ -5,13 +5,13 @@
     <projectFile profileName="PostIt.Web">PostIt.Web/PostIt.Web.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
+    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Generating random text in Post placeholder">
+      <change afterPath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/smtp.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/smtp.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +40,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dcf63bd710ab768fc442a7a2112df62d37348b5e52c73843c9633a4b57245c0/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f4d9a133305e4a386417768eca2b59e29cbf89ff5e3143243f5f711a4744e18/RedisCache.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Controllers/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Views/Home/Post.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -116,7 +119,7 @@
       <workItem from="1667156665486" duration="7714000" />
       <workItem from="1667167563576" duration="4971000" />
       <workItem from="1667219427379" duration="3942000" />
-      <workItem from="1667302521811" duration="1075000" />
+      <workItem from="1667302521811" duration="17597000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -209,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667178421577</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Generating random text in Post placeholder">
+      <created>1667303875864</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1667303875864</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,7 +252,8 @@
     <MESSAGE value="docker-compose and Search Service bug fixed" />
     <MESSAGE value="Added SMTP Service, Sending codes on account creation via google smtp.&#10;Storing codes in Redis Cluster" />
     <MESSAGE value="Creating a bug request ticket" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating a bug request ticket" />
+    <MESSAGE value="Generating random text in Post placeholder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Generating random text in Post placeholder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

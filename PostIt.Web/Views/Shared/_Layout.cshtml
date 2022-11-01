@@ -1,6 +1,8 @@
 ﻿@using PostIt.Web.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PostIt.Web.Services.Notification
 @inject IUserService _userService
+@inject INotificationService _notificationService
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,13 +37,23 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">🏠 Home</a>
                     </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            @if (_notificationService.Pop(_userService.GetByUsername(User.Identity.Name).Id) is not null)
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index"> 🔔🔔 Notifications</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index">🔔 Notifications</a>
+                            }
+                        </li>   
+                    }
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">👤 Account</a>
                     </li>
                 </ul>
                 

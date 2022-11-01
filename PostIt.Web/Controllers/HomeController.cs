@@ -4,8 +4,10 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PostIt.Web.Dtos.Post;
+using PostIt.Web.Enums;
 using PostIt.Web.Models;
 using PostIt.Web.Services;
+using PostIt.Web.Services.Notification;
 using PostIt.Web.Services.Posts;
 
 namespace PostIt.Web.Controllers;
@@ -15,12 +17,14 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IPostService _postService;
     private readonly IUserService _userService;
+    private readonly INotificationService _notificationService;
 
-    public HomeController(ILogger<HomeController> logger, IPostService postService, IUserService userService)
+    public HomeController(ILogger<HomeController> logger, IPostService postService, IUserService userService, INotificationService notificationService)
     {
         _logger = logger;
         _postService = postService;
         _userService = userService;
+        _notificationService = notificationService;
     }
 
     public IActionResult Index()
@@ -55,6 +59,16 @@ public class HomeController : Controller
                 Author = _userService.GetByUsername(HttpContext.User.Identity.Name)
             };
 
+            foreach (var authorFollower in post.Author!.Followers)
+            {
+                _notificationService.Push(authorFollower.FollowerId, new Notification
+                {
+                    Type = ENotificationType.Post,
+                    Title = $"New Post from {post.Author.Name}!",
+                    Content = postRequest.Content
+                });
+            }
+            
             _postService.Add(post);
             return RedirectToAction(nameof(Index));
         }
@@ -87,6 +101,16 @@ public class HomeController : Controller
     public IActionResult Like([FromRoute] int id)
     {
         var user = _userService.GetByUsername(User.Identity!.Name!);
+
+        var post = _postService.Get(id);
+        
+        _notificationService.Push(post!.Author.Id, new Notification
+        {
+            Type = ENotificationType.Like,
+            Title = $"{user.Username} likes yor post!",
+            Content = $"{post.Description}"
+        });
+        
         _postService.Like(id, user.Id);
         return RedirectToAction("Index");
     }
@@ -116,6 +140,14 @@ public class HomeController : Controller
     public IActionResult Follow([FromRoute] Guid id)
     {
         var followedBy = _userService.GetByUsername(User.Identity!.Name!);
+        
+        _notificationService.Push(id, new Notification
+        {
+            Type = ENotificationType.Follow,
+            Title = "New follower!",
+            Content = $"{followedBy.Username} is now following you!"
+        });
+        
         _postService.Follow(id, followedBy.Id);
         return RedirectToAction("Index");
     }

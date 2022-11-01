@@ -1,0 +1,35 @@
+﻿@using PostIt.Web.Enums
+@model List<Notification>?
+
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "_Layout";
+}
+
+<div>
+    @foreach (var notification in Model)
+    {
+        <article class="bg-secondary">
+            @{
+                
+                switch (notification.Type)
+                {
+                    case ENotificationType.Post:
+                        <a>✉</a>
+                        break;
+                    case ENotificationType.Like:
+                        <a>❤</a>
+                        break;
+                    case ENotificationType.Follow:
+                        <a>👤</a>
+                        break;
+                    case ENotificationType.Response:
+                        <a>🤳</a>
+                        break;
+                }
+            }
+            <h5>@notification.Title</h5>
+            <p>@notification.Content</p>
+        </article>
+    }    
+</div>
