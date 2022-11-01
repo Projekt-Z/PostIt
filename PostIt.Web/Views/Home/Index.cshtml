@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using PostIt.Web.Enums
+@using PostIt.Web.Helpers
 @using PostIt.Web.Services
 @model IEnumerable<Post>?
 
@@ -61,6 +62,10 @@
             <hr />
         </div>
     }
+    
+    <p class="text-center">
+        <a asp-action="Post" asp-controller="Home">Write a Post! 📨</a>
+    </p>
     return;
 }
 
@@ -135,7 +140,21 @@
                 
                         @if(!string.IsNullOrEmpty(post.MediaLink))
                         {
-                            <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+                            switch (post.MediaLink.DetectExtension())
+                            {
+                                case EFiles.Image:
+                                    <img src="@post.MediaLink" alt="Image" style="width: 30vw; height: 20vh;" />
+                                    break;
+                                case EFiles.Mp4:
+                                    <video class="h-50">
+                                        <source src="@post.MediaLink" alt="video"/>
+                                    </video>
+                                    break;
+                                case null:
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
 
                         @if (post.Author.Username == Context.User.Identity.Name || user.Roles == ERoleType.Admin)

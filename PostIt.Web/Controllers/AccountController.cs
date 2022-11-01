@@ -95,6 +95,9 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult IssuesSend(BugRequest request)
     {
+        if(!ModelState.IsValid)
+            return RedirectToAction(nameof(Issues));
+        
         var success = _smtpService.BugRequest(request);
 
         if (!success)

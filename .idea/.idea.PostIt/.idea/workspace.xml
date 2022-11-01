@@ -8,10 +8,10 @@
     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Smtp/ISmtpService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Smtp/ISmtpService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Smtp/SmtpService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Smtp/SmtpService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Account/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Post.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/smtp.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/smtp.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +114,9 @@
       <workItem from="1666992789721" duration="1665000" />
       <workItem from="1667058256559" duration="3858000" />
       <workItem from="1667156665486" duration="7714000" />
-      <workItem from="1667167563576" duration="4925000" />
+      <workItem from="1667167563576" duration="4971000" />
+      <workItem from="1667219427379" duration="3942000" />
+      <workItem from="1667302521811" duration="1075000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -200,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667164471501</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Creating a bug request ticket">
+      <created>1667178421577</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667178421577</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +241,8 @@
     <MESSAGE value="Fixed chat bugs" />
     <MESSAGE value="docker-compose and Search Service bug fixed" />
     <MESSAGE value="Added SMTP Service, Sending codes on account creation via google smtp.&#10;Storing codes in Redis Cluster" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added SMTP Service, Sending codes on account creation via google smtp.&#10;Storing codes in Redis Cluster" />
+    <MESSAGE value="Creating a bug request ticket" />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating a bug request ticket" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
