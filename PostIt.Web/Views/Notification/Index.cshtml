@@ -7,6 +7,13 @@
 }
 
 <div>
+    
+    @if (Model is null)
+    {
+        <p>No notifications...</p>
+        return;
+    }
+    
     @foreach (var notification in Model)
     {
         <article class="bg-secondary">
@@ -31,5 +38,5 @@
             <h5>@notification.Title</h5>
             <p>@notification.Content</p>
         </article>
-    }    
+    }
 </div>

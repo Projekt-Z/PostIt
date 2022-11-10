@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PostIt.Web.Data;
 using PostIt.Web.Models;
 using PostIt.Web.Services;
@@ -52,6 +53,31 @@ public class PostController : Controller
 
         _context.SaveChanges();
 
+        return RedirectToAction("Index", "Post", new {id = post.Id});
+    }
+
+    [Authorize]
+    [HttpPost("Reply")]
+    [ValidateAntiForgeryToken]
+    public IActionResult Reply(string content, int id, int postId, string username)
+    {
+        var post = _context.Posts.Include(x => x.Comments).First(x => x.Id == postId);
+
+        var comment = post.Comments!.First(x => x.Id == id);
+
+        comment.Comments ??= new();
+        comment.Comments.Add(
+        new Comment
+        {
+            Author = _userService.GetByUsername(username)!,
+            Content = content,
+            TimeAdded = DateTime.Now.ToString(),
+            Reply = true,
+            Post = post
+        });
+
+        _context.SaveChanges();
+        
         return RedirectToAction("Index", "Post", new {id = post.Id});
     }
 }

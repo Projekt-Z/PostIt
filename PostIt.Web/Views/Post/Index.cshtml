@@ -1,5 +1,4 @@
 ﻿@using PostIt.Web.Services
-@using System.Globalization
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Post
 
@@ -41,7 +40,7 @@
     </div>
     
     <p> Comments: </p>
-    @foreach (var comment in Model.Comments)
+    @foreach (var comment in Model.Comments.Where(modelComment => modelComment.Reply == false))
     {
         <div class="comments_section">
             <a> <img src="@comment.Author.ImageUrl" alt="profile picture" width="30" height="30" class="rounded-circle"/> @comment.Author.Username</a>
@@ -54,6 +53,40 @@
             }
             
             <a>@formattedTimeSpan ago</a>
+            
+            <a id="reply-btn" onclick="Reply()">Reply</a>
+            
+            <div id="reply">
+                @using (Html.BeginForm("Reply", "Post", FormMethod.Post))
+                {
+                    <input type="text" name="content" placeholder="Reply..." />
+                    
+                    <input type="number" name="id" value="@comment.Id" hidden/>
+                    <input type="number" name="postId" value="@Model.Id" hidden/>
+                    <input type="text" name="username" value="@User.Identity.Name" hidden/>
+            
+                    <input type="submit" value="&#128488;" />
+                }
+            </div>
+            
+            <div id="replies">
+                <hr/>
+                @foreach (var reply in comment.Comments ??= new())
+                {
+                    <a> <img src="@reply.Author.ImageUrl" alt="profile picture" width="30" height="30" class="rounded-circle"/> @reply.Author.Username</a>
+                    <h5>@reply.Content</h5>
+
+                    var agoReply = DateTime.Now.Subtract(DateTime.Parse(reply.TimeAdded));
+
+                    var formattedTimeSpanReply = string.Format("{0:D2} hrs, {1:D2} mins, {2:D2} secs", agoReply.Hours, agoReply.Minutes, agoReply.Seconds);
+
+                    <a>@formattedTimeSpanReply ago</a>
+
+                    <br/>
+                    <hr/>
+                }
+            </div>
+            
         </div>
     }
 
@@ -95,4 +128,33 @@
     form {
         margin-top: 10px;
     }
+    
+    #reply {
+        display: none;
+    }
+    
+    #reply:hover {
+        cursor: pointer;
+    }
 </style>
+
+<script>
+let reply = document.getElementById('reply');
+let replyBtn = document.getElementById('reply-btn');
+
+let clicked = false;
+
+function Reply() {
+   
+    console.log("clicked");
+    
+    if (!clicked) {
+        reply.style.display = 'none';
+        clicked = true;
+    }
+    else {
+        reply.style.display = 'block';    
+        clicked = false;
+    }
+}
+</script>

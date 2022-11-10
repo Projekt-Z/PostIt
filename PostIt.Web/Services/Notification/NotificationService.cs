@@ -23,6 +23,6 @@ public class NotificationService : INotificationService
     {
         var cacheJson = _cache.GetString(id.ToString());
 
-        return JsonConvert.DeserializeObject<Models.Notification>(cacheJson);
+        return cacheJson is null ? null : JsonConvert.DeserializeObject<Models.Notification>(cacheJson);
     }
 }

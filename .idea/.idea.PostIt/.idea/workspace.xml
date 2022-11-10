@@ -5,14 +5,23 @@
     <projectFile profileName="PostIt.Web">PostIt.Web/PostIt.Web.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="Generating random text in Post placeholder">
-      <change afterPath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" afterDir="false" />
+    <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/NotificationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Notification/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Notification/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/smtp.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/smtp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,18 +40,17 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ef6e9cab77d34786ac7dd38cf78b37393ac90/75/3031e5b7/RazorPage`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1f48c36d6dbafb9cca52da747f506ffcd4dca7f1cf2a9ef3d78647a17e307b/OrderedEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5330988bfaacf93f15e30f9b3dd6018a768f89da3b38d874fda77299c62164/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/575c31ecc35a636b6f962cb71d53992552941a18982aae1c8e6c16305cc3761b/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/91c68e7dbd3550854d7e2c9a886f4aa32eeb553742cef4cbbad0f26217b1cb/DistributedCacheExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/af5e8f58e0cd43a56f652468b1080bbdbf4276e50cddad25571e6f22556715/EntityFrameworkQueryableExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c6ad457575d35dcbff26c9a5e3fb1d92f1d3c55f25ef6ebf475367b5d8/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d1f68ef86315497c7b39ddb155d5cf3ace964abca69857f9943cd58479799/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d76d1de163a012d58994899c89ffd7dae80790/LoggerMessage.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9d9faea5e6ed6438a777ef8c6eed41261f81d8e86488ed923ad92564f54e/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dcf63bd710ab768fc442a7a2112df62d37348b5e52c73843c9633a4b57245c0/JsonSerializerInternalWriter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f4d9a133305e4a386417768eca2b59e29cbf89ff5e3143243f5f711a4744e18/RedisCache.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Controllers/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Controllers/HomeController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/lukas/RiderProjects/PostIt/PostIt.Web/Views/Home/Post.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -119,7 +127,10 @@
       <workItem from="1667156665486" duration="7714000" />
       <workItem from="1667167563576" duration="4971000" />
       <workItem from="1667219427379" duration="3942000" />
-      <workItem from="1667302521811" duration="17597000" />
+      <workItem from="1667302521811" duration="19213000" />
+      <workItem from="1667346120393" duration="1282000" />
+      <workItem from="1667387268779" duration="5470000" />
+      <workItem from="1668092211162" duration="5447000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -219,7 +230,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667303875864</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="➕ Notification Service">
+      <created>1667324778693</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1667324778693</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,7 +271,8 @@
     <MESSAGE value="Added SMTP Service, Sending codes on account creation via google smtp.&#10;Storing codes in Redis Cluster" />
     <MESSAGE value="Creating a bug request ticket" />
     <MESSAGE value="Generating random text in Post placeholder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Generating random text in Post placeholder" />
+    <MESSAGE value="➕ Notification Service" />
+    <option name="LAST_COMMIT_MESSAGE" value="➕ Notification Service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -272,17 +291,18 @@
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs</url>
-          <line>114</line>
-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Services\Posts\PostService.cs" initialLine="111" containingFunctionPresentation="method 'Add'">
+          <url>file://$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml</url>
+          <line>17</line>
+          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Views\Post\Index.cshtml" initialLine="17" isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
             <startOffsets>
-              <option value="3582" />
+              <option value="-1" />
             </startOffsets>
             <endOffsets>
-              <option value="3629" />
+              <option value="-1" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="15" />
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

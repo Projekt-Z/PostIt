@@ -35,23 +35,28 @@ public class PostService : IPostService
         
         foreach (var following in user.Following)
         {
-            var posts = _context.Posts
-                .Include(x => x.Author)
-                .Include(x => x.Likes)
-                .Include(x => x.Comments)
-                .Where(x => x.Author.Id == following.FollowingId).ToList();
+            foreach (var post in _context.Posts
+                         .Include(x => x.Author)
+                         .Include(x => x.Likes)
+                         .Include(x => x.Comments)
+                         .Where(x => x.Author.Id == following.FollowingId).ToList())
+            {
+                if(!joinedPosts.Contains(post))
+                    joinedPosts.Add(post);
+            }
 
-            var likedPosts = _context.Users
-                .Include(x => x.PostLiked)
-                .ThenInclude(x => x.Likes)
-                .Include(x => x.PostLiked)
-                .ThenInclude(x => x.Comments)
-                .FirstOrDefault(x => x.Id == following.FollowingId)?.PostLiked;
-
-            return joinedPosts.Concat(posts).Concat(likedPosts ?? new ()).Concat(GetAllYours(username)).OrderByDescending(x => x.TimeAdded).ToList();
+            foreach (var post in _context.Users
+                         .Include(x => x.PostLiked)
+                         .ThenInclude(x => x.Comments)
+                         .First(x => x.Id == following.FollowingId)
+                         .PostLiked.ToList())
+            {
+                if(!joinedPosts.Contains(post))
+                    joinedPosts.Add(post);
+            }
         }
         
-        return new List<Post>();
+        return joinedPosts.Concat(GetAllYours(username)).OrderByDescending(x => x.TimeAdded).ToList();
     }
 
     public IEnumerable<Post> GetAll()

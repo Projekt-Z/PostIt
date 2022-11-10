@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PostIt.Web.Data;
@@ -11,9 +12,10 @@ using PostIt.Web.Data;
 namespace PostIt.Web.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221110160003_CommentPost")]
+    partial class CommentPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,11 +63,8 @@ namespace PostIt.Web.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PostId")
+                    b.Property<int?>("PostId")
                         .HasColumnType("integer");
-
-                    b.Property<bool?>("Reply")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("TimeAdded")
                         .IsRequired()
@@ -291,8 +290,7 @@ namespace PostIt.Web.Migrations
                     b.HasOne("PostIt.Web.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Author");
 

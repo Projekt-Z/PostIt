@@ -16,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Postgres
 builder.Services.AddDbContext<ApplicationContext>(o =>
 {
-    o.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb"));
+    o.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDb"), npgsqlDbContextOptionsBuilder =>
+    {
+        npgsqlDbContextOptionsBuilder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    });
 });
 
 #region redis

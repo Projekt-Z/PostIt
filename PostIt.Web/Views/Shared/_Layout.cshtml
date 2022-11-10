@@ -42,14 +42,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            @if (_notificationService.Pop(_userService.GetByUsername(User.Identity.Name).Id) is not null)
-                            {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index"> 🔔🔔 Notifications</a>
-                            }
-                            else
-                            {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index">🔔 Notifications</a>
-                            }
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Index">🔔 Notifications</a>
                         </li>   
                     }
                     <li class="nav-item">

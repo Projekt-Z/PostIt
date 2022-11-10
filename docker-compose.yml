@@ -2,16 +2,15 @@ version: '3.4'
 
 services:
   postitdb:
-    image: ${DOCKER_REGISTRY-}postgres
+    image: postgres:14.1-alpine
+    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1337
-      - POSTGRES_DB=PostItDb
     ports:
-      - "5432:5432"
-    restart: unless-stopped
+      - '5432:5432'
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - postitdb:/var/lib/postgresql/data
   
   postit:
     image: ${DOCKER_REGISTRY-}postit
@@ -22,5 +21,5 @@ services:
       - postitdb
 
 volumes:
-  database-data:
-    
+  postitdb:
+    driver: local
