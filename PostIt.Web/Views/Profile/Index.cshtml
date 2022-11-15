@@ -1,6 +1,8 @@
 ﻿@using PostIt.Web.Services.Posts
 @using PostIt.Web.Services
 @using PostIt.Web.Enums
+@using PostIt.Web.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model User
 @inject IPostService _postService
 @inject IUserService _userService
@@ -15,7 +17,11 @@
 }
 <div id="bg" style="background-image: url(@Model.BackgroundUrl);" >
     <div style="width: 60px; height: 60px; background-color: gray;" class="rounded-circle">
-        <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60"> 
+        <img src="@Model.ImageUrl" alt="Profile Picture" width="60" height="60" class="rounded-circle"> 
+        @if (Model.PostItVerified)
+        {
+            <span id="verified" class="position-absolute">✔</span>
+        }
     </div>
 </div>
 
@@ -166,6 +172,10 @@ a#a {
     height: 100%;
     width: 100%;
     text-decoration: none;
+}
+
+#verified {
+    z-index: 0;
 }
 
 </style>

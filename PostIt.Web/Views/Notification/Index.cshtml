@@ -1,4 +1,5 @@
 ﻿@using PostIt.Web.Enums
+@using PostIt.Web.Helpers
 @model List<Notification>?
 
 @{
@@ -16,7 +17,7 @@
     
     @foreach (var notification in Model)
     {
-        <article class="bg-secondary">
+        <article class="bg-secondary m-2 p-3">
             @{
                 
                 switch (notification.Type)
@@ -37,6 +38,9 @@
             }
             <h5>@notification.Title</h5>
             <p>@notification.Content</p>
+            
+            <a>@notification.Time.TimeAgo()</a>
+            
         </article>
     }
 </div>

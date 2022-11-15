@@ -1,5 +1,6 @@
 ﻿@using PostIt.Web.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using PostIt.Web.Helpers
 @model Post
 
 @inject IUserService userService
@@ -18,7 +19,7 @@
         <a style="maring-top: 10px;"> <img src="@Model.Author.ImageUrl" alt="profile picture" width="50" height="50" class="rounded-circle"/> @Model.Author.Username</a>
         <h1>@Model.Title</h1>
         <h4>@Model.Description</h4>
-        <a>@Model.TimeAdded</a>
+        <a>@DateTime.Parse(Model.TimeAdded).TimeAgo()</a>
         
         <p>
 
@@ -47,12 +48,10 @@
             <h5>@comment.Content</h5>
             
             @{
-                var ago = DateTime.Now.Subtract(DateTime.Parse(comment.TimeAdded));
-
-                var formattedTimeSpan = string.Format("{0:D2} hrs, {1:D2} mins, {2:D2} secs", ago.Hours, ago.Minutes, ago.Seconds);
+                var ago = DateTime.Parse(comment.TimeAdded).TimeAgo();
             }
             
-            <a>@formattedTimeSpan ago</a>
+            <a>@ago</a>
             
             <a id="reply-btn" onclick="Reply()">Reply</a>
             
@@ -75,12 +74,8 @@
                 {
                     <a> <img src="@reply.Author.ImageUrl" alt="profile picture" width="30" height="30" class="rounded-circle"/> @reply.Author.Username</a>
                     <h5>@reply.Content</h5>
-
-                    var agoReply = DateTime.Now.Subtract(DateTime.Parse(reply.TimeAdded));
-
-                    var formattedTimeSpanReply = string.Format("{0:D2} hrs, {1:D2} mins, {2:D2} secs", agoReply.Hours, agoReply.Minutes, agoReply.Seconds);
-
-                    <a>@formattedTimeSpanReply ago</a>
+                                      
+                    <a>@DateTime.Parse(reply.TimeAdded).TimeAgo()</a>
 
                     <br/>
                     <hr/>

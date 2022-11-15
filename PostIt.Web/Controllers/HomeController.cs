@@ -54,7 +54,7 @@ public class HomeController : Controller
             {
                 Title = postRequest.Title,
                 Description = postRequest.Content,
-                TimeAdded = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                TimeAdded = DateTime.Now.ToString(),
                 MediaLink = postRequest.MediaUrl ??= string.Empty,
                 Author = _userService.GetByUsername(HttpContext.User.Identity.Name)
             };
@@ -65,7 +65,8 @@ public class HomeController : Controller
                 {
                     Type = ENotificationType.Post,
                     Title = $"New Post from {post.Author.Name}!",
-                    Content = postRequest.Content
+                    Content = postRequest.Content,
+                    Time = DateTime.Now
                 });
             }
             
@@ -108,7 +109,8 @@ public class HomeController : Controller
         {
             Type = ENotificationType.Like,
             Title = $"{user.Username} likes yor post!",
-            Content = $"{post.Description}"
+            Content = $"{post.Description}",
+            Time = DateTime.Now
         });
         
         _postService.Like(id, user.Id);
@@ -145,7 +147,8 @@ public class HomeController : Controller
         {
             Type = ENotificationType.Follow,
             Title = "New follower!",
-            Content = $"{followedBy.Username} is now following you!"
+            Content = $"{followedBy.Username} is now following you!",
+            Time = DateTime.Now
         });
         
         _postService.Follow(id, followedBy.Id);

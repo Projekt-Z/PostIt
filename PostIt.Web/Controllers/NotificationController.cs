@@ -26,16 +26,13 @@ public class NotificationController : Controller
     {
         var user = _context.Users.FirstOrDefault(x => x.Username == User.Identity!.Name);
 
-        var notification = _notificationService.Pop(user!.Id);
+        var notifications = _notificationService.Pop(user!.Id);
 
-        if (notification is null)
+        if (notifications is null)
         {
             return View(null);
         }
         
-        return View(new List<Notification>
-        {
-            notification
-        });
+        return View(notifications);
     }
 }

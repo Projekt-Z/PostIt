@@ -7,4 +7,5 @@ public class Notification
     public ENotificationType Type { get; set; }
     public string Title { get; set; } = default!;
     public string Content { get; set; } = default!;
+    public DateTime Time { get; set; }
 }

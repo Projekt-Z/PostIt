@@ -47,7 +47,7 @@
             <a>Followers: @u.Followers.Count</a>
                 
             @{
-                var a = usr!.Following.Contains(new Following { FollowingId = u.Id });
+                var a = usr.Following.Contains(new Following { FollowingId = u.Id });
 
 
                 if (a == false || usr.Following.Count == 0)
@@ -131,7 +131,7 @@
                         <h4> @post.Title </h4>
 
                         <p> @post.Description </p>
-                        <a>@post.TimeAdded |</a> 
+                        <a> @DateTime.Parse(post.TimeAdded).TimeAgo() |</a> 
 
                         <a asp-action="Index" asp-controller="Profile" asp-route-username="@post.Author.Username">
                             <img src="@post.Author.ImageUrl" width="30" height="30" alt="profile picture" class="rounded-circle"/>

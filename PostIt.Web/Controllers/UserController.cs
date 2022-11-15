@@ -73,6 +73,11 @@ public class UserController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult CreateConfirmConfirmed(CreateConfirm confirm)
     {
+        if (confirm.Email is null)
+        {
+            return RedirectToAction(nameof(CreateConfirm), confirm);
+        }
+    
         if (ModelState.IsValid)
         {
             var code = _cache.GetString(confirm.Email);

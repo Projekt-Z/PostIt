@@ -14,15 +14,21 @@ public class NotificationService : INotificationService
     
     public void Push(Guid userId, Models.Notification notification)
     {
-        var json = JsonConvert.SerializeObject(notification);
+        var cached = _cache.GetString(userId.ToString());
+
+        var notifications = cached is null ? new List<Models.Notification>() : JsonConvert.DeserializeObject<List<Models.Notification>>(cached);
+
+        notifications!.Add(notification);
+
+        var notificationsJson = JsonConvert.SerializeObject(notifications);
         
-        _cache.SetString(userId.ToString(), json);
+        _cache.SetString(userId.ToString(), notificationsJson);
     }
 
-    public Models.Notification? Pop(Guid id)
+    public List<Models.Notification>? Pop(Guid id)
     {
         var cacheJson = _cache.GetString(id.ToString());
 
-        return cacheJson is null ? null : JsonConvert.DeserializeObject<Models.Notification>(cacheJson);
+        return cacheJson is null ? null : JsonConvert.DeserializeObject<List<Models.Notification>>(cacheJson)?.OrderByDescending(x => x.Time).ToList();
     }
 }

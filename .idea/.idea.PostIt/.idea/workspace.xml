@@ -7,21 +7,22 @@
   <component name="ChangeListManager">
     <list default="true" id="5e49499e-4f03-4828-a22a-614b3f60a3a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PostIt/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/HomeController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/NotificationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/NotificationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/PostController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Controllers/UserController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Migrations/ApplicationContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/Notification.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/Notification.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Models/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Notification/INotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Notification/INotificationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Notification/NotificationService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Services/Posts/PostService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Home/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Notification/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Notification/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Profile/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PostIt.Web/smtp.json" beforeDir="false" afterPath="$PROJECT_DIR$/PostIt.Web/smtp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PostIt.Web/wwwroot/favicon.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +39,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c2a72f7fe70b4723a5d0dda57d0b15831cba88/98/cdbd4593/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ef6e9cab77d34786ac7dd38cf78b37393ac90/75/3031e5b7/RazorPage`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ef6e9cab77d34786ac7dd38cf78b37393ac90/8f/c6520127/RazorView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/17a25bf4cd58852e31b6bc798fef1d6289441360eea1912bf89a9b4fd337a3/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/198a6261cebc324728dcc4c178edc5f2894123f711722c80e8557cbfd27651/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1f48c36d6dbafb9cca52da747f506ffcd4dca7f1cf2a9ef3d78647a17e307b/OrderedEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
@@ -130,7 +132,13 @@
       <workItem from="1667302521811" duration="19213000" />
       <workItem from="1667346120393" duration="1282000" />
       <workItem from="1667387268779" duration="5470000" />
-      <workItem from="1668092211162" duration="5447000" />
+      <workItem from="1668092211162" duration="5788000" />
+      <workItem from="1668125996201" duration="904000" />
+      <workItem from="1668132417106" duration="530000" />
+      <workItem from="1668194423256" duration="9973000" />
+      <workItem from="1668269041757" duration="2173000" />
+      <workItem from="1668271377316" duration="1211000" />
+      <workItem from="1668294345349" duration="1220000" />
     </task>
     <task id="LOCAL-00001" summary="Password Confirmation, Redirect on Log, In, Default Logging change, MORE: &#10;&#10;+ ADDED Changelog&#10;+ UPDATED README&#10;+ Password Confirmation on Creating Account.&#10;+ Redirect directly to Login when Submitting Account creation.&#10;+ Changing Password in AccountController.&#10;+ Default Logging via email or username.&#10;+ Changed input type = password to all inputs requiring password.&#10;+ FIXED following users and unfollowing">
       <created>1666198764320</created>
@@ -237,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667324778693</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Notifications and Replies to Comments on posts">
+      <created>1668098072727</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668098072727</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,7 +287,8 @@
     <MESSAGE value="Creating a bug request ticket" />
     <MESSAGE value="Generating random text in Post placeholder" />
     <MESSAGE value="➕ Notification Service" />
-    <option name="LAST_COMMIT_MESSAGE" value="➕ Notification Service" />
+    <MESSAGE value="Notifications and Replies to Comments on posts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Notifications and Replies to Comments on posts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -289,20 +305,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/PostIt.Web/Views/Post/Index.cshtml</url>
-          <line>17</line>
-          <properties documentPath="C:\Users\lukas\RiderProjects\PostIt\PostIt.Web\Views\Post\Index.cshtml" initialLine="17" isMultiMethodBreakpoint="true">
-            <option name="multiMethodBreakpoint" value="true" />
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
